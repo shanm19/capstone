@@ -30,4 +30,5 @@ var subredditSchema = new Schema({
     }]
 });
 
+
 module.exports = mongoose.model('Subreddit', subredditSchema);
