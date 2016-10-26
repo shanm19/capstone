@@ -1,0 +1,28 @@
+<div class="main" layout-padding>
+    <div flex="100" layout layout layout-align="space-around start">
+        <div ng-cloak flex="70">
+            <md-content>
+                <md-list flex>
+                    <md-list-item class="md-3-line post" ng-repeat="post in posts" md-whiteframe="2" layout-padding layout-margin>
+                        <div class="vote" layout="column" layout-align="space-between center">
+                            <i class="material-icons">arrow_upward</i>
+                            <span><b>{{post.newVotes || 65759}}</b></span>
+                            <i class="material-icons">arrow_downward</i>
+                        </div>
+                        <div layout layout-padding>
+                            <img ng-src="{{image}}" alt="{{item.who}}" class="main-post-thumb"/>
+                            <div class="md-list-item-text" layout="column">
+                                <p>{{post.title}}</p>
+                                <p> {{post.originalPoster}}</p>
+                                <span class="caption">
+                                    submitted x hours ago by <a href="#/"><b>{{post.originalPoster}}</b></a> to <b><a href="#/">welovedogs</a></b>
+                                </span>
+                            </div>
+                        </div>
+                    </md-list-item>
+                </md-list>
+            </md-content>
+        </div>
+        <side-bar class="aside" flex="25" layout="column" layout-align="start stretch" md-whiteframe="z1"></side-bar>
+    </div>
+</div>
