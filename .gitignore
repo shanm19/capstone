@@ -1,4 +1,11 @@
-node_modules
-config.js
+# Dependency diretories
+/backend/node_modules/
+
+
+# environment config/authentication
+/backend/config.js
+
+# OS generated files or directories
 .DS_Store
+
 .idea
