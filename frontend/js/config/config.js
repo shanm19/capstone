@@ -7,6 +7,10 @@ app.config(['$routeProvider', '$mdThemingProvider', function ($routeProvider, $m
         .when('/', {
             templateUrl: './templates/main.html',
             controller: 'MainController'
+        })
+        .when('/signup/', {
+            templateUrl: './js/authentication/templates/signup.html',
+            controller: 'SignupController'
         });
 
     $mdThemingProvider.theme('cyan')

@@ -1,34 +1,29 @@
 /* BookReviewSite auth.js */
 
-var app = angular.module('myApp.Auth', ['ngRoute', 'ngAnimate', 'ui.bootstrap']);
+var app = angular.module('MockReddit.Auth', ['ngRoute', 'ngAnimate']);
 
 // only the Logout has a route with a view because signup and login are handled in pop-up modals
 app.config(["$routeProvider", function($routeProvider) {
     $routeProvider
+    .when('/signup', {
+        templateUrl: 'js/authenticatioin/templates/signup.html',
+        controller: 'SignupController'
+    })
+    .when('/login', {
+        templateUrl: 'js/authentication/templates/login.html',
+        controller: 'LoginController'
+    })
     .when('/logout', {
-        templateUrl: '/authentication/templates/logout.html',
+        templateUrl: 'js/authentication/templates/logout.html',
         controller: 'LogoutController'
     })
 }])
 
 // Controller for the login/signup navbar
-app.controller('AuthController', ["$scope", "$uibModal", "UserService", function($scope, $uibModal, UserService){
+app.controller('AuthController', ["$scope", "UserService", function($scope, UserService){
     $scope.userService = UserService;
     // launches Signup Modal from navbar link
-    $scope.showSignup = function() {
-        $uibModal.open({
-            templateUrl: '/authentication/templates/signup.html',
-            controller: 'SignupController'
-        });
-    }
-
-    // launches Login Modal from navbar link
-    $scope.showLogin = function() {
-        $uibModal.open({
-            templateUrl: '/authentication/templates/login.html',
-            controller: 'LoginController'
-        })
-    }
+    
 
 // Retrieve the logged-in user's' information after a page reload using the Authentication Token
     $scope.getUserFromToken = function(){

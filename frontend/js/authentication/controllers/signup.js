@@ -1,7 +1,9 @@
 /* BookReviewSite signup.js */
 
-angular.module('myApp.Auth')
-    .controller('SignupController', ["$scope", "$timeout", "$uibModal", "$uibModalInstance", "UserService", function ($scope, $timeout, $uibModal, $uibModalInstance, UserService) {
+angular.module('MockReddit.Auth')
+    .controller('SignupController', ["$scope", "$timeout", "$location", "UserService", function ($scope, $timeout, $location, UserService) {
+        
+        
         $scope.user = {};
         $scope.invalidForm = false;
         
@@ -17,30 +19,25 @@ angular.module('myApp.Auth')
             } else {
                 UserService.signup($scope.user)
                     .then(function (response) {
-                        if (response.success === false  && response.message === 'That email is in use already.') {
+                        if (response.success === false  && response.message === 'username or email already in use') {
+                            $scope.cause = response.cause;
                             $scope.duplicate = true;
                         } else {
                             $scope.success = true
                             UserService.newSignin = true;
-                            UserService.user.email = $scope.user.email
                             $timeout(function () {
-                                $scope.showLogin();
+                                $location.path('/login')
                             }, 2000);
                         }
                     })
             }
         }
 
-        $scope.showLogin = function (email) {
-            $uibModalInstance.close();
-            if (email) UserService.user.email = email;
-            $uibModal.open({
-                templateUrl: '/authentication/templates/login.html',
-                controller: 'LoginController',
-            });
+        $scope.oauthSignup = function(provider) {
+            $location.path('/auth/' + provider)
         }
 
-        $scope.dismiss = function () {
-            $uibModalInstance.dismiss();
-        }
+        
+
+        
     }])

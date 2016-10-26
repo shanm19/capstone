@@ -1,6 +1,6 @@
 /* BookReviewSite logout.js */
 
-angular.module('myApp.Auth')
+angular.module('MockReddit.Auth')
 .controller('LogoutController', ["$scope", "UserService", "TokenService", function($scope, UserService, TokenService) {
     $scope.user = UserService.user;
     UserService.user = {};
