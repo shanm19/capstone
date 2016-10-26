@@ -45,10 +45,11 @@ var userSchema = new Schema({
     // optionally, the user can have a list of content they no longer want to see to prevent a stale page
     // perhaps the user can choose to reset this array if they want to undo what they've dismissed
     dismissedContent: [{
-        type: Schema.Type.ObjectId,
-        ref: 'Post',
-    }, {
-        timestamp: true
+        post: {
+            type: Schema.Type.ObjectId,
+            ref: 'Post'
+        },
+        timestamps: true // NOTE: I do not know if this works
     }],
     // this tracks what the user has already viewed to visually track history
     visitedContent: [{
