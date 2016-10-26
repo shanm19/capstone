@@ -60,7 +60,7 @@ var userSchema = new Schema({
     // because they aren't necessarily aware they are no longer contributing
     shadowBans: [{
         type: Schema.Type.ObjectId,
-        ref: 'Subreddits'
+        ref: 'Subreddit'
     }],
     // Admins can block users from commenting and posting for being dillweeds
     isBlocked: {
