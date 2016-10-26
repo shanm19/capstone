@@ -1,0 +1,42 @@
+<!-- BookReviewSite signup.html -->
+
+
+<div class="myModal">
+    <div class="modal-header">
+        <span class="glyphicon glyphicon-remove pull-right" ng-click="dismiss()"></span><h1>Signup <small>for a new account</small></h1>
+    </div>
+    <div class="modal-body">
+        <form class="row" id="signupForm" name="signupForm">
+            <div class="col-xs-6 col-xs-offset-3">
+                <div class="form-group">
+                    <label class="control-label">name</label>
+                    <input class="form-control" type="text" placeholder="Name" ng-model="user.name" autofocus>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">email</label>
+                    <input class="form-control" type="email" name="email" placeholder="email" ng-model="user.email" ng-required="true">
+                    <p class="error validationerror" ng-show="signupForm.email.$invalid && invalidForm">A valid email address is required.</p>
+                </div>
+                <div class="form-group"><label class="control-label">password</label>
+                    <input class="form-control" type="password" name="password" placeholder="password" ng-model="user.password" ng-required="true">
+                    <p class="error validationerror" ng-show="signupForm.password.$invalid && invalidForm">A password is required.</p>
+                </div>
+            </div>
+        </form>
+        <div class="success-message" ng-show="success">
+            <p class="h3 text-center text-success" >
+                Signup Successfull! <br/>
+                <small>Please login on next page.</small>
+            </p>
+        </div>
+        <div class="error" ng-show="duplicate">
+            <p class="h3 text-center text-danger" >
+                That email is already in use. <br/>
+                <small>If you're already signed up, please login<a class="h4" style="font-weight:900;color:#555" href ng-click="showLogin(user.email)"> here</a></small><br/><small>Otherwise use a different email to sign up.</small>
+            </p>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <input type="submit" form="signupForm"  value="Signup" class="btn btn-default" ng-click="signup($event)">
+    </div>
+</div>

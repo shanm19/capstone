@@ -1,0 +1,69 @@
+
+@import url("https://fonts.googleapis.com/css?family=Roboto:100,300,900");
+
+.myModal {
+    font-family: Roboto;
+}
+
+.logout {
+    margin-top: 50px;
+    padding: 30px 75px 75px;
+}
+/*   modal dismiss   */
+.glyphicon-remove {
+    font-size: 3em;
+    opacity: .2;
+}
+
+.glyphicon-remove:hover {
+    cursor: pointer;
+}
+
+
+/*******************************************
+****   User login notification message: **** 
+****   smooth fade-in-out transitions:  ****
+********************************************/
+.success-message {
+    opacity: 1;
+    line-height: 1.15em;
+    margin: 0;
+    padding: 0;
+}
+.success-message.ng-hide-remove, .success-message.ng-hide-add {
+    transition: all ease 0.5s;
+}
+.success-message.ng-hide {
+    opacity: 0;
+    line-height: 0;
+}
+
+/*******************************************
+****   User form validation  message:   **** 
+****   smooth fade-in-out transitions:  ****
+********************************************/
+
+input.ng-invalid.ng-touched.invalidForm {
+    border: 1px solid #DA3637;
+}
+
+input.ng-valid.ng-touched {
+    border: 1px solid #509D12;
+}
+
+.error {
+    color: #DA3637;
+    font-size: 1.5em;
+    line-height: 1.7em;
+    padding:0;
+    margin:0;
+}
+
+.error.ng-hide-remove, .error.ng-hide-add {
+    transition: all ease 0.5s;
+}
+
+.error.ng-hide {
+    line-height: 0;
+    opacity: 0;
+}
