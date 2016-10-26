@@ -1,0 +1,66 @@
+/****************************************
+                Base Styles
+*****************************************/
+
+a {
+    text-decoration: none;
+    color: steelblue;
+}
+
+.full-width {
+    width: 96%;
+}
+
+/****************************************
+                 SideBar
+*****************************************/
+
+.main input {
+    border: 1px solid #BBB !important;
+}
+
+.main label {
+    padding-left: .5em !important;
+}
+
+.aside {
+    margin: 1.15em;
+}
+
+.aside input {
+    -webkit-border-radius: .25em;
+    -moz-border-radius: .25em;
+    border-radius: .25em;
+}
+
+.aside md-toolbar {
+    min-height: 40px;
+    height: 40px;
+}
+
+/****************************************
+                 Topics
+*****************************************/
+
+.main-post-thumb {
+    width: 60px;
+    height: 60px;
+}
+
+.vote {
+    min-height: 89px;
+}
+
+.vote i,
+.vote span,
+.main .caption {
+    color: #AAA;
+}
+
+.main .caption {
+    font-size: .7em;
+}
+
+.post {
+    max-width: 1200px;
+}
