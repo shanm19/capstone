@@ -1,6 +1,5 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var SubredditSchema = require('./Subreddit').Schema;
 
 var userSchema = new Schema({
     firstName: {
@@ -14,7 +13,8 @@ var userSchema = new Schema({
     username: {
         type: String,
         required: true,
-        unique: true
+        unique: true,
+        lowercase: true
     },
     password: {
         type: String,
@@ -45,8 +45,11 @@ var userSchema = new Schema({
     // optionally, the user can have a list of content they no longer want to see to prevent a stale page
     // perhaps the user can choose to reset this array if they want to undo what they've dismissed
     dismissedContent: [{
-        type: Schema.Type.ObjectId,
-        ref: 'Post'
+        post: {
+            type: Schema.Type.ObjectId,
+            ref: 'Post'
+        },
+        timestamps: true // NOTE: I do not know if this works
     }],
     // this tracks what the user has already viewed to visually track history
     visitedContent: [{
@@ -60,7 +63,7 @@ var userSchema = new Schema({
     // because they aren't necessarily aware they are no longer contributing
     shadowBans: [{
         type: Schema.Type.ObjectId,
-        ref: 'Subreddits'
+        ref: 'Subreddit'
     }],
     // Admins can block users from commenting and posting for being dillweeds
     isBlocked: {
