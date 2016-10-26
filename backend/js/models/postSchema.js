@@ -1,8 +1,5 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var UserSchema = require('./userSchema').Schema;
-var SubredditSchema = require('./subredditSchema').Schema;
-var CommentSchema = require('./commentSchema').Schema;
 
 var postSchema = new Schema({
     title: {

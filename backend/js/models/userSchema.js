@@ -1,6 +1,5 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var SubredditSchema = require('./Subreddit').Schema;
 
 var userSchema = new Schema({
     firstName: {
@@ -14,7 +13,8 @@ var userSchema = new Schema({
     username: {
         type: String,
         required: true,
-        unique: true
+        unique: true,
+        lowercase: true
     },
     password: {
         type: String,
