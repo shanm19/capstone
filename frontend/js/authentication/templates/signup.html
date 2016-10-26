@@ -1,42 +1,55 @@
-<!-- BookReviewSite signup.html -->
 
 
-<div class="myModal">
-    <div class="modal-header">
-        <span class="glyphicon glyphicon-remove pull-right" ng-click="dismiss()"></span><h1>Signup <small>for a new account</small></h1>
-    </div>
-    <div class="modal-body">
-        <form class="row" id="signupForm" name="signupForm">
-            <div class="col-xs-6 col-xs-offset-3">
-                <div class="form-group">
-                    <label class="control-label">name</label>
-                    <input class="form-control" type="text" placeholder="Name" ng-model="user.name" autofocus>
-                </div>
-                <div class="form-group">
-                    <label class="control-label">email</label>
-                    <input class="form-control" type="email" name="email" placeholder="email" ng-model="user.email" ng-required="true">
-                    <p class="error validationerror" ng-show="signupForm.email.$invalid && invalidForm">A valid email address is required.</p>
-                </div>
-                <div class="form-group"><label class="control-label">password</label>
-                    <input class="form-control" type="password" name="password" placeholder="password" ng-model="user.password" ng-required="true">
-                    <p class="error validationerror" ng-show="signupForm.password.$invalid && invalidForm">A password is required.</p>
-                </div>
+<md-dialog class="authDialog">
+        
+        <div class="dialog-header">
+            <h2>Signup for a new account</h2>
+        </div>
+        <md-dialog-content class="dialog-body">
+            <form name="signupForm">
+                    <div class="form-group">
+                        <label class="control-label">first name</label>
+                        <input class="form-control" type="text" placeholder="first name" ng-model="user.firstName" autofocus>
+                        <p class="error validationerror" ng-show="signupForm.firstName.$invalid && invalidForm">You must provide a first name.</p>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">last name</label>
+                        <input class="form-control" type="text" placeholder="last name" ng-model="user.lastName" autofocus>
+                        <p class="error validationerror" ng-show="signupForm.lastName.$invalid && invalidForm">You must provide a last name.</p>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">username</label>
+                        <input class="form-control" type="text" placeholder="username" ng-model="user.username" autofocus>
+                        <p class="error validationerror" ng-show="signupForm.username.$invalid && invalidForm">A username is required.</p>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">email</label>
+                        <input class="form-control" type="email" name="email" placeholder="email" ng-model="user.email" ng-required="true">
+                        <p class="error validationerror" ng-show="signupForm.email.$invalid && invalidForm">A valid email address is required.</p>
+                    </div>
+                    <div class="form-group"><label class="control-label">password</label>
+                        <input class="form-control" type="password" name="password" placeholder="password" ng-model="user.password" ng-required="true">
+                        <p class="error validationerror" ng-show="signupForm.password.$invalid && invalidForm">A password is required.</p>
+                    </div>
+            </form>
+            <div class="success-message" ng-show="success">
+                <p class="h3 text-center text-success" >
+                    Signup Successfull! <br/>
+                    <small>Please login on next page.</small>
+                </p>
             </div>
-        </form>
-        <div class="success-message" ng-show="success">
-            <p class="h3 text-center text-success" >
-                Signup Successfull! <br/>
-                <small>Please login on next page.</small>
-            </p>
-        </div>
-        <div class="error" ng-show="duplicate">
-            <p class="h3 text-center text-danger" >
-                That email is already in use. <br/>
-                <small>If you're already signed up, please login<a class="h4" style="font-weight:900;color:#555" href ng-click="showLogin(user.email)"> here</a></small><br/><small>Otherwise use a different email to sign up.</small>
-            </p>
-        </div>
-    </div>
-    <div class="modal-footer">
-        <input type="submit" form="signupForm"  value="Signup" class="btn btn-default" ng-click="signup($event)">
-    </div>
-</div>
+            <div class="error" ng-show="duplicate">
+                <p class="h3 text-center text-danger" >
+                    That {{duplicate}} is already in use. <br/>
+                    <small>If you're already signed up, please login<a class="h4" style="font-weight:900;color:#555" href ng-click="showLogin(user.email)"> here</a></small><br/><small>Otherwise use a different {{duplicate}} to sign up.</small>
+                </p>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions>
+            <input type="submit" form="signupForm"  value="Signup" class="btn btn-default" ng-click="signup($event)">
+            <br>
+            <md-button class="md-primary" ng-click="oauthSignup('facebook')"><img src="https://scontent-sjc2-1.xx.fbcdn.net/t39.2178-6/851579_209602122530903_1060396115_n.png" alt=""></md-button>
+            <md-button class="md-primary" ng-click="oauthSignup('twitter')"><img src="https://g.twimg.com/dev/sites/default/files/images_documentation/sign-in-with-twitter-link.png" alt=""> </md-button>
+            <div class="fb-login-button" data-max-rows="1" data-size="large" data-show-faces="false" data-auto-logout-link="true"></div>
+        </md-dialog-actions>
+</md-dialog>

@@ -1,7 +1,7 @@
 /* BookReviewSite login.js */
 
-angular.module('myApp.Auth')
-    .controller('LoginController', ["$scope", "$location", "$timeout", "$document", "$uibModal", "$uibModalInstance", "UserService", function ($scope, $location, $timeout, $document, $uibModal, $uibModalInstance, UserService) {
+angular.module('MockReddit.Auth')
+    .controller('LoginController', ["$scope", "$location", "$timeout", "$document", "UserService", "$mdDialog", function ($scope, $location, $timeout, $document, UserService, $mdDialog) {
         $scope.user = {};
         $scope.user.email = UserService.user.email;
         $scope.invalidForm = false;
@@ -29,15 +29,12 @@ angular.module('myApp.Auth')
                                 }
                             }, 3000);
                         } else {
-                            $uibModalInstance.close({
-                            resolve: $location.path('/')
-                            })
+                             $location.path('/')
+                            }
                             console.log('login ', response);
-                        }
+
                     })
             }
         }
-        $scope.dismiss = function () {
-            $uibModalInstance.dismiss();
-        }
+
     }])
