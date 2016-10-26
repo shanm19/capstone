@@ -46,7 +46,9 @@ var userSchema = new Schema({
     // perhaps the user can choose to reset this array if they want to undo what they've dismissed
     dismissedContent: [{
         type: Schema.Type.ObjectId,
-        ref: 'Post'
+        ref: 'Post',
+    }, {
+        timestamp: true
     }],
     // this tracks what the user has already viewed to visually track history
     visitedContent: [{
