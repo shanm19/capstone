@@ -1,9 +1,25 @@
 /* BookReviewSite signup.js */
 
 angular.module('MockReddit.Auth')
-    .controller('SignupController', ["$scope", "$timeout", "$location", "UserService", function ($scope, $timeout, $location, UserService) {
+    .controller('SignupController', ["$scope", "$timeout", "$location", "$mdDialog", "UserService", function ($scope, $timeout, $location, $mdDialog, UserService) {
+        $scope.button = "I'm a button"
         
-        
+$scope.showPrompt = function(ev) {
+    // Appending dialog to document.body to cover sidenav in docs app
+    $mdDialog.show({
+        templateUrl: '/js/authentication/templates/signup.html',
+        targetEvent: ev,
+        clickOutsidetoClose: true 
+    })
+    .then(function(result) {
+      $scope.status =  result.firstName;
+    }, function() {
+      $scope.status = result.username;
+    });
+  };
+
+
+
         $scope.user = {};
         $scope.invalidForm = false;
         

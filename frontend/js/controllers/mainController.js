@@ -4,22 +4,24 @@ var app = angular.module('MockReddit');
 
 app.controller('MainController', ['$scope', function ($scope) {
 
-    function loginDialog(ev) {
-        var parentEl = angular.element(document.body);
-        var login = $mdDialog.show()
-        .title('Sign up')
-        .ok('Close')
-        $mdDialog.showPrompt({
-            parent: parentEl,
-            targetEvent: ev,
-            templateUrl: '/js/authentication/templates/login.html',
-            locals: {
-            user: $scope.user
-        },
-            controller: 'LoginController'
-        });
+// user login
 
-    }
+    // function loginDialog(ev) {
+    //     var parentEl = angular.element(document.body);
+    //     var login = $mdDialog.show()
+    //     .title('Sign up')
+    //     .ok('Close')
+    //     $mdDialog.showPrompt({
+    //         parent: parentEl,
+    //         targetEvent: ev,
+    //         templateUrl: '/js/authentication/templates/login.html',
+    //         locals: {
+    //         user: $scope.user
+    //     },
+    //         controller: 'LoginController'
+    //     });
+
+    // }
     
     
 

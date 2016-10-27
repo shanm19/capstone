@@ -1,5 +1,5 @@
 <md-dialog aria-label="Login" ng-cloak>
-
+<md-dialog-content>
     <form name="loginForm" data-ng-submit="vm.handleSubmit()">
 
         <md-toolbar>
@@ -42,34 +42,3 @@
     </form>
 
 </md-dialog>
-
-
-<!--
-<div class="myModal">
-    <div class="modal-header">
-        <span class="glyphicon glyphicon-remove pull-right" ng-click="dismiss()"></span><h1>Login</h1>
-    </div>
-    <div class="modal-body">
-        <form class="row" name="loginForm" id="loginForm">
-            <div class="col-xs-6 col-xs-offset-3">
-                <div class="form-group">
-                    <label class="control-label">email</label>
-                    <input class="form-control" name="email" type="email" ng-selected="enterPassword" placeholder="email" ng-model="user.email" ng-required="true">
-                    <p class="error validationerror" ng-show="loginForm.email.$invalid && invalidForm">A valid email address is required to login.</p>
-                </div>
-                <div class="form-group"><label class="control-label">password</label>
-                    <input class="form-control" name="password" type="password" placeholder="password" ng-model="user.password" ng-required="true">
-                    <p class="error validationerror" ng-show="loginForm.password.$invalid && invalidForm">A password is required to login.</p>
-                </div>
-            </div>
-        </form>
-        <div class="error" ng-show="loginError">
-            <p class="h3 text-center text-danger" >
-                {{message}}
-            </p>
-        </div>
-    </div>
-    <div class="modal-footer">
-        <input type="submit" form="loginForm" class="btn btn-default" value="login" ng-click="login($event)">
-    </div>
-</div>-->

@@ -5,14 +5,6 @@ var app = angular.module('MockReddit.Auth', ['ngRoute', 'ngAnimate']);
 // only the Logout has a route with a view because signup and login are handled in pop-up modals
 app.config(["$routeProvider", function($routeProvider) {
     $routeProvider
-    .when('/signup', {
-        templateUrl: 'js/authenticatioin/templates/signup.html',
-        controller: 'SignupController'
-    })
-    .when('/login', {
-        templateUrl: 'js/authentication/templates/login.html',
-        controller: 'LoginController'
-    })
     .when('/logout', {
         templateUrl: 'js/authentication/templates/logout.html',
         controller: 'LogoutController'

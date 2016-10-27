@@ -3,8 +3,8 @@
         <div ng-cloak flex="70">
             <md-content>
                 <md-list flex>
-                    <md-button  ng-click=loginDialog() name="login" class="md-raised md-primary">login</md-button>
-                    <md-button  ng-click=signupDialog() name="signup" class="md-raised md-primary">signup</md-button>
+                    <md-button ng-href="#/login" ng-click=loginDialog() name="login" class="md-raised md-primary">login</md-button>
+                    <md-button ng-href="#/signup" ng-click=goto('/signup') name="signup" class="md-raised md-primary">signup</md-button>
                     <md-list-item class="md-3-line post" ng-repeat="post in posts" md-whiteframe="2" layout-padding layout-margin>
                         <div class="vote" layout="column" layout-align="space-between center">
                             <i class="material-icons">arrow_upward</i>

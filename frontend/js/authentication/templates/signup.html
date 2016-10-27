@@ -1,36 +1,33 @@
 
-
+<md-button class="ng-raised md-primary" ng-click="showPrompt($event)">{{button}}</md-button>
 <md-dialog class="authDialog">
         
-        <div class="dialog-header">
-            <h2>Signup for a new account</h2>
-        </div>
         <md-dialog-content class="dialog-body">
-            <form name="signupForm">
-                    <div class="form-group">
-                        <label class="control-label">first name</label>
-                        <input class="form-control" type="text" placeholder="first name" ng-model="user.firstName" autofocus>
+                <form name="signupForm" layout="column" layout-margin layout-padding>
+                    <md-input-container>
+                        <label>first name</label>
+                        <input type="text" placeholder="first name" ng-model="user.firstName" autofocus>
                         <p class="error validationerror" ng-show="signupForm.firstName.$invalid && invalidForm">You must provide a first name.</p>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">last name</label>
-                        <input class="form-control" type="text" placeholder="last name" ng-model="user.lastName" autofocus>
+                    </md-input-container>
+                    <md-input-container>
+                        <label>last name</label>
+                        <input type="text" placeholder="last name" ng-model="user.lastName" autofocus>
                         <p class="error validationerror" ng-show="signupForm.lastName.$invalid && invalidForm">You must provide a last name.</p>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">username</label>
-                        <input class="form-control" type="text" placeholder="username" ng-model="user.username" autofocus>
+                    </md-input-container>
+                    <md-input-container>
+                        <label>username</label>
+                        <input type="text" placeholder="username" ng-model="user.username" autofocus>
                         <p class="error validationerror" ng-show="signupForm.username.$invalid && invalidForm">A username is required.</p>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">email</label>
-                        <input class="form-control" type="email" name="email" placeholder="email" ng-model="user.email" ng-required="true">
+                    </md-input-container>
+                    <md-input-container>
+                        <label>email</label>
+                        <input type="email" name="email" placeholder="email" ng-model="user.email" ng-required="true">
                         <p class="error validationerror" ng-show="signupForm.email.$invalid && invalidForm">A valid email address is required.</p>
-                    </div>
-                    <div class="form-group"><label class="control-label">password</label>
-                        <input class="form-control" type="password" name="password" placeholder="password" ng-model="user.password" ng-required="true">
+                    </md-input-container>
+                    <md-input-container><label>password</label>
+                        <input type="password" name="password" placeholder="password" ng-model="user.password" ng-required="true">
                         <p class="error validationerror" ng-show="signupForm.password.$invalid && invalidForm">A password is required.</p>
-                    </div>
+                    </md-input-container>
             </form>
             <div class="success-message" ng-show="success">
                 <p class="h3 text-center text-success" >
@@ -45,11 +42,13 @@
                 </p>
             </div>
         </md-dialog-content>
-        <md-dialog-actions>
-            <input type="submit" form="signupForm"  value="Signup" class="btn btn-default" ng-click="signup($event)">
+        <md-dialog-actions layout="column">
+            <input type="submit" form="signupForm"  value="Signup" class="md-button md-raised md-primary" ng-click="signup($event)">
             <br>
-            <md-button class="md-primary" ng-click="oauthSignup('facebook')"><img src="https://scontent-sjc2-1.xx.fbcdn.net/t39.2178-6/851579_209602122530903_1060396115_n.png" alt=""></md-button>
-            <md-button class="md-primary" ng-click="oauthSignup('twitter')"><img src="https://g.twimg.com/dev/sites/default/files/images_documentation/sign-in-with-twitter-link.png" alt=""> </md-button>
+            <div layout="row">
+                <md-button class="md-raised" ng-click="oauthSignup('facebook')"><img src="https://scontent-sjc2-1.xx.fbcdn.net/t39.2178-6/851579_209602122530903_1060396115_n.png" alt=""></md-button>
+                <md-button class="md-raised" ng-click="oauthSignup('twitter')"><img src="https://g.twimg.com/dev/sites/default/files/images_documentation/sign-in-with-twitter-link.png" alt=""> </md-button>
+            </div>
             <div class="fb-login-button" data-max-rows="1" data-size="large" data-show-faces="false" data-auto-logout-link="true"></div>
         </md-dialog-actions>
 </md-dialog>
