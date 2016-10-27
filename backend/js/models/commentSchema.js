@@ -26,6 +26,15 @@ var commentSchema = new Schema({
     netVotes: {
         type: Number,
         default: 0
+    },
+    isEdited: {
+        type: Boolean,
+        default: false
+    },
+    editHistory: [ String ],
+    isDeleted: {
+        type: Boolean,
+        default: false
     }
 });
 
