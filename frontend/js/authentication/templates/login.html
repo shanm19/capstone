@@ -1,14 +1,11 @@
 <md-dialog aria-label="Login" ng-cloak>
 <md-dialog-content>
-    <form name="loginForm" data-ng-submit="vm.handleSubmit()">
+    <form name="loginForm" ng-submit="login()">
 
         <md-toolbar>
             <div class="md-toolbar-tools">
                 <h2>Login</h2>
                 <span flex></span>
-                <md-button type="button" class="md-icon-button" ng-click="vm.handleCancel(); $event.stopPropagation();">
-                    <md-icon md-svg-icon="navigation:close" aria-label="Close dialog"></md-icon>
-                </md-button>
             </div>
         </md-toolbar>
 
@@ -16,27 +13,23 @@
             <div class="md-dialog-content">
                 <md-input-container class="md-block">
                     <label>Username:</label>
-                    <input ng-model="vm.username" required>
+                    <input ng-model="user.username" required>
                 </md-input-container>
 
                 <md-input-container class="md-block">
                     <label>Password:</label>
-                    <input ng-model="vm.password" type="password" required>
+                    <input ng-model="user.password" type="password" required>
                 </md-input-container>
             </div>
         </md-dialog-content>
 
-        <md-dialog-actions layout="row">
-            <span flex></span>
-            <md-button type="submit" class="md-primary"
-                       ng-class="{'md-raised md-hue-1': (loginForm.$dirty && loginForm.$valid) }"
-                       aria-label="OK">
-                OK
-            </md-button>
-            <md-button type="button" ng-click="vm.handleCancel(); $event.stopPropagation();"
-                       aria-label="Cancel">
-                Cancel
-            </md-button>
+         <md-dialog-actions layout="column">
+            <input type="submit" form="loginForm"  value="Login" class="md-button md-raised md-primary" ng-click="login($event)">
+            <br>
+            <div layout="row">
+                <md-button class="md-raised" ng-click="oauthSignup('facebook')"><img src="https://scontent-sjc2-1.xx.fbcdn.net/t39.2178-6/851579_209602122530903_1060396115_n.png" alt=""></md-button>
+                <md-button class="md-raised" ng-click="oauthSignup('twitter')"><img src="https://g.twimg.com/dev/sites/default/files/images_documentation/sign-in-with-twitter-link.png" alt=""> </md-button>
+            </div>
         </md-dialog-actions>
 
     </form>

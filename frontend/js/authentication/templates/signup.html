@@ -1,34 +1,43 @@
 
-<md-button class="ng-raised md-primary" ng-click="showPrompt($event)">{{button}}</md-button>
 <md-dialog class="authDialog">
-        
+        <md-toolbar layout="center end">
+            <div class="md-toolbar-tools">
+                <h2>Signup for a new account</h2>
+            </div>
+        </md-toolbar>
         <md-dialog-content class="dialog-body">
-                <form name="signupForm" layout="column" layout-margin layout-padding>
-                    <md-input-container>
-                        <label>first name</label>
-                        <input type="text" placeholder="first name" ng-model="user.firstName" autofocus>
-                        <p class="error validationerror" ng-show="signupForm.firstName.$invalid && invalidForm">You must provide a first name.</p>
-                    </md-input-container>
-                    <md-input-container>
-                        <label>last name</label>
-                        <input type="text" placeholder="last name" ng-model="user.lastName" autofocus>
-                        <p class="error validationerror" ng-show="signupForm.lastName.$invalid && invalidForm">You must provide a last name.</p>
-                    </md-input-container>
-                    <md-input-container>
-                        <label>username</label>
-                        <input type="text" placeholder="username" ng-model="user.username" autofocus>
-                        <p class="error validationerror" ng-show="signupForm.username.$invalid && invalidForm">A username is required.</p>
-                    </md-input-container>
-                    <md-input-container>
-                        <label>email</label>
-                        <input type="email" name="email" placeholder="email" ng-model="user.email" ng-required="true">
-                        <p class="error validationerror" ng-show="signupForm.email.$invalid && invalidForm">A valid email address is required.</p>
-                    </md-input-container>
-                    <md-input-container><label>password</label>
-                        <input type="password" name="password" placeholder="password" ng-model="user.password" ng-required="true">
-                        <p class="error validationerror" ng-show="signupForm.password.$invalid && invalidForm">A password is required.</p>
-                    </md-input-container>
-            </form>
+                <div class="md-dialog-content">
+                    <form name="signupForm" layout="column">
+                        <md-input-container>
+                            <label>first name</label>
+                            <input type="text" placeholder="first name" ng-model="user.firstName" autofocus>
+                            <p class="error validationerror" ng-show="signupForm.firstName.$invalid && invalidForm">You must provide a first name.</p>
+                        </md-input-container>
+                        <md-input-container>
+                            <label>last name</label>
+                            <input type="text" placeholder="last name" ng-model="user.lastName" autofocus>
+                            <p class="error validationerror" ng-show="signupForm.lastName.$invalid && invalidForm">You must provide a last name.</p>
+                        </md-input-container>
+                        <md-input-container>
+                            <label>username</label>
+                            <input type="text" placeholder="username" ng-model="user.username" autofocus>
+                            <p class="error validationerror" ng-show="signupForm.username.$invalid && invalidForm">A username is required.</p>
+                        </md-input-container>
+                        <md-input-container>
+                            <label>email</label>
+                            <input type="email" name="email" placeholder="email" ng-model="user.email" ng-required="true">
+                            <p class="error validationerror" ng-show="signupForm.email.$invalid && invalidForm">A valid email address is required.</p>
+                        </md-input-container>
+                        <md-input-container><label>password</label>
+                            <input type="password" name="password" placeholder="password" ng-model="user.password" ng-required="true">
+                            <p class="error validationerror" ng-show="signupForm.password.$invalid && invalidForm">A password is required.</p>
+                        </md-input-container>
+                        <md-input-container><label>re-type password</label>
+                            <input type="password" name="password-check" placeholder="password-check" ng-model="check.password" ng-required="true">
+                            <p class="error validationerror" ng-show="signupForm.password.$invalid && invalidForm">The passwords do not match.</p>
+                        </md-input-container>
+                                </form>
+                </div>
             <div class="success-message" ng-show="success">
                 <p class="h3 text-center text-success" >
                     Signup Successfull! <br/>
