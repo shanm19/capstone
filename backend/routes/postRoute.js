@@ -122,7 +122,7 @@ postRoute.route("/:postID")
 	// The idea is to also deeply populate the comments and also fill out
 	// only the person's username and _id who submitted the comment
 	// Ref: http://stackoverflow.com/questions/26691543/return-certain-fields-with-populate-from-mongoose
-	.deepPopulate('comments.originalPoster', 'comments.originalPoster.username comments.originalPoster._id')
+	.deepPopulate('comments.originalPoster', 'username _id')
 	.exec(function(err, post){
 		if(err) res.status(500).send(err);
 		res.send(post);
