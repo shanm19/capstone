@@ -8,7 +8,7 @@ var bodyParser = require("body-parser");
 var mongoose = require("mongoose");
 
 // Config environment variables
-var config = require("./config");
+//var config = require("./config");
 var port = process.env.PORT || 8080;
 
 // Require routes
