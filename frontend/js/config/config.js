@@ -7,15 +7,28 @@ app.config(['$routeProvider', '$mdThemingProvider', function ($routeProvider, $m
         .when('/', {
             templateUrl: './templates/main.html',
             controller: 'MainController'
+        })
+        .when('/newpost', {
+            templateUrl: './templates/createPost.html',
+            controller: 'NewPostController'
+        });
+
+    $mdThemingProvider.theme('forms')
+        .primaryPalette('blue-grey', {
+            'default': '600'
+        })
+        .accentPalette('blue-grey', {
+            'default': '500'
         });
 
     $mdThemingProvider.theme('cyan')
         .primaryPalette('cyan', {
-            'default': '600',
-            'hue-1': '100',
-            'hue-2': '600',
-            'hue-3': 'A100'
-        })
+                'default': '600',
+                'hue-1': '100',
+                'hue-2': '600',
+                'hue-3': 'A100'
+            }
+        )
         .accentPalette('grey', {
             'default': '300',
             'hue-1': '500',
@@ -27,8 +40,7 @@ app.config(['$routeProvider', '$mdThemingProvider', function ($routeProvider, $m
             'hue-1': '100',
             'hue-2': '600',
             'hue-3': 'A100'
-        })
-        .dark();
+        }).dark();
 
     $mdThemingProvider.theme('blue')
         .primaryPalette('blue-grey')
