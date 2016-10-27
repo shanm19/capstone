@@ -9,7 +9,7 @@ purpose: Endpoints that can be accessed without being logged in to fill the fron
 sub route: /
     $http.get(baseUrl + "/post")
     return array of current posts
-    note:   This will need to be more robust than it seems.
+    Note:   This will need to be more robust than it seems.
             The GET should be able to query the Post collection limited by it's timestamp.
             Optionally, it can return the information sorted by a default of net votes, but the user will have several 
             options for sorting the return data, so a lot of that sorting can be done front end after the initial query.
@@ -17,17 +17,26 @@ sub route: /
     sub route: /search
         $http.get(baseUrl + "/post/search?" + queryString)
         return array of queried searches
-        note:   This is for when a user uses the search bar to find a post by N parameters
+        Note:   This is for when a user uses the search bar to find a post by N parameters
         ---
         $http.post(baseUrl + "/post/search/", { queryObj })
         return array of queried searches
-        note:   This is an optional way to search that allows you to attach a req.body if the coder desires.
+        Note:   This is an optional way to search that allows you to attach a req.body if the coder desires.
+				However, it's not written. We're staying traditional.
+	---
+	sub route: /:postID 
+		$http.get(baseUrl + "/post/:postID")
+		return full post object with populated comments
+		Note: 	The front page or subreddit is just filled with posts with basic data, and references to comments 
+				It's not until the 'comments' button is clicked that it will make a second call for the post
+				and deep populate the comments
 
 */
 
 var express = require('express');
 var postRoute = express.Router();
 var Post = require('../models/postSchema');
+var Comment = require('../models/commentSchema');
 
 postRoute.route("/")
 // GET all posts based
@@ -99,6 +108,20 @@ postRoute.route("/search")
 		});
 	}
 
+});
+
+postRoute.route("/:postID")
+// $http.get(baseUrl + "/post/:postID")
+// return post object with deeply populated comments
+.get(function(req, res){
+	var postID = req.params.postID;
+	Post.findById(postID)
+	// documentation for deepPopulate at https://www.npmjs.com/package/mongoose-deep-populate
+	.deepPopulate('comments')
+	.exec(function(err, post){
+		if(err) res.status(500).send(err);
+		res.send(post);
+	});
 });
 
 module.exports = postRoute;

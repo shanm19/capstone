@@ -5,6 +5,7 @@ var express = require("express");
 var logger = require("morgan");
 var bodyParser = require("body-parser");
 //var expressJwt = require("express-jwt");
+var path = require("path");
 var mongoose = require("mongoose");
 
 // Config environment variables
@@ -27,8 +28,7 @@ app.use(logger("dev"));
 });*/
 
 // Serve up frontend files
-//app.use(express.static(path.join(__dirname, '..', '/frontend')));
-//app.use(express.static(path.join(__dirname, "..", "/frontend")));
+app.use(express.static(path.join(__dirname, "..", "/frontend")));
 
 // Routes requiring authentication
 //app.use("/api", expressJwt({secret:config.secret}));

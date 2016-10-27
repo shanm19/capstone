@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var mongoosastic = require('mongoosastic');
+var deepPopulate = require('mongoose-deep-populate')(mongoose);
 var Schema = mongoose.Schema;
 
 var postSchema = new Schema({
@@ -53,5 +54,6 @@ var postSchema = new Schema({
 }, { timestamps: true });
 
 postSchema.plugin(mongoosastic);
+postSchema.plugin(deepPopulate);
 
 module.exports = mongoose.model('Post', postSchema);
