@@ -12,6 +12,58 @@ a {
     width: 96%;
 }
 
+.caption {
+    font-size: .85em;
+}
+
+.p-t-1 {
+    padding-top: 1em;
+}
+
+.m-a-half {
+    margin: .5em;
+}
+
+.dark {
+    color: #3f3f3f;
+}
+
+/****************************************
+                 NavBar
+*****************************************/
+
+._md-nav-button.md-active,
+.md-tab.md-active {
+    background: rgb(144, 164, 174);
+    color: #EEE !important;
+    -webkit-border-radius: .25em .25em 0;
+    -moz-border-radius: .25em .25em 0;
+    border-radius: .25em .25em 0;
+}
+
+md-nav-ink-bar {
+    background: transparent !important;
+}
+
+.md-nav-bar {
+    padding-top: 1em;
+    max-height: 49px !important;
+    box-sizing: border-box;
+}
+
+a.md-button {
+    padding: 0 !important;
+}
+
+.md-nav-item a {
+    padding-top: .8em !important;
+    font-size: .8em;
+}
+
+.md-nav-item i {
+    font-size: 1.3em;
+}
+
 /****************************************
                  SideBar
 *****************************************/
@@ -51,7 +103,7 @@ side-bar label {
 
 .login md-input-container {
     margin: 0;
-    margin-top: .25em;
+    margin-top: .65em;
     max-height: 35px !important;
 }
 
@@ -64,6 +116,17 @@ side-bar label {
     border-radius: 25px 0 25px 0 !important;
 }
 
+.side-bar .vote,
+.side-bar .vote i {
+    max-height: 40px !important;
+    max-width: 20px !important;
+}
+
+.side-bar .recent {
+    border: 1px solid #DDD;
+    background: #eee;
+}
+
 /****************************************
                  Posts
 *****************************************/
@@ -73,7 +136,7 @@ side-bar label {
     height: 60px;
 }
 
-.vote {
+.main .vote {
     min-height: 89px;
     max-width: 40px;
 }
@@ -126,15 +189,17 @@ side-bar label {
 }
 
 .new-post textarea {
-    min-height: 175px !important;
+    min-height: 145px !important;
 }
 
-.new-post form[name="newPostForm"] {
+.new-post form[name="newPostForm"],
+form[name="newSubForumForm"] {
     max-width: 500px;
     margin: auto;
 }
 
-form[name="newPostForm"] md-input-container {
+form[name="newPostForm"] md-input-container,
+form[name="newSubForumForm"] md-input-container {
     -webkit-border-radius: .25em;
     -moz-border-radius: .25em;
     border-radius: .25em;
@@ -143,7 +208,8 @@ form[name="newPostForm"] md-input-container {
     margin: .35em;
 }
 
-form[name="newPostForm"] label {
+form[name="newPostForm"] label,
+form[name="newSubForumForm"] label {
     padding-left: 1.5em !important;
     margin-bottom: -10px !important;
 }

@@ -11,6 +11,12 @@ app.config(['$routeProvider', '$mdThemingProvider', function ($routeProvider, $m
         .when('/newpost', {
             templateUrl: './templates/createPost.html',
             controller: 'NewPostController'
+        })
+        .when('/messages', {
+            templateUrl: './templates/messages.html'
+        })
+        .when('/newsubforum', {
+            templateUrl: './templates/createSubForum.html'
         });
 
     $mdThemingProvider.theme('forms')
@@ -44,6 +50,8 @@ app.config(['$routeProvider', '$mdThemingProvider', function ($routeProvider, $m
 
     $mdThemingProvider.theme('blue')
         .primaryPalette('blue-grey')
-        .accentPalette('grey');
+        .accentPalette('grey', {
+            'default': '400'
+        });
 
 }]);
