@@ -1,6 +1,7 @@
 # Dependency diretories
 node_modules/
 
+
 # environment config/authentication
 /backend/config.js
 
