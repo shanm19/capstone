@@ -87,12 +87,12 @@ postRoute.route("/search")
 		})
 	}
 
-	// documentation at https://www.npmjs.com/package/mongoosastic
-	// this is an implementation of mongoosastic, which combines elasticsearch with
+	// Ref: https://www.npmjs.com/package/mongoosastic
+	// This is an implementation of mongoosastic, which combines elasticsearch with
 	// mongoose to achieve 'fuzzy' search results, or anything that is a partial match
 	// on the postSchema you will see es_indexed: true, which takes specified information
 	// and places it in an elastic-searchable index file and ties everything together
-	// note: make sure to npm install, it's been added as a dependency in the package.json
+	// Note: make sure to npm install, it's been added as a dependency in the package.json
 	// $http.get(baseUrl + "/post/search?title=")
 	if(req.query.title){
 		var title = req.query.title;
@@ -116,8 +116,13 @@ postRoute.route("/:postID")
 .get(function(req, res){
 	var postID = req.params.postID;
 	Post.findById(postID)
-	// documentation for deepPopulate at https://www.npmjs.com/package/mongoose-deep-populate
+	// Ref for deepPopulate: https://www.npmjs.com/package/mongoose-deep-populate
 	.deepPopulate('comments')
+	// Disclaimer: NO idea if this is right yet, hasn't been tested
+	// The idea is to also deeply populate the comments and also fill out
+	// only the person's username and _id who submitted the comment
+	// Ref: http://stackoverflow.com/questions/26691543/return-certain-fields-with-populate-from-mongoose
+	.deepPopulate('comments.originalPoster', 'comments.originalPoster.username comments.originalPoster._id')
 	.exec(function(err, post){
 		if(err) res.status(500).send(err);
 		res.send(post);
