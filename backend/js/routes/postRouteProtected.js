@@ -28,3 +28,12 @@ sub route: /
         return user's deleted post
 
 */
+
+var express = require('express');
+var postRouteProtected = express.Router();
+
+
+
+
+
+module.exports = postRouteProtected;

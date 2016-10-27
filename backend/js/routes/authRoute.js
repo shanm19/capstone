@@ -15,3 +15,12 @@ sub route: /login
     return user object
 
 */
+
+var express = require('express');
+var authRoute = express.Router();
+
+
+
+
+
+module.exports = authRoute;

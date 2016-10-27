@@ -1,10 +1,12 @@
 var mongoose = require('mongoose');
+var mongoosastic = require('mongoosastic');
 var Schema = mongoose.Schema;
 
 var subredditSchema = new Schema({
     name: {
         type: String,
-        unique: true
+        unique: true,
+        es_indexed: true
     },
     posts: [{
         type: Schema.Type.ObjectId,
@@ -26,7 +28,8 @@ var subredditSchema = new Schema({
         type: Schema.Type.ObjectId,
         ref: 'User'
     }]
-});
+} , { timestamps: true });
 
+subredditSchema.plugin(mongoosastic);
 
 module.exports = mongoose.model('Subreddit', subredditSchema);

@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var mongoosastic = require('mongoosastic');
 var Schema = mongoose.Schema;
 
 var userSchema = new Schema({
@@ -14,7 +15,8 @@ var userSchema = new Schema({
         type: String,
         required: true,
         unique: true,
-        lowercase: true
+        lowercase: true,
+        es_indexed: true
     },
     password: {
         type: String,
@@ -80,7 +82,8 @@ var userSchema = new Schema({
         default: 0
     }
 
-});
+} , { timestamps: true });
 
+userSchema.plugin(mongoosastic);
 
 module.exports = mongoose.model('User', userSchema);

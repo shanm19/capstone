@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var mongoosastic = require('mongoosastic');
 var Schema = mongoose.Schema;
 
 var commentSchema = new Schema({
@@ -9,7 +10,8 @@ var commentSchema = new Schema({
     },
     content: {
         type: String,
-        required: true
+        required: true,
+        es_indexed: true
     },
     childComments: [{
         type: Schema.Type.ObjectId,
@@ -36,7 +38,8 @@ var commentSchema = new Schema({
         type: Boolean,
         default: false
     }
-});
+}, { timestamps: true });
 
+commentSchema.plugin(mongoosastic);
 
 module.exports = mongoose.model('Comment', commentSchema);

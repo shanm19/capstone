@@ -1,16 +1,18 @@
 var mongoose = require('mongoose');
+var mongoosastic = require('mongoosastic');
 var Schema = mongoose.Schema;
 
 var postSchema = new Schema({
     title: {
         type: String,
-        required: true
+        required: true,
+        es_indexed: true
     },
     // in modern vernacular, referred to as OP
     originalPoster: {
         type: Schema.Type.ObjectId,
-        ref: 'User',
-        required: true
+        ref: 'User'
+        // required: true
     },
     subreddit: {
         type: Schema.Type.ObjectId,
@@ -48,7 +50,8 @@ var postSchema = new Schema({
         enum: ['nsfw', 'sfw', 'none'],
         default: 'none'
     }]
-});
+}, { timestamps: true });
 
+postSchema.plugin(mongoosastic);
 
 module.exports = mongoose.model('Post', postSchema);

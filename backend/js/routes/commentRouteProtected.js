@@ -46,3 +46,12 @@ sub route: /
                 you just change comment.isDeleted to true and this will get filtered on the frontend
                 to read DELETED. It still exists, but maintaining it preserves the connection to its children. 
 */
+
+var express = require('express');
+var commentRouteProtected = express.Router();
+
+
+
+
+
+module.exports = commentRouteProtected;
