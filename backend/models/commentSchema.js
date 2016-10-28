@@ -1,21 +1,21 @@
 var mongoose = require('mongoose');
-var mongoosastic = require('mongoosastic');
+//var mongoosastic = require('mongoosastic');
 var deepPopulate = require('mongoose-deep-populate')(mongoose);
 var Schema = mongoose.Schema;
 
 var commentSchema = new Schema({
     originalPoster: {
-        type: Schema.Type.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: 'User',
         required: true
     },
     content: {
         type: String,
-        required: true,
-        es_indexed: true
+        required: true
+        //es_indexed: true
     },
     childComments: [{
-        type: Schema.Type.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: 'Comment'
     }],
     upVotes: {
@@ -41,7 +41,7 @@ var commentSchema = new Schema({
     }
 }, { timestamps: true });
 
-commentSchema.plugin(mongoosastic);
+//commentSchema.plugin(mongoosastic);
 commentSchema.plugin(deepPopulate);
 
 module.exports = mongoose.model('Comment', commentSchema);

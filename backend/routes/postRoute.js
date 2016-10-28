@@ -38,12 +38,22 @@ var postRoute = express.Router();
 var Post = require('../models/postSchema');
 var Comment = require('../models/commentSchema');
 
+// Mongoosastic indexing not working
+// Post.createMapping(function(err, mapping) {
+//   if (err) {
+//     console.log('error creating mapping (you can safely ignore this)');
+//     console.log(err);
+//   } else {
+//     console.log('mapping created!');
+//     console.log(mapping);
+//   }
+// });
+
 postRoute.route("/")
-// GET all posts based
 // You probably won't really use this endpoint, it will return everything
 // $http.get(baseUrl + "/post")
 // return all posts
-.get(function(req, res){
+.get(function(req, res){ // ~ (this is my way of saying the endpoint is tested and proved)
 	Post.find({}, function(err, posts){
 		if(err) res.status(500).send(err);
 		res.send(posts);
@@ -53,7 +63,7 @@ postRoute.route("/")
 // It also could just be an option until the authentication is hooked up
 // $http.post(baseUrl + "/post", { title: "", subreddit: sub._id, siteUrl: "", image: "", tags: ["nsfw"] })
 // return new post object
-.post(function(req, res){
+.post(function(req, res){ // ~
 	var newPost = new Post(req.body);
 	newPost.save(function(err, savedPost){
 		if(err) res.status(500).send(err);
@@ -63,7 +73,6 @@ postRoute.route("/")
 
 
 postRoute.route("/search")
-
 // eg: time="day" would return all new posts in the last 24 hours
 // and time="hour" would return all new posts in the last hour
 // optional feature down the road can be to find posts by specific days, months, etc
@@ -75,6 +84,7 @@ postRoute.route("/search")
 		var d = new Date();
 
 		// Rewind the clock for the db query
+		//if(time === "minute") d.setMinutes(d.getMinutes() - 1);
 		if(time === "hour") d.setHours(d.getHours() - 1);
 		if(time === "day") d.setDate(d.getDate() - 1);
 		if(time === "week") d.setDate(d.getDate() - 7);
@@ -94,15 +104,28 @@ postRoute.route("/search")
 	// and places it in an elastic-searchable index file and ties everything together
 	// Note: make sure to npm install, it's been added as a dependency in the package.json
 	// $http.get(baseUrl + "/post/search?title=")
-	if(req.query.title){
+	// if(req.query.title){ //
+	// 	var title = req.query.title;
+	// 	console.log("title",title);
+	// 	Post.search({
+  	// 		query_string: {
+    // 			query: title
+  	// 		}
+	// 		  // by default, only the indexed data is returned
+	// 		  // this will 'hydrate' the results with the full object data
+	// 	}, { hydrate: true }, function(err, foundPosts){ 
+	// 		console.log("foundPosts",foundPosts);
+	// 		if(err) res.status(500).send(err);
+	// 		res.send(foundPosts);
+	// 	});
+	// }
+
+	// Mongoosastic not working, this is for finding exact matches
+	if(req.query.title){ // ~
 		var title = req.query.title;
-		Post.search({
-  			query_string: {
-    			query: title
-  			}
-			  // by default, only the indexed data is returned
-			  // this will 'hydrate' the results with the full object data
-		}, { hydrate: true }, function(err, foundPosts){ 
+		Post.find({
+			title: title
+		}, function(err, foundPosts){
 			if(err) res.status(500).send(err);
 			res.send(foundPosts);
 		});
