@@ -5,9 +5,9 @@
 process.env.PORT =  8080;
 
 module.exports = {
-    db_host: "",
-    db_name: "",
-    db_user: "",
-    db_pass: "",
-    db_secret: ""
+    db_host: "104.131.190.254:27017",
+    db_name: "capstone",
+    db_user: "capstoneTeam",
+    db_pass: "Ci0gEDGZC5AwrdEVzHqr",
+    db_secret: "rX6Oqwp0nZsNyGTHjUZg"
 };

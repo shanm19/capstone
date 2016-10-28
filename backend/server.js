@@ -45,7 +45,7 @@ app.use(express.static(path.join(__dirname, "..", "/frontend")));
 //app.use("/auth", require("./routes/authRoute"));
 app.use("/post", require("./routes/postRoute"));
 //app.use("/subreddit", require("./routes/subredditRoute"));
-//app.use("/comment", require("./routes/commentRoute"));
+app.use("/comment", require("./routes/commentRoute"));
 
 app.listen(port, function() {console.log("Server is listening on port", port)});
 

@@ -138,17 +138,46 @@ postRoute.route("/:postID")
 // return post object with deeply populated comments
 .get(function(req, res){
 	var postID = req.params.postID;
+	//var populateSections = ["comments", "comments.comments", "comments.comments.comments"];
 	Post.findById(postID)
 	// Ref for deepPopulate: https://www.npmjs.com/package/mongoose-deep-populate
-	.deepPopulate('comments')
+	// Second Ref: http://stackoverflow.com/questions/27407080/mongoose-nested-deep-populate
+	// I'm sure there's a better way, but for now this works
+	// It only populates ternary comments, but this is similar to Reddit where you have to make 
+	// a subsequent call for deeper levels
+	.deepPopulate("comments comments.comments comments.comments.comments")
 	// Disclaimer: NO idea if this is right yet, hasn't been tested
 	// The idea is to also deeply populate the comments and also fill out
 	// only the person's username and _id who submitted the comment
 	// Ref: http://stackoverflow.com/questions/26691543/return-certain-fields-with-populate-from-mongoose
-	.deepPopulate('comments.originalPoster', 'username _id')
+	//.deepPopulate('comments.originalPoster', 'username _id')
 	.exec(function(err, post){
 		if(err) res.status(500).send(err);
 		res.send(post);
+	});
+});
+
+// This is for posting primary level comments, directly to the Post object
+// Note: this method is a temp bypass, originalPoster should be grabbed by req.user._id and be under postRouteProtected
+postRoute.route("/comment/:postID")
+// $http.post(baseUrl + "/post/comment/:postID, { originalPoster: _id, content: "I like cheese" })
+// return comment
+.post(function(req, res){ // ~
+	var postID = req.params.postID;
+	Post.findById(postID, function(err, foundPost){
+		if(err) {
+			res.status(500).send(err);
+		} else {
+			var newComment = new Comment(req.body);
+			newComment.save(function(err, savedComment){
+				if(err) res.status(500).send(err);
+				foundPost.comments.push(newComment);
+				foundPost.save(function(err, savedPost){
+					if(err) res.status(500).send(err);
+					res.send(newComment);
+				})
+			});
+		}
 	});
 });
 

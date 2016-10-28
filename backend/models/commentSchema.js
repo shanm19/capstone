@@ -6,15 +6,15 @@ var Schema = mongoose.Schema;
 var commentSchema = new Schema({
     originalPoster: {
         type: Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
+        ref: 'User'
+        //required: true
     },
     content: {
         type: String,
         required: true
         //es_indexed: true
     },
-    childComments: [{
+    comments: [{
         type: Schema.Types.ObjectId,
         ref: 'Comment'
     }],

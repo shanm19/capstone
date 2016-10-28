@@ -26,6 +26,10 @@ sub route: /
         ---
         $http.delete(baseUrl + "/api/post/:postID")
         return user's deleted post
+    ---
+    sub route: /comment/:postID
+        $http.post(baseUrl + "/api/post/comment/:postID, { content: "I like cheese" })
+        return comment
 
 */
 
@@ -34,6 +38,25 @@ var postRouteProtected = express.Router();
 
 
 
-
+// This is for posting primary level comments, directly to the Post object
+postRoute.route("/comment/:postID")
+// $http.post(baseUrl + "/api/post/comment/:postID, { content: "I like cheese" })
+// return comment
+.post(function(req, res){
+	var postID = req.params.postID;
+	Post.findById(postID, function(err, foundPost){
+		if(err) {
+			res.status(500).send(err);
+		} else {
+            req.body.originalPoster = req.user._id;
+            var newComment = new Comment(req.body);
+			newComment.save(function(err, savedComment){
+				if(err) res.status(500).send(err);
+				foundPost.comments.push(newComment);
+				res.send(newComment);
+			});
+		}
+	});
+});
 
 module.exports = postRouteProtected;
