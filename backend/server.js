@@ -10,7 +10,7 @@ var mongoose = require("mongoose");
 var path = require('path');
 
 // Config environment variables
-// var config = require("./config");
+var config = require("./config");
 var port = process.env.PORT || 7000;
 
 // Require routes
