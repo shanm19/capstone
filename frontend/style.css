@@ -5,21 +5,79 @@
 a {
     text-decoration: none;
     color: steelblue;
+    cursor: default;
 }
 
 .full-width {
     width: 96%;
 }
 
+.caption {
+    font-size: .85em;
+}
+
+.p-t-1 {
+    padding-top: 1em;
+}
+
+.m-a-half {
+    margin: .5em;
+}
+
+.dark {
+    color: #3f3f3f;
+}
+
+/****************************************
+                 NavBar
+*****************************************/
+
+._md-nav-button.md-active,
+.md-tab.md-active {
+    background: rgb(144, 164, 174);
+    color: #EEE !important;
+    -webkit-border-radius: .25em .25em 0;
+    -moz-border-radius: .25em .25em 0;
+    border-radius: .25em .25em 0;
+}
+
+md-nav-ink-bar {
+    background: transparent !important;
+}
+
+.md-nav-bar {
+    padding-top: 1em;
+    max-height: 49px !important;
+    box-sizing: border-box;
+}
+
+a.md-button {
+    padding: 0 !important;
+}
+
+.md-nav-item a {
+    padding-top: .8em !important;
+    font-size: .8em;
+}
+
+.md-nav-item i {
+    font-size: 1.3em;
+}
+
 /****************************************
                  SideBar
 *****************************************/
 
+.new-post input,
+.new-post textarea,
+.sign-up input,
 .main input {
     border: 1px solid #BBB !important;
 }
 
-.main label {
+.sign-up label,
+.main label,
+side-bar label {
     padding-left: .5em !important;
 }
 
@@ -27,10 +85,15 @@ a {
     margin: 1.15em;
 }
 
+.new-post input,
+.new-post textarea,
+.sign-up input,
 .aside input {
     -webkit-border-radius: .25em;
     -moz-border-radius: .25em;
     border-radius: .25em;
+    box-shadow: inset 1px 1px 2px -1px rgba(0, 0, 0, 0.15);
+    background: #fff;
 }
 
 .aside md-toolbar {
@@ -38,8 +101,34 @@ a {
     height: 40px;
 }
 
+.login md-input-container {
+    margin: 0;
+    margin-top: .65em;
+    max-height: 35px !important;
+}
+
+.login-button {
+    width: 25px;
+    margin: .25em;
+}
+
+.main-buttons .md-button {
+    border-radius: 25px 0 25px 0 !important;
+}
+
+.side-bar .vote,
+.side-bar .vote i {
+    max-height: 40px !important;
+    max-width: 20px !important;
+}
+
+.side-bar .recent {
+    border: 1px solid #DDD;
+    background: #eee;
+}
+
 /****************************************
-                 Topics
+                 Posts
 *****************************************/
 
 .main-post-thumb {
@@ -47,8 +136,9 @@ a {
     height: 60px;
 }
 
-.vote {
+.main .vote {
     min-height: 89px;
+    max-width: 40px;
 }
 
 .vote i,
@@ -59,4 +149,67 @@ a {
 
 .main .caption {
     font-size: .7em;
+}
+
+/****************************************
+                SignUp/Login
+*****************************************/
+
+.sign-up div {
+    min-width: 400px;
+}
+
+.sign-up md-input-container {
+    max-width: 250px;
+    margin: 0;
+}
+
+.sign-up input {
+    background: #fff;
+}
+
+.sign-up {
+    background-color: #DDD;
+}
+
+.sign-up h3 {
+    color: #3f3f3f;
+}
+
+.sign-up .md-button {
+    color: #DDD !important;
+}
+
+/****************************************
+                New post
+*****************************************/
+
+.new-post {
+    margin-top: 2em;
+}
+
+.new-post textarea {
+    min-height: 145px !important;
+}
+
+.new-post form[name="newPostForm"],
+form[name="newSubForumForm"] {
+    max-width: 500px;
+    margin: auto;
+}
+
+form[name="newPostForm"] md-input-container,
+form[name="newSubForumForm"] md-input-container {
+    -webkit-border-radius: .25em;
+    -moz-border-radius: .25em;
+    border-radius: .25em;
+    background: rgb(144, 164, 174);
+    padding: 1.2em;
+    margin: .35em;
+}
+
+form[name="newPostForm"] label,
+form[name="newSubForumForm"] label {
+    padding-left: 1.5em !important;
+    margin-bottom: -10px !important;
 }
