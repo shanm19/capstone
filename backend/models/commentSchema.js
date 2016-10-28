@@ -1,8 +1,5 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var UserSchema = require('./userSchema').Schema;
-var SubredditSchema = require('./subredditSchema').Schema;
-var CommentSchema = require('./commentSchema').Schema;
 
 var commentSchema = new Schema({
     originalPoster: {
@@ -29,6 +26,15 @@ var commentSchema = new Schema({
     netVotes: {
         type: Number,
         default: 0
+    },
+    isEdited: {
+        type: Boolean,
+        default: false
+    },
+    editHistory: [ String ],
+    isDeleted: {
+        type: Boolean,
+        default: false
     }
 });
 
