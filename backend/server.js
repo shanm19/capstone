@@ -20,6 +20,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(logger("dev"));
 
+// passport
+// app.use(passport.initialize());
+// require('./app/routes.js')(app, passport);
+
+
 // Connect to Mongoose
 //var database = path.join(config.db_host.config.db_name);
 /*mongoose.connect("mongodb://" + config.db_user + ":" + config.db_pass + "@" + database, function(err) {
