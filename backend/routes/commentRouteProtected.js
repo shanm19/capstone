@@ -1,3 +1,74 @@
+/* capstone commentProtected */
+
+var express = require("express");
+var Comment = require("../models/comment");
+var User = require("../models/userSchema");
+var Post = require("../models/post");
+var commentRouteProtected = express.Router();
+var userRouteProtected = express.Router();
+
+
+userRouteProtected.route = ("/api/user")
+    .get(function(req, res) {
+
+        var user_id = req.user._id;
+        // difference between find and findONe and error checking?
+        User.findOne(user_id)
+
+            .populate("commentHistory")
+            .exec(function(err, userComments) {
+
+                if (err) res.status(500).send(err);
+                res.send(userComments);
+            })
+    });
+
+commentRouteProtected.route = ("/api/comment")
+
+    .post(function(req, res) {
+
+        // Is all the following code correct?
+        var newComment = new Comment(req.body);
+
+        newComment.save(newComment, function(err, newComment) {
+
+            if (err) res.status(500).send(err);
+            res.send(newComment);
+
+        });
+
+        var post_id = req.post._id;
+
+        if (post_id) {
+
+            Post.findOne(post_id, function (err, post) {
+                if (err) res.status(500).send(err);
+                else {
+                    // Why push here?
+                    post.comments.push(newComment._id);
+                    post.save();
+                }
+            })
+        }
+        else {
+
+            var comment_id = req.comment._id;
+
+            Comment.findOne(comment_id, function (err, comment) {
+
+                if (err) res.status(500).send(err);
+                else {
+
+                    comment.childComments.push(comment_id);
+                    comment.save();
+                }
+            })
+        }
+    });
+
+
+module.exports = commentRouteProtected;
+
 /*
 
  Comment Protected
@@ -13,7 +84,7 @@
  $http.post(baseUrl + "/api/comment", {
  content: "Stupid pun comment for cheap laughs.",
  parentComment: comment._id,
- isPrimaryComment: Boolean
+ post._id
  })
  return comment object
  Note:  This one is highly debatable. Frankly, I don't know how to do nested comments the best way.
@@ -23,7 +94,7 @@
  Now, the parentComment and isPrimaryComment properties aren't being stored in the collection,
  they are just there for the backend to sort out where the comment goes, and then trims it off
  before being stored.
- If isPrimaryComment === true, then the comment's ._id will be stored in the commentArray for the post.
+ If there is a post id, then the comment's ._id will be stored in the commentArray for the post.
  If the comment is being added as a child to another comment, you will create and set parentComment: parent._id
  Then, if it works, there is a mongoose deep populate npm package that appears capable of recursively
  retrieving and populating nested objects.

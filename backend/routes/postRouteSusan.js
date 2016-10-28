@@ -1,7 +1,7 @@
 /* capstone post.js */
 
 var express = require("express");
-var Post = require("../models/user");
+var Post = require("../models/userSchema");
 var postRoute = express.Router;
 
 postRoute.route("/")
