@@ -50,8 +50,8 @@ var userSchema = new Schema({
         post: {
             type: Schema.Types.ObjectId,
             ref: 'Post'
-        },
-        timestamps: true // NOTE: I do not know if this works
+        }
+        // timestamps: true NOTE: I do not know if this works
     }],
     // this tracks what the user has already viewed to visually track history
     visitedContent: [{
