@@ -84,7 +84,7 @@ postRoute.route("/search")
 		var d = new Date();
 
 		// Rewind the clock for the db query
-		//if(time === "minute") d.setMinutes(d.getMinutes() - 1);
+		if(time === "minute") d.setMinutes(d.getMinutes() - 1);
 		if(time === "hour") d.setHours(d.getHours() - 1);
 		if(time === "day") d.setDate(d.getDate() - 1);
 		if(time === "week") d.setDate(d.getDate() - 7);

@@ -48,7 +48,7 @@ var postSchema = new Schema({
     // someone would mark a post as SFW if, by the title, the post appears to be NSFW and you want to ensure it's okay to look at
     tags: [{
         type: String,
-        enum: ['nsfw', 'sfw', 'none'],
+        enum: ['nsfw', 'sfw', 'controversial', 'none'],
         default: 'none'
     }]
 }, { timestamps: true });
