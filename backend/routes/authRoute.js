@@ -15,3 +15,78 @@ sub route: /login
     return user object
 
 */
+
+var express = require('express');
+var authRouter = express.Router();
+var User = require('../models/userSchema');
+
+
+
+
+authRouter.post('/signup', function(req, res) {
+    User.find({
+        username: req.body.username
+    }, (function (err, existingUser) {
+        if (err) res.status(500).send(err);
+        if (existingUser.length) res.json({
+            success: false,
+            message: "That username is already taken."
+        });
+        else {
+            var newUser = new User(req.body);
+            newUser.save(function(err, userObj) {
+                if (err) res.status(500).send(err);
+                if(userObj)res.send({
+                    user: userObj,
+                    message: "Successfully created new account.",
+                    success: true
+                });
+                else {
+                    console.log('user saved, but nothing returned ', userObj);
+                }
+            });
+        }
+    
+    }));
+});
+
+authRouter.delete('/delete/:userId', function(req, res) {
+    var uId = req.params.userId;
+    User.findOneAndRemove({
+        _id: uId
+    }, function(err, deletedUser){
+        if (err) res.status(500).send(err);
+        res.send({
+            success: true,
+            message: "User account was successfully deleted.",
+            user: deletedUser
+    });
+});
+})
+
+//////////////////////////////////////////////////
+///                 FACEBOOK                   ///
+//////////////////////////////////////////////////
+// route for Facebook authentication and login
+// passport
+var passport = require('passport');
+
+
+
+
+
+authRouter.get('/facebook', passport.authenticate('facebook', {scope: 'email'}));
+
+// handle the callback after facebook has authenticated the user
+authRouter.get('/facebook/callback',
+    passport.authenticate('facebook', {
+        successRedirect: '/profile',
+        failureRedirect: '/'
+    }))
+
+
+
+
+
+
+module.exports = authRouter;

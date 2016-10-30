@@ -53,12 +53,7 @@ app.controller('AuthController', ["$scope", "$mdDialog", "UserService", function
             });
     }
 
-    $scope.signup = function(){
-        $mdDialog.cancel();
-    }
-    $scope.login = function(){
-        $mdDialog.cancel();
-    }
+    
 
 
     // Retrieve the logged-in user's' information after a page reload using the Authentication Token
@@ -94,6 +89,10 @@ app.service('UserService', ["$http", "$location", "TokenService", function ($htt
     var self = this;
     self.user = {};
     self.newSignin = null;
+    
+
+    
+ // signup with local auth   
     this.signup = function (userObj) {
         return $http.post('/auth/signup', userObj)
             .then(function (response) {

@@ -26,7 +26,7 @@ module.exports = function(passport) {
     passport.use(new FacebookStrategy({
 
         //pull in the FB app credetials from config file
-        clientId: config.facebookAuth.clientID,
+        clientID: config.facebookAuth.clientID,
         clientSecret: config.facebookAuth.clientSecret,
         callbackURL: config.facebookAuth.callbackURL
     },
