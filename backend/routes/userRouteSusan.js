@@ -1,7 +1,7 @@
 /* capstone userRoute.js */
 
 var express = require('express');
-var User = require("../models/user");
+var User = require("../models/userSchema");
 var Post = require("../models/post");
 var userRoute = express.Router;
 
