@@ -45,7 +45,7 @@ app.use("/api", expressJwt({secret:config.db_secret}));
 //app.use("/api/comment", require("./routes/commentRouteProtected"));
 
 // Routes without authentication
-//app.use("/auth", require("./routes/authRoute"));
+app.use("/auth", require("./routes/authRoute"));
 //app.use("/post", require("./routes/postRoute"));
 //app.use("/subreddit", require("./routes/subredditRoute"));
 //app.use("/comment", require("./routes/commentRoute"));
