@@ -1,0 +1,86 @@
+<div class="new-post">
+    <div flex="100" layout layout-align="space-around start">
+        <div flex="70" flex-offset="5" ng-cloak>
+            <md-content flex="70" md-theme="blue">
+                <md-tabs md-dynamic-height md-border-bottom>
+                    <md-tab label="text">
+                        <md-content class="md-padding">
+                            <div>
+                                <div>
+                                    <form name="newPostForm" layout="column">
+                                        <md-input-container>
+                                            <label>title</label>
+                                            <input type="text" ng-model="newPost.title">
+                                        </md-input-container>
+                                        <md-input-container>
+                                            <label>choose a sub forum</label>
+                                            <input type="text" ng-model="newPost.subForum">
+                                            <br>
+                                            <div class="p-t-1">
+                                                <span class="caption dark">sub forums you're subscibed to:</span>
+                                                <!-- ng repeat something -->
+                                                <span><a class="caption" href="#/">welovedogs</a></span>
+                                                <span><a class="caption" href="#/">vcshool</a></span>
+                                                <span><a class="caption" href="#/">wehatecats</a></span>
+                                                <span><a class="caption" href="#/">wehatecats</a></span>
+                                                <span><a class="caption" href="#/">wehatecats</a></span>
+                                                <span><a class="caption" href="#/">wehatecats</a></span>
+
+                                            </div>
+                                        </md-input-container>
+
+                                        <md-input-container>
+                                            <label>text</label>
+                                            <textarea type="text"></textarea>
+                                        </md-input-container>
+                                    </form>
+                                </div>
+                            </div>
+                        </md-content>
+                    </md-tab>
+                    <md-tab label="link">
+                        <md-content class="md-padding">
+                            <div>
+                                <div>
+                                    <form name="newPostForm" layout="column">
+                                        <md-input-container>
+                                            <label>url</label>
+                                            <input type="url" ng-model="newPost.url">
+                                        </md-input-container>
+
+                                        <md-input-container>
+                                            <label>title</label>
+                                            <input type="text" ng-model="newPost.title">
+                                        </md-input-container>
+
+                                        <md-input-container>
+                                            <label>image url</label>
+                                            <input type="url" ng-model="newPost.imageUrl">
+                                        </md-input-container>
+
+                                        <md-input-container>
+                                            <label>choose a sub forum</label>
+                                            <input type="text" ng-model="newPost.subForum">
+                                            <br>
+                                            <div class="p-t-1">
+                                                <span class="caption">sub forums you're subscribed to:</span>
+                                                <!-- ng repeat something -->
+                                                <span><a class="caption" href="#/">welovedogs</a></span>
+                                                <span><a class="caption" href="#/">vcshool</a></span>
+                                                <span><a class="caption" href="#/">wehatecats</a></span>
+                                                <span><a class="caption" href="#/">wehatecats</a></span>
+                                                <span><a class="caption" href="#/">wehatecats</a></span>
+                                                <span><a class="caption" href="#/">wehatecats</a></span>
+                                            </div>
+                                        </md-input-container>
+                                    </form>
+                                </div>
+                            </div>
+                        </md-content>
+                    </md-tab>
+                </md-tabs>
+            </md-content>
+        </div>
+        <side-bar class="aside" flex="25" layout="column" layout-align="start stretch" md-whiteframe="z1"></side-bar>
+    </div>
+</div>

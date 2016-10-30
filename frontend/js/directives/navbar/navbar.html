@@ -1,11 +1,15 @@
 <md-content md-theme="cyan">
     <md-nav-bar nav-bar-aria-label="navigation links">
-        <md-nav-item md-nav-href="#/" name="new">new</md-nav-item>
-        <md-nav-item md-nav-href="#/hot" name="hot">hot</md-nav-item>
-        <md-nav-item md-nav-href="#/top" name="top">top</md-nav-item>
-        <div layout="center end" ng-controller="AuthController">
-            <md-nav-item md-nav-click="showLogin()"  name="login">login</md-nav-item>
-            <md-nav-item md-nav-click="showSignup()" name="signup">signup</md-nav-item>
+        <div flex="50" layout layout-align="start end">
+            <md-nav-item md-nav-href="#/" name="new" >new</md-nav-item>
+            <md-nav-item md-nav-href="#/hot" name="hot">hot</md-nav-item>
+            <md-nav-item md-nav-href="#/top" name="top">top</md-nav-item>
+        </div>
+        <div flex="50" layout layout-align="end end">
+            <md-nav-item md-nav-href="#/profile" name="profile">username</md-nav-item>
+            <md-nav-item md-nav-href="#/messages" name="messages"><i class="material-icons">email</i></md-nav-item>
+            <md-nav-item md-nav-href="#/preferences" name="preferences">preferences</md-nav-item>
+            <md-nav-item md-nav-href="#/logout" name="logout">logout</md-nav-item>
         </div>
     </md-nav-bar>
 </md-content>
