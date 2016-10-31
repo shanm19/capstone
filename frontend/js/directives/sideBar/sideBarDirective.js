@@ -14,7 +14,6 @@ app.directive('sideBar', function () {
                     templateUrl: 'templates/loginAndSignUp.html',
                     controller: function ($scope) {
                         $scope.close = function () {
-                            console.log('hide');
                             $mdDialog.hide();
                         }
                     }

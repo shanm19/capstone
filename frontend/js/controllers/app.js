@@ -1,3 +1,3 @@
 'use strict';
 
-var app = angular.module('MockReddit', ['ngRoute', 'ngMaterial', 'ngAria', 'ngMessages', 'ngAnimate']);
+var app = angular.module('MockReddit', ['ngRoute', 'ngMaterial', 'ngAria', 'ngMessages', 'ngAnimate', 'ngFileUpload']);
