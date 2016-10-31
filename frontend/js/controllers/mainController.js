@@ -26,13 +26,5 @@ app.controller('MainController', ['$scope', function ($scope) {
     $scope.image = 'http://surfingsports.com/images/casey_michigan_sup1.jpg'
 
 
-    $scope.FBlogin = function(){
-        UserService.FBlogin()
-        .then(function(response){
-            console.logt('Maincontroller ', response)
-            $scope.user = response;
-        })
-    }
-
-
+    
 }]);

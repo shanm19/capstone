@@ -16,10 +16,21 @@ app.config(["$routeProvider", function ($routeProvider) {
 }])
 
 // Controller for the login/signup navbar
-app.controller('AuthController', ["$scope", "$mdDialog", "UserService", function ($scope, $mdDialog, UserService) {
-    $scope.userService = UserService;
+app.controller('AuthController', ["$scope", "UserService", function ($scope, UserService) {
 
+    $scope.facebookLogin = function() {
+        UserService.facebook()
+        .then(function(response){
+            console.log('controller response ', response);
+        })
+    }
     
+    $scope.googleLogin = function() {
+        UserService.google()
+        .then(function(response){
+            console.log('controller response ', response);
+        })
+    }
 
 
     // Retrieve the logged-in user's' information after a page reload using the Authentication Token
@@ -54,10 +65,15 @@ app.service('TokenService', function () {
 app.service('UserService', ["$http", "$location", "TokenService", function ($http, $location, TokenService) {
     var self = this;
     self.user = {};
-    self.newSignin = null;
 
-    // signup/login with Facebook
-    this.FBlogin = function(){
+
+
+///////////////////////////////////////
+///             OAUTH               ///
+///////////////////////////////////////
+
+    // SIGNUP/LOGIN WITH FACEBOOK
+    this.facebook = function(){
         return $http.get('/auth/facebook')
         .then(function(response){
             console.log('Userservice facebook res ', response)
@@ -65,6 +81,18 @@ app.service('UserService', ["$http", "$location", "TokenService", function ($htt
             return response.data;
         }, function(error){
             console.log('Userservice facebook error ', error);
+        })
+    }
+    
+    // SIGNUP/LOGIN WITH GOOGLE
+    this.google = function(){
+        return $http.get('/auth/google')
+        .then(function(response){
+            console.log('Userservice google res ', response)
+            this.user = response.data
+            return response.data;
+        }, function(error){
+            console.log('Userservice google error ', error);
         })
     }
 
