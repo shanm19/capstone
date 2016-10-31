@@ -94,8 +94,21 @@ authRouter.get('/facebook/callback', passport.authenticate('facebook', {
 }));
 
 
+//////////////////////////////////////////////////
+///                 GOOGLE                     ///
+//////////////////////////////////////////////////
+// route for Google authentication and login
+authRouter.get('/google/', passport.authenticate('google', {
+    session: false,
+    scope: ['https://www.googleapis.com/auth/userinfo.profile', 'https://www.googleapis.com/auth/userinfo.email']
+}));
 
 
+authRouter.get('/google/callback', passport.authenticate('google', {
+    session: false,
+    successRedirect: '/auth/profile',
+    failureRedirect: '/'
+}))
 
 
 module.exports = authRouter;

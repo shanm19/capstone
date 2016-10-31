@@ -1,3 +1,6 @@
+
+// Initialize Passport Strategies for OAuth
+
 var passport = require('passport');
 
 module.exports = function (app) {
@@ -7,5 +10,6 @@ module.exports = function (app) {
    
 
     require('./facebookStrategy')();
-
+    require('./googleStrategy')();
+    // require('./googleStrategy')();
 }
