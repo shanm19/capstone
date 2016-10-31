@@ -8,11 +8,12 @@ var expressJwt = require("express-jwt");
 var path = require("path");
 var mongoose = require("mongoose");
 
+
+
 // Config environment variables
 var config = require("./config");
-var port = process.env.PORT || 8080;
+var port = process.env.PORT || 7000;
 
-// Require routes
 
 // Create Server
 var app = express();
@@ -32,17 +33,25 @@ app.use(express.static(path.join(__dirname, "..", "/frontend")));
 
 // Routes requiring authentication
 app.use("/api", expressJwt({secret:config.db_secret}));
-//app.use("/api/user", require("./routes/userRouteProtected"));
+
+
+
+
+require('./passport/passport')(app);
+
+// app.use("/api/user", require("./routes/userRouteProtected"));
 //app.use("/api/admin", require("./routes/adminRoute"));
 //app.use("/api/post", require("./routes/postRouteProtected"));
 //app.use("/api/subreddit", require("./routes/subredditRouteProtected"));
 //app.use("/api/comment", require("./routes/commentRouteProtected"));
 
 // Routes without authentication
-//app.use("/auth", require("./routes/authRoute"));
+// require('./routes/authRoute')(app, passport);
+app.use("/auth", require("./routes/authRoute"))
 //app.use("/post", require("./routes/postRoute"));
 //app.use("/subreddit", require("./routes/subredditRoute"));
 //app.use("/comment", require("./routes/commentRoute"));
+
 
 
 app.listen(port, function() {console.log("Server is listening on port", port)});
