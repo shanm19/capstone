@@ -2,7 +2,6 @@
 
 angular.module('MockReddit.Auth')
     .controller('SignupController', ["$scope", "$timeout", "$location", "$mdDialog", "UserService", function ($scope, $timeout, $location, $mdDialog, UserService) {
-        $scope.button = "I'm a button"
         
 
         $scope.user = {};
@@ -33,12 +32,5 @@ angular.module('MockReddit.Auth')
                     })
             }
         }
-
-        $scope.oauthSignup = function(provider) {
-            $location.path('/auth/' + provider)
-        }
-
-        
-
         
     }])

@@ -9,49 +9,15 @@ app.config(["$routeProvider", function ($routeProvider) {
             templateUrl: 'js/authentication/templates/logout.html',
             controller: 'LogoutController'
         })
+        .when('/auth/profile', {
+            templateUrl: 'js/authentication/templates/profile.html',
+            controller: 'ProfileController'
+        })
 }])
 
 // Controller for the login/signup navbar
 app.controller('AuthController', ["$scope", "$mdDialog", "UserService", function ($scope, $mdDialog, UserService) {
     $scope.userService = UserService;
-
-    $scope.showSignup = function (ev) {
-        // Appending dialog to document.body to cover sidenav in docs app
-        $mdDialog.show({
-                parent: angular.element(document.body),
-                templateUrl: '/js/authentication/templates/signup.html',
-                targetEvent: ev,
-                clickOutsidetoClose: true
-
-            })
-            .then(function (result) {
-                console.log("result.firstName ", result.firstName);
-                $mdDialog.cancel();
-
-            }, function () {
-                console.log("result.username ", result.username);
-                $mdDialog.cancel();
-            });
-    }
-    
-    $scope.showLogin = function (ev) {
-        // Appending dialog to document.body to cover sidenav in docs app
-        $mdDialog.show({
-                parent: angular.element(document.body),
-                templateUrl: '/js/authentication/templates/login.html',
-                targetEvent: ev,
-                clickOutsidetoClose: true
-
-            })
-            .then(function (result) {
-                console.log("result.firstName ", result.firstName);
-                $mdDialog.cancel();
-
-            }, function () {
-                console.log("result.username ", result.username);
-                $mdDialog.cancel();
-            });
-    }
 
     
 
@@ -89,7 +55,18 @@ app.service('UserService', ["$http", "$location", "TokenService", function ($htt
     var self = this;
     self.user = {};
     self.newSignin = null;
-    
+
+    // signup/login with Facebook
+    this.FBlogin = function(){
+        return $http.get('/auth/facebook')
+        .then(function(response){
+            console.log('Userservice facebook res ', response)
+            this.user = response.data
+            return response.data;
+        }, function(error){
+            console.log('Userservice facebook error ', error);
+        })
+    }
 
     
  // signup with local auth   

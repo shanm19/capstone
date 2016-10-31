@@ -19,11 +19,15 @@ sub route: /login
 var express = require('express');
 var authRouter = express.Router();
 var User = require('../models/userSchema');
+var config = require('../config');
 
+authRouter.route('/profile')
+    .get(function (req, res) {
+        console.log('profile route ', req.user)
+        res.send(req.user)
+    })
 
-
-
-authRouter.post('/signup', function(req, res) {
+authRouter.post('/signup', function (req, res) {
     User.find({
         username: req.body.username
     }, (function (err, existingUser) {
@@ -34,9 +38,9 @@ authRouter.post('/signup', function(req, res) {
         });
         else {
             var newUser = new User(req.body);
-            newUser.save(function(err, userObj) {
+            newUser.save(function (err, userObj) {
                 if (err) res.status(500).send(err);
-                if(userObj)res.send({
+                if (userObj) res.send({
                     user: userObj,
                     message: "Successfully created new account.",
                     success: true
@@ -46,22 +50,22 @@ authRouter.post('/signup', function(req, res) {
                 }
             });
         }
-    
+
     }));
 });
 
-authRouter.delete('/delete/:userId', function(req, res) {
-    var uId = req.params.userId;
+authRouter.delete('/delete/:userId', function (req, res) {
+    var userId = req.params.userId;
     User.findOneAndRemove({
         _id: uId
-    }, function(err, deletedUser){
+    }, function (err, deletedUser) {
         if (err) res.status(500).send(err);
         res.send({
             success: true,
             message: "User account was successfully deleted.",
             user: deletedUser
+        });
     });
-});
 })
 
 //////////////////////////////////////////////////
@@ -71,18 +75,18 @@ authRouter.delete('/delete/:userId', function(req, res) {
 // passport
 var passport = require('passport');
 
+authRouter.get('/facebook', passport.authenticate('facebook', {
+    session: false,
+    scope: ['email']
+}));
 
-
-
-
-authRouter.get('/facebook', passport.authenticate('facebook', {scope: 'email'}));
 
 // handle the callback after facebook has authenticated the user
-authRouter.get('/facebook/callback',
-    passport.authenticate('facebook', {
-        successRedirect: '/profile',
-        failureRedirect: '/'
-    }))
+authRouter.get('/facebook/callback', passport.authenticate('facebook', {
+    session: false,
+    successRedirect: '/auth/profile',
+    failureRedirect: '/'
+}))
 
 
 

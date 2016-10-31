@@ -5,28 +5,33 @@ var bcrypt = require('bcrypt');
 
 var userSchema = new Schema({
     firstName: {
-        type: String,
-        required: true
+        type: String
+        // required: true
     },
     lastName: {
-        type: String,
-        required: true
+        type: String
+        // required: true
     },
     username: {
         type: String,
-        required: true,
-        unique: true,
+        // required: true,
+        // unique: true,
         lowercase: true
     },
     email: {
         type: String,
-        required: true,
-        unique: true,
+        // required: true,
+        // unique: true,
         lowercase: true
     },
     password: {
-        type: String,
-        required: true
+        type: String
+        // required: true
+    },
+    facebookId: String,
+    facebook: {
+        accessToken: String,
+        refreshToken: String
     },
     isAdmin: {
         type: Boolean,
