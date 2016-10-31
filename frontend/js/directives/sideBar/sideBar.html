@@ -1,14 +1,66 @@
 <md-toolbar md-theme="blue"></md-toolbar>
-<div layout-padding>
-    <form name="searchForm">
-        <md-input-container layout layout-align="start stretch">
-            <label>search</label>
-            <input type="text">
-        </md-input-container>
-    </form>
-</div>
-<div md-theme="cyan" layout="column" layout-align="center space-around" layout-padding>
-    <md-button class="full-width md-accent md-raised">Submit a new link</md-button>
-    <md-button class="full-width md-accent md-raised">Submit a new post</md-button>
-    <md-button class="full-width md-accent md-raised">Create your own subreddit</md-button>
+<div class="side-bar">
+    <div layout-padding>
+        <form name="searchForm">
+            <md-input-container layout layout-align="start stretch">
+                <label>search</label>
+                <input type="text">
+            </md-input-container>
+        </form>
+        <div class="login" md-theme="blue">
+            <span><small>Login or <a ng-click="showAuthForm()">signup</a></small></span>
+            <form name="signUpForm" layout="column">
+                <div class="login" layout>
+                    <md-input-container flex="50">
+                        <label>username</label>
+                        <input type="text">
+                    </md-input-container>
+                    <md-input-container flex="50">
+                        <label>password</label>
+                        <input type="password">
+                    </md-input-container>
+                </div>
+                <md-button class="login-button md-raised md-primary" type="submit">login</md-button>
+            </form>
+        </div>
+    </div>
+    <div class="main-buttons" md-theme="cyan" layout="column" layout-align="center space-around" layout-padding>
+        <md-button class="full-width md-accent md-raised" href="#/newpost">Submit a new Post</md-button>
+        <md-button class="full-width md-accent md-raised" href="#/newsubforum">Create your own sub forum</md-button>
+    </div>
+    <div class="recent">
+        <md-subheader md-theme="cyan">recently viewed</md-subheader>
+        <!-- ng-repeat -->
+        <div class="caption m-a-half " layout layout-align="start center">
+            <div class="vote m-a-half" layout="column" layout-align="center center">
+                <i class="material-icons">keyboard_arrow_upward</i>
+                <i class="material-icons">keyboard_arrow_downward</i>
+            </div>
+            <div layout="column">
+                <a href="">I like dogs</a>
+                <span class="caption dark">600 | <a href="">comment</a></span>
+            </div>
+        </div>
+
+        <div class="caption m-a-half" layout layout-align="start center">
+            <div class="vote m-a-half" layout="column" layout-align="center center">
+                <i class="material-icons">keyboard_arrow_upward</i>
+                <i class="material-icons">keyboard_arrow_downward</i>
+            </div>
+            <div layout="column">
+                <a href="">Look at this picture from 1971</a>
+                <span class="caption dark">600 | <a href="">comment</a></span>
+            </div>
+        </div>
+        <div class="caption m-a-half" layout layout-align="start center">
+            <div class="vote m-a-half" layout="column" layout-align="center center">
+                <i class="material-icons">keyboard_arrow_upward</i>
+                <i class="material-icons">keyboard_arrow_downward</i>
+            </div>
+            <div layout="column">
+                <a href="">how do I know if he's cheating?</a>
+                <span class="caption dark">908 | <a href="">comment</a></span>
+            </div>
+        </div>
+    </div>
 </div>

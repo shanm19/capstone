@@ -7,10 +7,11 @@ var bodyParser = require("body-parser");
 var expressJwt = require("express-jwt");
 var path = require("path");
 var mongoose = require("mongoose");
+var path = require('path');
 
 // Config environment variables
 var config = require("./config");
-var port = process.env.PORT || 8080;
+var port = process.env.PORT || 7000;
 
 // Require routes
 
