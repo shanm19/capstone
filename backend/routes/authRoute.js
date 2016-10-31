@@ -23,8 +23,13 @@ var config = require('../config');
 
 authRouter.route('/profile')
     .get(function (req, res) {
-        console.log('profile route ', req.user)
-        res.send(req.user)
+        // console.log('profile route ', req)
+        console.log('profile req.user ', req.user)
+        console.log('profile req.authUser ', req.authUser)
+        // console.log('profile req.body ', req.body)
+        console.log('profile serializeuser ', req._passport.instance._userProperty)
+        var user = req._passport.instance._userProperty
+        res.send(user)
     })
 
 authRouter.post('/signup', function (req, res) {
@@ -86,7 +91,7 @@ authRouter.get('/facebook/callback', passport.authenticate('facebook', {
     session: false,
     successRedirect: '/auth/profile',
     failureRedirect: '/'
-}))
+}));
 
 
 

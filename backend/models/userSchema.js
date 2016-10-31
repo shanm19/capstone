@@ -30,8 +30,7 @@ var userSchema = new Schema({
     },
     facebookId: String,
     facebook: {
-        accessToken: String,
-        refreshToken: String
+        accessToken: String
     },
     isAdmin: {
         type: Boolean,

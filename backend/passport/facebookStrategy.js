@@ -34,16 +34,16 @@ module.exports = function () {
             // user.image = profile._json.image.url;
             user.firstName = profile.name.givenName;
             user.lastName = profile.name.familyName;
+            user.username = profile.name.givenName.slice(0,2) + profile.name.familyName.slice(0,3);
             user.facebook = {};
             user.facebookId = profile.id;
             user.facebook.accessToken = accessToken;
-            user.facebook.refreshToken = refreshToken;
-           
+
             User.find({
                 facebookId: profile.id
             }, function (err, existingUser) {
                 if (err) {
-                     return done(err);
+                      return done(err);
                 }
                 else { 
                     if (!existingUser.length) {
@@ -54,12 +54,16 @@ module.exports = function () {
                         if (err) {
                             throw err;
                         } else {
+                            req._passport.instance._userProperty = savedUser
                             return done(null, savedUser);
                         }
                     });
                 } else {
-                    console.log('user already exists', existingUser);
-                    return done(null, user);
+                    
+                    console.log('user already exists', existingUser[0]);
+                    // add the user to req
+                    req._passport.instance._userProperty = existingUser[0]
+                     return done(null, existingUser[0]);
                 }
             }});
         }
