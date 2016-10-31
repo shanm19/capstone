@@ -2,14 +2,14 @@
 <html lang="en" ng-app="MockReddit">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 
     <!-- Style -->
     <link rel="stylesheet" href="node_modules/angular-material/angular-material.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body ng-controller="MainController">
@@ -33,6 +33,7 @@
 <!-- Controllers -->
 <script src="js/controllers/app.js"></script>
 <script src="js/controllers/mainController.js"></script>
+<script src="js/controllers/newPostController.js"></script>
 <!-- Config -->
 <script src="js/config/config.js"></script>
 <!-- Services -->
@@ -40,6 +41,11 @@
 <!-- Directives -->
 <script src="js/directives/navbar/navbarDirective.js"></script>
 <script src="js/directives/sideBar/sideBarDirective.js"></script>
+
+<!-- Authentication -->
+<script src="js/authentication/auth.js"></script>
+<script src="js/authentication/controllers/signup.js"></script>
+<script src="js/authentication/controllers/login.js"></script>
 
 </body>
 </html>

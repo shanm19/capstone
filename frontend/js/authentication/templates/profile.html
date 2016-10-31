@@ -1,0 +1,16 @@
+<md-content>
+    <h3>Name: {{user.firstName}} {{user.lastName}}</h3>
+    <ul>
+        <li> username: {{user.username}} </li>
+        <li> email: {{user.email}} </li>
+        <li> 
+            <ul>Facebook:
+                <li ng-repeat="(key, val) in user.facebook">
+                    {{key}}: {{val}}   
+                </li> 
+            </ul>
+        </li>
+        
+    </ul>
+
+</md-content>

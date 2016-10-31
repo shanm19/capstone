@@ -3,6 +3,7 @@ var mongoose = require('mongoose');
 var deepPopulate = require('mongoose-deep-populate')(mongoose);
 var Schema = mongoose.Schema;
 
+
 var commentSchema = new Schema({
     originalPoster: {
         type: Schema.Types.ObjectId,
