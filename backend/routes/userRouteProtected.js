@@ -62,3 +62,12 @@ sub route: /
     return deleted user obj 
 
 */
+
+var express = require('express');
+var userRouteProtected = express.Router();
+
+
+
+
+
+module.exports = userRouteProtected;

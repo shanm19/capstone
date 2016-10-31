@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+//var mongoosastic = require('mongoosastic');
 var Schema = mongoose.Schema;
 var bcrypt = require('bcrypt');
 
@@ -17,6 +18,7 @@ var userSchema = new Schema({
         // required: true,
         // unique: true,
         lowercase: true
+        //es_indexed: true
     },
     email: {
         type: String,
@@ -92,7 +94,9 @@ var userSchema = new Schema({
         default: 0
     }
 
-});
+} , { timestamps: true });
+
+//userSchema.plugin(mongoosastic);
 
 userSchema.pre("save", function(next){
     var user = this;
@@ -116,6 +120,5 @@ userSchema.methods.withoutPassword = function(){
     delete user.password;
     return user;
 }
-
 
 module.exports = mongoose.model('User', userSchema);

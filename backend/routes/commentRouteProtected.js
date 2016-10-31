@@ -1,9 +1,9 @@
 /* capstone commentProtected */
 
 var express = require("express");
-var Comment = require("../models/comment");
+var Comment = require("../models/commentSchema");
 var User = require("../models/userSchema");
-var Post = require("../models/post");
+var Post = require("../models/postSchema");
 var commentRouteProtected = express.Router();
 var userRouteProtected = express.Router();
 

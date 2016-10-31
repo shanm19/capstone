@@ -8,8 +8,6 @@ var expressJwt = require("express-jwt");
 var path = require("path");
 var mongoose = require("mongoose");
 
-
-
 // Config environment variables
 var config = require("./config");
 var port = process.env.PORT || 7000;
@@ -20,7 +18,6 @@ var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(logger("dev"));
-
 // Connect to Mongoose
 var database = path.join(config.db_host,config.db_name);
 mongoose.connect("mongodb://" + config.db_user + ":" + config.db_pass + "@" + database, function(err) {
@@ -46,11 +43,12 @@ require('./passport/passport')(app);
 //app.use("/api/comment", require("./routes/commentRouteProtected"));
 
 // Routes without authentication
+app.use("/post", require("./routes/postRoute"));
+//app.use("/subreddit", require("./routes/subredditRoute"));
+app.use("/comment", require("./routes/commentRoute"));
 // require('./routes/authRoute')(app, passport);
 app.use("/auth", require("./routes/authRoute"))
-//app.use("/post", require("./routes/postRoute"));
 //app.use("/subreddit", require("./routes/subredditRoute"));
-//app.use("/comment", require("./routes/commentRoute"));
 
 
 
