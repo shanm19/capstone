@@ -23,9 +23,6 @@ sub route: /
      sub route: /:postID
         $http.put(baseUrl + "/api/post/:postID", { updated post Obj })
         return user's updated post object in full
-        ---
-        $http.delete(baseUrl + "/api/post/:postID")
-        return user's deleted post
     ---
     sub route: /comment/:postID
         $http.post(baseUrl + "/api/post/comment/:postID, { content: "I like cheese" })
@@ -87,11 +84,8 @@ postRoute.route("/")
 });
 
 
-        // $http.put(baseUrl + "/api/post/:postID", { updated post Obj })
-        // return user's updated post object in full
-        // ---
-        // $http.delete(baseUrl + "/api/post/:postID")
-        // return user's deleted post
+// $http.put(baseUrl + "/api/post/:postID", { updated post Obj })
+// return user's updated post object in full
 postRoute.route("/:postID")
 .put(function(req, res){
     Post.findByIdAndUpdate(req.params.postID, 
