@@ -6,20 +6,13 @@ file name: "authRoute"
 base route: /auth
 purpose: Signing up and loggin in a new user
 
-sub route: /signup
-    $http.post(baseUrl + "/auth/signup", { firstName: "John", lastName: "Smith", username: "johnjohn", password: "1234"})
-    return user object 
-
-sub route: /login
-    $http.post(baseUrl + "/auth/login", { username: "johnjohn", password: "1234" } )
-    return user object
-
 */
 
 var express = require('express');
 var authRouter = express.Router();
 var User = require('../models/userSchema');
 var config = require('../config');
+var jwt = require('jsonwebtoken')
 
 authRouter.route('/profile')
     .get(function (req, res) {
@@ -31,6 +24,10 @@ authRouter.route('/profile')
         var user = req._passport.instance._userProperty
         res.send(user)
     })
+
+/*********************************
+    SIGNUP ROUTE
+**********************************/
 
 authRouter.post('/signup', function (req, res) {
     User.find({
@@ -67,12 +64,55 @@ authRouter.post('/signup', function (req, res) {
                     });
                 }
             }))
-
         }
-
     }));
 });
 
+
+/**********************************
+    LOGIN ROUTE
+**********************************/
+
+authRouter.post('/login', function (req, res) {
+    console.log('login user ', req.body)
+    User.findOne({
+        username: req.body.username
+    }, function (err, user) {
+        if (err) res.status(500).send(err);
+
+        // If user isn't in the database'
+        if (!user) res.status(401).send({
+            success: false,
+            message: 'incorrect username or password'
+        });
+
+        // If user is found, check password and create token
+        else if (user) {
+
+            // Check password
+            user.checkPassword(req.body.password, function (err, match) {
+                if (err) throw (err);
+                if (!match) res.status(401).send({
+                    success: false,
+                    message: 'incorrect username or password'
+                });
+                else {
+                    var token = jwt.sign(user.toObject(), config.db_secret, {
+                        expiresIn: "24h"
+                    });
+                    res.send({
+                        user: user.withoutPassword(),
+                        token: token,
+                        success: true,
+                        message: 'Here is your token'
+                    })
+                }
+            })
+        }
+    })
+})
+
+// delete user account route
 authRouter.delete('/delete/:userId', function (req, res) {
     var userId = req.params.userId;
     User.findOneAndRemove({

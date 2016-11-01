@@ -2,39 +2,24 @@
 
 angular.module('MockReddit.Auth')
     .controller('LoginController', ["$scope", "$location", "$timeout", "$document", "UserService", "$mdDialog", function ($scope, $location, $timeout, $document, UserService, $mdDialog) {
-        $scope.user = {};
-        $scope.user.email = UserService.user.email;
-        $scope.invalidForm = false;
-        
-        $scope.login = function (e) {
-            e.preventDefault();
-            if ($scope.loginForm.$invalid) {
-                $scope.invalidForm = true;
-                $timeout(function () {
-                    $scope.invalidForm = false;
-                }, 2500);
-                return;
-            } else {
+            $scope.user = {};
+
+            $scope.login = function (e) {
+                console.log('logging in ', $scope.user)
+                e.preventDefault();
                 UserService.login($scope.user)
                     .then(function (response) {
-                        if (response.status === 401) {
+                        if (response.status === 401 && response.statusText === 'Unauthorized') {
                             $scope.message = response.data.message;
                             $scope.loginError = true;
                             $timeout(function () {
                                 $scope.loginError = false;
-                                $scope.user.password = '';
-                                if (response.data.cause === 'username') {
-                                    var el = $document.find('input');
-                                    el[0].focus();
-                                }
                             }, 3000);
-                        } else {
-                             $location.path('/')
-                            }
-                            console.log('login ', response);
+                        } 
+                        console.log('login ', response);
 
                     })
-            }
+            
         }
 
     }])

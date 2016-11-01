@@ -39,7 +39,7 @@
                         <div ng-message="pattern">please enter a valid email</div>
                     </div>
                 </md-input-container>
-                <p class="duplicate" ng-show="duplicate">{{message}}</p>
+                <p class="error" ng-show="duplicate">{{message}}</p>
                 <p class="success-message" ng-show="success">Your account was created successfully!</br>Please login on the next panel.</p>
                 <md-button ng-click="signup()" type="submit" class="md-raised md-accent" ng-disabled="signUpForm.$invalid">sign up
                 </md-button>
