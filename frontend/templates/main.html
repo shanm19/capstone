@@ -4,17 +4,17 @@
             <md-content>
                 <md-list flex>
                     <md-list-item class="md-3-line post" ng-repeat="post in posts" md-whiteframe="2" layout-padding layout-margin>
-                        <div class="vote" layout="column" layout-align="space-between center">
-                            <i class="material-icons">arrow_upward</i>
-                            <span><b>{{post.netVotes || 65759}}</b></span>
-                            <i class="material-icons">arrow_downward</i>
+                        <div class="vote" layout="column" layout-align="center center">
+                            <i class="material-icons">keyboard_arrow_upward</i>
+                            <span><b>{{post.netVotes}}</b></span>
+                            <i class="material-icons">keyboard_arrow_downward</i>
                         </div>
                         <div layout layout-padding>
-                            <img ng-src="{{image}}" alt="image of {{post.title}}" class="main-post-thumb"/>
+                            <a href="{{post.siteUrl}}"><img ng-src="{{post.image}}" alt="image of {{post.title}}" class="main-post-thumb"/></a>
                             <div class="md-list-item-text" layout="column">
                                 <p>{{post.title}}</p>
                                 <span class="caption">
-                                    submitted x hours ago by <a href="#/"><b>{{post.originalPoster}}</b></a> to <b><a href="#/">welovedogs</a></b>
+                                    submitted {{ post.createdAt | when }} by <a href="#/"><b>{{post.originalPoster.username}}</b></a> to <b><a href="#/">welovedogs</a></b>
                                 </span>
                             </div>
                         </div>

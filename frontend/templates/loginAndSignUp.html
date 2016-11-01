@@ -46,7 +46,7 @@
         <md-divider></md-divider>
         <div layout="column" layout-align="start center">
             <h3>login</h3>
-            <form name="loginForm"  md-theme="forms"  layout="column">
+            <form name="loginForm" md-theme="forms" layout="column">
                 <md-input-container>
                     <label>username</label>
                     <input type="text" name="username" ng-model="user.username" required>
@@ -67,7 +67,11 @@
         </div>
     </md-dialog-content>
     <md-dialog-actions>
-        <md-button class="md-accent md-raised" md-theme="cyan" ng-click="close()">
+        <md-button class="md-primary md-raised fb" md-theme="blue" layout layout-align="start center">
+            <img src="../assets/20140221023021!Facebook_icon.svg" alt="facebook icon">
+            <small>Log In with Facebook</small>
+        </md-button>
+        <md-button class="md-accent md-hue-1 md-raised" md-theme="cyan" ng-click="close()">
             <small>close</small>
         </md-button>
     </md-dialog-actions>
