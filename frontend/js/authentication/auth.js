@@ -38,7 +38,7 @@ app.controller('AuthController', ["$scope", "UserService", function ($scope, Use
         if (UserService.isAuthenticated()) {
             UserService.getUserFromToken()
                 .then(function (response) {
-                    UserService.user = response
+                    UserService.user = response;
                 });
         }
     }();
@@ -86,7 +86,7 @@ app.service('UserService', ["$http", "$location", "TokenService", function ($htt
     
     // SIGNUP/LOGIN WITH GOOGLE
     this.google = function(){
-        return $http.get('/auth/google')
+        return $http.get('/auth/google' + '?apikey=721050503042-f2qipv794269gifb9de6fpdo4cs7dkjp.apps.googleusercontent.com')
         .then(function(response){
             console.log('Userservice google res ', response)
             this.user = response.data
@@ -162,7 +162,7 @@ app.factory("AuthInterceptor", ["$q", "$location", "TokenService", function ($q,
         responseError: function (response) {
             if (response.status === 401) {
                 TokenService.removeToken();
-                $location.path('/login');
+                $location.path('/');
             }
             return $q.reject(response);
         }
