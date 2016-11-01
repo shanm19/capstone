@@ -2,7 +2,7 @@
 
 var app = angular.module('MockReddit');
 
-app.controller('MainController', ['$scope', function ($scope) {
+app.controller('MainController', ['$scope', "UserService", function ($scope, UserService) {
 
     $scope.posts = [
         {
