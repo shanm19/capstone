@@ -59,11 +59,14 @@
                                     <div class="drop-box">
                                         <!-- Image preview -->
                                         <img ngf-thumbnail="newLinkPost.image">
-                                        <md-button ng-show="!newLinkPost.image" class="md-raised md-accent md-hue-3" ngf-select
+                                        <md-button ng-show="!newLinkPost.image" class="md-raised md-accent md-hue-3"
+                                                   ngf-select
                                                    ng-model="newLinkPost.image" name="file" ngf-pattern="'image/*'"
                                                    ngf-accept="'image/*'" ngf-max-size="10MB" ngf-min-height="100"
-                                                   ngf-resize="{width: 500, height: 400}" layout layout-align="start center">
-                                            <span layout-margin>Choose File</span><i class="material-icons" layout-margin>cloud_upload</i>
+                                                   ngf-resize="{width: 500, height: 400}" layout
+                                                   layout-align="start center">
+                                            <span layout-margin>Choose File</span><i class="material-icons"
+                                                                                     layout-margin>cloud_upload</i>
                                         </md-button>
                                     </div>
                                     <a ng-if="newLinkPost.image" class="caption" ng-click="newLinkPost.image = ''">cancel</a>

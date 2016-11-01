@@ -9,6 +9,10 @@
         </form>
         <div class="login" md-theme="blue">
             <span><small>Login or <a ng-click="showAuthForm()">signup</a></small></span>
+            <<<<<<< HEAD
+            =======
+
+            >>>>>>> dev
             <form name="signUpForm" layout="column">
                 <div class="login" layout>
                     <md-input-container flex="50">
@@ -22,6 +26,18 @@
                 </div>
                 <md-button class="login-button md-raised md-primary" type="submit">login</md-button>
             </form>
+            ]
+            <md-content layout-margin>
+                Or Log In Using:
+                <div layout layout-align="space-around center" ng-controller="AuthController">
+                    <md-button class="md-raised md-primary" href="auth/facebook" style="background-color:#4267B2"
+                               flex="50" layout><i class="fa fa-facebook fa-lg" flex="20"></i> <span
+                            style="font-size:12px" flex layout layout-align="center">Facebook</span></md-button>
+                    <md-button class="md-raised md-primary" href="auth/google" style="background-color:#db3236"
+                               flex="50" layout><i class="fa fa-google-plus fa-lg" flex="30"></i> <span
+                            style="font-size:12px" flex layout layout-align="center">Google</span></md-button>
+                </div>
+            </md-content>
         </div>
     </div>
     <div class="main-buttons" md-theme="cyan" layout="column" layout-align="center space-around" layout-padding>

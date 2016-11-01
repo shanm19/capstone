@@ -91,6 +91,7 @@ textarea {
     border-radius: .25em !important;
     box-shadow: inset 3px 3px 3px -3px rgba(0, 0, 0, 0.2) !important;
     background: #fff !important;
+
 }
 
 .aside md-toolbar {
@@ -124,7 +125,11 @@ textarea {
 }
 
 /****************************************
+<<<<<<< HEAD
                  Main/Posts
+=======
+                 Posts
+>>>>>>> dev
 *****************************************/
 
 .main-post-thumb {

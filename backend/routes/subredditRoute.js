@@ -21,3 +21,12 @@ sub route: /
         return subreddit object found by ID
 
 */
+
+var express = require('express');
+var subredditRoute = express.Router();
+
+
+
+
+
+module.exports = subredditRoute;
