@@ -81,6 +81,41 @@ side-bar label {
     padding-left: .5em !important;
 }
 
+
+/***************************************
+****   duplicate and successful     ****
+****    sign up messages            **** 
+****   smooth transitions:          ****
+****************************************/
+
+.duplicate {
+    color: #DA3637;
+    font-size: 1em;
+    line-height: 1.25em;
+    text-align: center;
+    padding:0;
+    margin:0;
+}
+
+.duplicate.ng-show-remove, .duplicate.ng-show-add {
+    transition: all ease 0.5s;
+}
+
+.duplicate.ng-hide {
+    line-height: 0;
+    opacity: 0;
+}
+
+.success-message {
+    opacity: 1;
+    line-height: 1.15em;
+    margin: 0;
+    padding: 0;
+}
+.success-message.ng-show-add, .success-message.ng-show-remove {
+    transition: all ease 0.5s;
+}
+
 .aside {
     margin: 1.15em;
 }

@@ -26,7 +26,7 @@ authRouter.route('/profile')
         // console.log('profile route ', req)
         console.log('profile req.user ', req.user)
         console.log('profile req.authUser ', req.authUser)
-        // console.log('profile req.body ', req.body)
+            // console.log('profile req.body ', req.body)
         console.log('profile serializeuser ', req._passport.instance._userProperty)
         var user = req._passport.instance._userProperty
         res.send(user)
@@ -39,21 +39,35 @@ authRouter.post('/signup', function (req, res) {
         if (err) res.status(500).send(err);
         if (existingUser.length) res.json({
             success: false,
+            cause: 'username or email',
             message: "That username is already taken."
         });
         else {
-            var newUser = new User(req.body);
-            newUser.save(function (err, userObj) {
+            User.find({
+                email: req.body.email
+            }, (function (err, existingUser) {
                 if (err) res.status(500).send(err);
-                if (userObj) res.send({
-                    user: userObj,
-                    message: "Successfully created new account.",
-                    success: true
+                if (existingUser.length) res.json({
+                    success: false,
+                    cause: 'username or email',
+                    message: "That email belongs to an existing account"
                 });
                 else {
-                    console.log('user saved, but nothing returned ', userObj);
+                    var newUser = new User(req.body);
+                    newUser.save(function (err, userObj) {
+                        if (err) res.status(500).send(err);
+                        if (userObj) res.send({
+                            user: userObj,
+                            message: "Successfully created new account.",
+                            success: true
+                        });
+                        else {
+                            console.log('user saved, but nothing returned ', userObj);
+                        }
+                    });
                 }
-            });
+            }))
+
         }
 
     }));
