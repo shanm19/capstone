@@ -13,12 +13,11 @@ module.exports = function () {
     passport.use(new GoogleStrategy({
             clientID: config.googleAuth.clientID,
             clientSecret: config.googleAuth.clientSecret,
-            callbackURL: config.googleAuth.callbackURL
+            callbackURL: config.googleAuth.callbackURL,
+            passReqToCallback: true,
         },
         function (req, accessToken, refreshToken, profile, done) {
             var user = {}
-
-            
             done(null, profile)
         }))
 }

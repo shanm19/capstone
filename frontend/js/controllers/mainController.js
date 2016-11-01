@@ -10,8 +10,9 @@ app.controller('MainController', ['$scope', 'PostService', function ($scope, Pos
                 console.log($scope.posts);
             });
     }
-    getPosts();
 
+    getPosts();
+    
     $scope.FBlogin = function () {
         UserService.FBlogin()
             .then(function (response) {
@@ -19,6 +20,4 @@ app.controller('MainController', ['$scope', 'PostService', function ($scope, Pos
                 $scope.user = response;
             })
     }
-
-
 }]);

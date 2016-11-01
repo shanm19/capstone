@@ -2,70 +2,79 @@
 
 var express = require("express");
 var Comment = require("../models/commentSchema");
-var User = require("../models/userSchema");
 var Post = require("../models/postSchema");
 var commentRouteProtected = express.Router();
-var userRouteProtected = express.Router();
 
+commentRouteProtected.route = ("/api/comment")  // "/api/comment" is written in the server.js, so anything getting to this file already has '/api/comment' prefixed to it
+   .get(function(req, res) {                    // commentRouteProtected.route("/")
 
-userRouteProtected.route = ("/api/user")
-    .get(function(req, res) {
+       Comment.find({originalPoster: req.user_id},function(err, userComments) { // req.user._id
 
-        var user_id = req.user._id;
-        // difference between find and findONe and error checking?
-        User.findOne(user_id)
+           if (err) res.status(500).send(err);
+           res.send(userComments);
+       });
+   })
 
-            .populate("commentHistory")
-            .exec(function(err, userComments) {
+   .post(function(req, res) {
 
-                if (err) res.status(500).send(err);
-                res.send(userComments);
-            })
-    });
+       var newComment = new Comment(req.body);
 
-commentRouteProtected.route = ("/api/comment")
+       var post_id = req.post._id; // req.body.postID
 
-    .post(function(req, res) {
+       if (post_id) {
 
-        // Is all the following code correct?
-        var newComment = new Comment(req.body);
+           Post.findOne({_id:post_id}, function (err, post) {
+               if (err) res.status(500).send(err);
+               else {
 
-        newComment.save(newComment, function(err, newComment) {
+                   post.comments.push(newComment._id);
+                   post.save();
+                   res.send(newComment);
+               }
+           })
+       }
+       else {
 
-            if (err) res.status(500).send(err);
-            res.send(newComment);
+           Comment.findOne({_id:req.comment._id}, function (err, comment) { // _id: req.body.parentCommentID
 
-        });
+               if (err) res.status(500).send(err);
+               else {
 
-        var post_id = req.post._id;
+                   comment.childComments.push(comment_id); // this is my fault; I changed it to just be 'comments' to be easier to deep populate; also, it should push newComment._id
+                   comment.save();
+                   res.send(newComment);
+               }
+           })
+       }
+   });
 
-        if (post_id) {
+commentRouteProtected.route = ("/api/comment/:id") // commentRouteProtected.route("/:commentID")
+   .put(function(req, res) {
 
-            Post.findOne(post_id, function (err, post) {
-                if (err) res.status(500).send(err);
-                else {
-                    // Why push here?
-                    post.comments.push(newComment._id);
-                    post.save();
-                }
-            })
-        }
-        else {
+       Comment.findOne({_id:req.params.id}, function(err, comment) {
 
-            var comment_id = req.comment._id;
+           if (err) res.status(500).send(err);
+           else if (req.user._id === comment.originalPoster.user._id) { // 'comment.originalPoster' is already Reference ID
 
-            Comment.findOne(comment_id, function (err, comment) {
+               comment.editHistory.push(comment.content); // .unshift(comment.content); it works fine with .push, but unshift will place the most recent comment at the front of the array so the most recent edit is first
+               comment.content = req.body.content; // req.body.editedComment
+               res.send(comment); // comment.save();
+           }
+       });
+   })
 
-                if (err) res.status(500).send(err);
-                else {
+   .delete(function(req, res) {
 
-                    comment.childComments.push(comment_id);
-                    comment.save();
-                }
-            })
-        }
-    });
+       Comment.findOne({_id:req.params.id}, function(err, comment) {
 
+               if (err) res.status(500).send(err);
+               else {
+
+                   comment.isDeleted = true; // comment.save();
+                   res.send(comment);
+               }
+       })
+   });
 
 module.exports = commentRouteProtected;
 
@@ -84,7 +93,7 @@ module.exports = commentRouteProtected;
  $http.post(baseUrl + "/api/comment", {
  content: "Stupid pun comment for cheap laughs.",
  parentComment: comment._id,
- post._id
+ postID: _id
  })
  return comment object
  Note:  This one is highly debatable. Frankly, I don't know how to do nested comments the best way.
