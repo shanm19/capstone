@@ -2,7 +2,16 @@
 
 var app = angular.module('MockReddit');
 
-app.service('PostService', ['Upload', function (Upload) {
+app.service('PostService', ['$http', 'Upload', function ($http, Upload) {
+
+    this.getPosts = function () {
+        return $http.get('/post')
+            .then(function (response) {
+                return response.data;
+            }, function (err) {
+                console.log("Error could not get posts:", err.status);
+            });
+    };
 
     this.createNewTextPost = function (textPostObj) {
         console.log(textPostObj);

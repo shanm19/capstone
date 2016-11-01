@@ -91,7 +91,6 @@ textarea {
     border-radius: .25em !important;
     box-shadow: inset 3px 3px 3px -3px rgba(0, 0, 0, 0.2) !important;
     background: #fff !important;
-
 }
 
 .aside md-toolbar {
@@ -125,11 +124,7 @@ textarea {
 }
 
 /****************************************
-<<<<<<< HEAD
-                 Main/Posts
-=======
-                 Posts
->>>>>>> dev
+            Main/Posts
 *****************************************/
 
 .main-post-thumb {
@@ -188,6 +183,7 @@ textarea {
 .fb small {
     color: #FFF !important;
     font-size: .8em;
+    padding: 0 .5em 0 .5em;
 }
 
 .fb img {
@@ -249,4 +245,9 @@ form[name="newSubForumForm"] label {
 
 form[name="newLinkPostForm"] .md-button {
     margin: .5em 0 !important;
+}
+
+form[name="newSubForumForm"] label {
+    padding-left: 1.5em !important;
+    margin-bottom: -10px !important;
 }
