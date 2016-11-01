@@ -37,6 +37,14 @@ var express = require('express');
 var postRoute = express.Router();
 var Post = require('../models/postSchema');
 var Comment = require('../models/commentSchema');
+// all modules below are for the protected route
+var multipart = require('connect-multiparty');
+var multipartyMiddleWare = multipart();
+var fs = require('fs');
+
+// needed for the req.file for images
+// protected route
+postRoute.use('/', multipartyMiddleWare);
 
 // Mongoosastic indexing not working
 // Post.createMapping(function(err, mapping) {
@@ -65,8 +73,24 @@ postRoute.route("/")
     // It also could just be an option until the authentication is hooked up
     // $http.post(baseUrl + "/post", { title: "", subreddit: sub._id, siteUrl: "", image: "", tags: ["nsfw"] })
     // return new post object
+    // this is for the protected route, just here for testing at this point - AV
     .post(function (req, res) { // ~
         var newPost = new Post(req.body);
+
+        newPost.user = req.user;
+
+        if (newPost.type === 'link') {
+            if (req.files.file) {
+                var data = fs.readFileSync(req.files.file.path);
+                var contentType = req.files.file.type;
+                newPost.image = 'data:' + contentType + ';base64,' + data.toString('base64');
+            } else {
+                newPost.image = '../assets/link.png'
+            }
+        } else {
+            newPost.image = '../assets/text.png';
+        }
+
         newPost.save(function (err, savedPost) {
             if (err) res.status(500).send(err);
             res.send(savedPost);

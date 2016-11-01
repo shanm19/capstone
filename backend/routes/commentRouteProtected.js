@@ -126,6 +126,5 @@ module.exports = commentRouteProtected;
  you just change comment.isDeleted to true and this will get filtered on the frontend
  to read DELETED. It still exists, but maintaining it preserves the connection to its children.
 
- agustin - we should also delete the actual comment key value pair, some comments can get really long, no
- sense in bogging up the db with "deleted" content
+ agustin - we should also delete the actual comment key value pair, some comments can get really long
  */

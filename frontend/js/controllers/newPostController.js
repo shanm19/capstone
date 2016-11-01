@@ -5,12 +5,16 @@ var app = angular.module('MockReddit');
 app.controller('NewPostController', ['$scope', 'PostService', function ($scope, PostService) {
 
     $scope.submitTextPost = function () {
-        PostService.createNewTextPost($scope.newTextPost);
+        var newTextPost = $scope.newTextPost;
+        newTextPost.type = 'text';
+        PostService.createNewTextPost(newTextPost);
         $scope.newTextPost = {};
     };
 
     $scope.submitLinkPost = function () {
-        PostService.createNewTextPost($scope.newLinkPost);
+        var newLinkPost = $scope.newLinkPost;
+        newLinkPost.type = 'link';
+        PostService.createNewTextPost(newLinkPost);
         $scope.newLinkPost = {};
     };
 }]);

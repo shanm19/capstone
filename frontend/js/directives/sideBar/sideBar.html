@@ -10,15 +10,15 @@
         <div class="login" md-theme="blue">
             <div ng-if="!userService.isAuthenticated()" class="login" md-theme="blue">
                 <span><small>Login or <a ng-click="showAuthForm()"><b>signup</b></a></small></span>
-                <form name="signUpForm" layout="column">
+                <form name="loginSBForm" ng-submit="login()" layout="column">
                     <div class="login" layout>
                         <md-input-container flex="50">
                             <label>username</label>
-                            <input type="text">
+                            <input type="text" ng-model="user.username" required>
                         </md-input-container>
                         <md-input-container flex="50">
                             <label>password</label>
-                            <input type="password">
+                            <input type="password" ng-model="user.password" required>
                         </md-input-container>
                     </div>
                     <md-button class="login-button md-raised md-primary" type="submit">login</md-button>
