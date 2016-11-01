@@ -1,21 +1,24 @@
 var mongoose = require('mongoose');
+//var mongoosastic = require('mongoosastic');
+var deepPopulate = require('mongoose-deep-populate')(mongoose);
 var Schema = mongoose.Schema;
 
 var postSchema = new Schema({
     title: {
         type: String,
         required: true
+        //es_indexed: true
     },
     // in modern vernacular, referred to as OP
     originalPoster: {
-        type: Schema.Type.ObjectId,
-        ref: 'User',
-        required: true
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+        // required: true
     },
     subreddit: {
-        type: Schema.Type.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: 'Subreddit',
-        required: true
+        // required: true
     },
     // posts can just be images, gifs, or videos, so this isn't required
     siteUrl: String,
@@ -23,7 +26,7 @@ var postSchema = new Schema({
     // Evan is exploring a 3rd party option, like Imgur
     image: String,
     comments: [{
-        type: Schema.Type.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: 'Comment'
     }],
     upVotes: {
@@ -45,10 +48,16 @@ var postSchema = new Schema({
     // someone would mark a post as SFW if, by the title, the post appears to be NSFW and you want to ensure it's okay to look at
     tags: [{
         type: String,
-        enum: ['nsfw', 'sfw', 'none'],
+        enum: ['nsfw', 'sfw', 'controversial', 'none'],
         default: 'none'
     }]
-});
+}, { timestamps: true });
 
+// var elasticsearch = require("elasticsearch");
+// var esClient = new elasticsearch.Client({host: 'localhost:9200'});
+// postSchema.plugin(mongoosastic, {
+//   esClient: esClient
+// })
+postSchema.plugin(deepPopulate);
 
 module.exports = mongoose.model('Post', postSchema);
