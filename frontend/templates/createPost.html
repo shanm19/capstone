@@ -45,6 +45,33 @@
                                            ng-disabled="newTextPostForm.$invalid">Submit
                                 </md-button>
                             </form>
+                            <form name="newPostForm" layout="column">
+                                <md-input-container>
+                                    <label>title</label>
+                                    <input type="text" ng-model="newPost.title">
+                                </md-input-container>
+                                <md-input-container>
+                                    <label>choose a sub forum</label>
+                                    <input type="text" ng-model="newPost.subForum">
+                                    <br>
+                                    <div class="p-t-1">
+                                        <span class="caption dark">sub forums you're subscibed to:</span>
+                                        <!-- ng repeat something -->
+                                        <span><a class="caption" href="#/">welovedogs</a></span>
+                                        <span><a class="caption" href="#/">vcshool</a></span>
+                                        <span><a class="caption" href="#/">wehatecats</a></span>
+                                        <span><a class="caption" href="#/">wehatecats</a></span>
+                                        <span><a class="caption" href="#/">wehatecats</a></span>
+                                        <span><a class="caption" href="#/">wehatecats</a></span>
+
+                                    </div>
+                                </md-input-container>
+
+                                <md-input-container>
+                                    <label>text</label>
+                                    <textarea type="text"></textarea>
+                                </md-input-container>
+                            </form>
                         </md-content>
                     </md-tab>
                     <md-tab label="link">
@@ -59,11 +86,14 @@
                                     <div class="drop-box">
                                         <!-- Image preview -->
                                         <img ngf-thumbnail="newLinkPost.image">
-                                        <md-button ng-show="!newLinkPost.image" class="md-raised md-accent md-hue-3" ngf-select
+                                        <md-button ng-show="!newLinkPost.image" class="md-raised md-accent md-hue-3"
+                                                   ngf-select
                                                    ng-model="newLinkPost.image" name="file" ngf-pattern="'image/*'"
                                                    ngf-accept="'image/*'" ngf-max-size="10MB" ngf-min-height="100"
-                                                   ngf-resize="{width: 500, height: 400}" layout layout-align="start center">
-                                            <span layout-margin>Choose File</span><i class="material-icons" layout-margin>cloud_upload</i>
+                                                   ngf-resize="{width: 500, height: 400}" layout
+                                                   layout-align="start center">
+                                            <span layout-margin>Choose File</span><i class="material-icons"
+                                                                                     layout-margin>cloud_upload</i>
                                         </md-button>
                                     </div>
                                     <a ng-if="newLinkPost.image" class="caption" ng-click="newLinkPost.image = ''">cancel</a>
@@ -98,6 +128,38 @@
                                 <md-button type="submit" class="md-raised md-accent md-hue-3"
                                            ng-disabled="newLinkPostForm.$invalid">Submit
                                 </md-button>
+                            </form>
+                            <form name="newPostForm" layout="column">
+                                <md-input-container>
+                                    <label>url</label>
+                                    <input type="url" ng-model="newPost.url">
+                                </md-input-container>
+
+                                <md-input-container>
+                                    <label>title</label>
+                                    <input type="text" ng-model="newPost.title">
+                                </md-input-container>
+
+                                <md-input-container>
+                                    <label>image url</label>
+                                    <input type="url" ng-model="newPost.imageUrl">
+                                </md-input-container>
+
+                                <md-input-container>
+                                    <label>choose a sub forum</label>
+                                    <input type="text" ng-model="newPost.subForum">
+                                    <br>
+                                    <div class="p-t-1">
+                                        <span class="caption">sub forums you're subscribed to:</span>
+                                        <!-- ng repeat something -->
+                                        <span><a class="caption" href="#/">welovedogs</a></span>
+                                        <span><a class="caption" href="#/">vcshool</a></span>
+                                        <span><a class="caption" href="#/">wehatecats</a></span>
+                                        <span><a class="caption" href="#/">wehatecats</a></span>
+                                        <span><a class="caption" href="#/">wehatecats</a></span>
+                                        <span><a class="caption" href="#/">wehatecats</a></span>
+                                    </div>
+                                </md-input-container>
                             </form>
                         </md-content>
                     </md-tab>

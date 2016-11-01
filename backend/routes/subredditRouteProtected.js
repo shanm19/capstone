@@ -14,3 +14,12 @@ sub route: /
             along with the timestamp parameter.
     
 */
+
+var express = require('express');
+var subredditRouteProtected = express.Router();
+
+
+
+
+
+module.exports = subredditRouteProtected;

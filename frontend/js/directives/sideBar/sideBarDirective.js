@@ -12,11 +12,12 @@ app.directive('sideBar', function () {
                     parent: angular.element(document.body),
                     targetEvent: $event,
                     templateUrl: 'templates/loginAndSignUp.html',
-                    controller: function ($scope) {
+                    controller: ['$scope', 'UserService', function ($scope, UserService) {
+                        $scope.userService = UserService;
                         $scope.close = function () {
                             $mdDialog.hide();
                         }
-                    }
+                    }]
                 })
             };
         }]

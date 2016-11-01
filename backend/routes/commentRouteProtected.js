@@ -1,9 +1,9 @@
 /* capstone commentProtected */
 
 var express = require("express");
-var Comment = require("../models/comment");
+var Comment = require("../models/commentSchema");
 var User = require("../models/userSchema");
-var Post = require("../models/post");
+var Post = require("../models/postSchema");
 var commentRouteProtected = express.Router();
 var userRouteProtected = express.Router();
 
@@ -116,4 +116,7 @@ module.exports = commentRouteProtected;
  Note:   This is tricky. In a linked list, this can break connection to ALL children. So really,
  you just change comment.isDeleted to true and this will get filtered on the frontend
  to read DELETED. It still exists, but maintaining it preserves the connection to its children.
+
+ agustin - we should also delete the actual comment key value pair, some comments can get really long, no
+ sense in bogging up the db with "deleted" content
  */
