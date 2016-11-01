@@ -37,6 +37,7 @@ var express = require('express');
 var postRoute = express.Router();
 var Post = require('../models/postSchema');
 var Comment = require('../models/commentSchema');
+var User = require('../models/userSchema');
 
 // Mongoosastic indexing not working
 // Post.createMapping(function(err, mapping) {
@@ -136,7 +137,7 @@ postRoute.route("/search")
 postRoute.route("/:postID")
 // $http.get(baseUrl + "/post/:postID")
 // return post object with deeply populated comments
-.get(function(req, res){
+.get(function(req, res){ // ~
 	var postID = req.params.postID;
 	//var populateSections = ["comments", "comments.comments", "comments.comments.comments"];
 	Post.findById(postID)
@@ -159,26 +160,86 @@ postRoute.route("/:postID")
 
 // This is for posting primary level comments, directly to the Post object
 // Note: this method is a temp bypass, originalPoster should be grabbed by req.user._id and be under postRouteProtected
-postRoute.route("/comment/:postID")
+//postRoute.route("/comment/:postID")
 // $http.post(baseUrl + "/post/comment/:postID, { originalPoster: _id, content: "I like cheese" })
 // return comment
-.post(function(req, res){ // ~
+// .post(function(req, res){ // ~
+// 	var postID = req.params.postID;
+// 	Post.findById(postID, function(err, foundPost){
+// 		if(err) {
+// 			res.status(500).send(err);
+// 		} else {
+// 			var newComment = new Comment(req.body);
+// 			newComment.save(function(err, savedComment){
+// 				if(err) res.status(500).send(err);
+// 				foundPost.comments.push(newComment);
+// 				foundPost.save(function(err, savedPost){
+// 					if(err) res.status(500).send(err);
+// 					res.send(newComment);
+// 				})
+// 			});
+// 		}
+// 	});
+// });
+
+// $http.post(baseURL + "/post/comment/:postID", { originalPoster: _id, content: "I like gouda", (parentCommentID: _id) }) -> parentCommentID is optional, for if it's a comment of a comment
+// return comment
+postRoute.route("/comment/:postID")
+.post(function(req, res){
 	var postID = req.params.postID;
-	Post.findById(postID, function(err, foundPost){
-		if(err) {
-			res.status(500).send(err);
-		} else {
-			var newComment = new Comment(req.body);
-			newComment.save(function(err, savedComment){
-				if(err) res.status(500).send(err);
-				foundPost.comments.push(newComment);
-				foundPost.save(function(err, savedPost){
-					if(err) res.status(500).send(err);
-					res.send(newComment);
-				})
+
+	// if the new comment is a secondary-level comment, a child of another comment
+	if(req.body.parentCommentID) {
+		Comment.findById(req.body.parentCommentID, function(err, foundComment){ // add comment to parent's child comments
+			var newComment = new Comment(req.body); // will prune off .parentComment
+			foundComment.comments.push(newComment._id);
+			foundComment.save(function(err, savedComment){
+				if(err) { 
+					res.status(500).send(err);
+				} else {
+					User.findById(req.body.originalPoster, function(err, foundUser){ // add comment to user's postHistory
+						if(err){
+							res.status(500).send(err);
+						} else {
+							foundUser.commentHistory.push(newComment._id);
+							foundUser.save(function(err, savedUser){
+								if(err) res.status(500).send(err);
+								res.send(newComment);
+							})
+						}
+					});
+				}
 			});
-		}
-	});
+		});
+	} else if(!req.body.parentComment){ // if the new comment is a primary-level comment directly to the post
+		Post.findById(postID, function(err, foundPost){ // add comment to the post's comment section
+			if(err){
+				res.status(500).send(err);
+			} else{
+				var newComment = new Comment(req.body); // will prune off .parentComment
+				newComment.save(function(err, savedComment){
+					foundPost.comments.push(savedComment._id);
+					foundPost.save(function(err, savedPost){
+						if(err) { 
+							res.status(500).send(err);
+						} else {
+							User.findById(req.body.originalPoster, function(err, foundUser){
+								if(err) {
+									res.status(500).send(err);
+								} else {
+									foundUser.commentHistory.push(savedComment._id);
+									foundUser.save(function(err, savedUser){
+										if(err) res.status(500).send(err);
+										res.send(savedComment);
+									});
+								}
+							});
+						}
+					})
+				})
+			}
+		});
+	}
 });
 
 module.exports = postRoute;
