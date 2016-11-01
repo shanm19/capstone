@@ -121,6 +121,10 @@ textarea {
 .side-bar .recent {
     border: 1px solid #DDD;
     background: #eee;
+    -webkit-border-radius: .25em;
+    -moz-border-radius: .25em;
+    border-radius: .25em;
+    padding: 0 !important;
 }
 
 /****************************************
