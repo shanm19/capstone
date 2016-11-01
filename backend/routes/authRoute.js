@@ -91,12 +91,13 @@ authRouter.post('/login', function (req, res) {
 
             // Check password
             user.checkPassword(req.body.password, function (err, match) {
-                if (err) throw (err);
-                if (!match) res.status(401).send({
+                if (err) {
+                    res.status(500).send(err)
+                } else if (!match) { res.status(401).send({
                     success: false,
                     message: 'incorrect username or password'
                 });
-                else {
+                } else {
                     var token = jwt.sign(user.toObject(), config.db_secret, {
                         expiresIn: "24h"
                     });
