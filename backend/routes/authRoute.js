@@ -6,31 +6,28 @@ file name: "authRoute"
 base route: /auth
 purpose: Signing up and loggin in a new user
 
-sub route: /signup
-    $http.post(baseUrl + "/auth/signup", { firstName: "John", lastName: "Smith", username: "johnjohn", password: "1234"})
-    return user object 
-
-sub route: /login
-    $http.post(baseUrl + "/auth/login", { username: "johnjohn", password: "1234" } )
-    return user object
-
 */
 
 var express = require('express');
 var authRouter = express.Router();
 var User = require('../models/userSchema');
 var config = require('../config');
+var jwt = require('jsonwebtoken')
 
 authRouter.route('/profile')
     .get(function (req, res) {
         // console.log('profile route ', req)
         console.log('profile req.user ', req.user)
         console.log('profile req.authUser ', req.authUser)
-        // console.log('profile req.body ', req.body)
+            // console.log('profile req.body ', req.body)
         console.log('profile serializeuser ', req._passport.instance._userProperty)
         var user = req._passport.instance._userProperty
         res.send(user)
     })
+
+/*********************************
+    SIGNUP ROUTE
+**********************************/
 
 authRouter.post('/signup', function (req, res) {
     User.find({
@@ -39,26 +36,84 @@ authRouter.post('/signup', function (req, res) {
         if (err) res.status(500).send(err);
         if (existingUser.length) res.json({
             success: false,
+            cause: 'username or email',
             message: "That username is already taken."
         });
         else {
-            var newUser = new User(req.body);
-            newUser.save(function (err, userObj) {
+            User.find({
+                email: req.body.email
+            }, (function (err, existingUser) {
                 if (err) res.status(500).send(err);
-                if (userObj) res.send({
-                    user: userObj,
-                    message: "Successfully created new account.",
-                    success: true
+                if (existingUser.length) res.json({
+                    success: false,
+                    cause: 'username or email',
+                    message: "That email belongs to an existing account"
                 });
                 else {
-                    console.log('user saved, but nothing returned ', userObj);
+                    var newUser = new User(req.body);
+                    newUser.save(function (err, userObj) {
+                        if (err) res.status(500).send(err);
+                        if (userObj) res.send({
+                            user: userObj,
+                            message: "Successfully created new account.",
+                            success: true
+                        });
+                        else {
+                            console.log('user saved, but nothing returned ', userObj);
+                        }
+                    });
                 }
-            });
+            }))
         }
-
     }));
 });
 
+
+/**********************************
+    LOGIN ROUTE
+**********************************/
+
+authRouter.post('/login', function (req, res) {
+    console.log('login user ', req.body)
+    User.findOne({
+        username: req.body.username
+    }, function (err, user) {
+        if (err) res.status(500).send(err);
+
+        // If user isn't in the database'
+        if (!user) res.status(401).send({
+            success: false,
+            message: 'incorrect username or password'
+        });
+
+        // If user is found, check password and create token
+        else if (user) {
+
+            // Check password
+            user.checkPassword(req.body.password, function (err, match) {
+                if (err) {
+                    res.status(500).send(err)
+                } else if (!match) { res.status(401).send({
+                    success: false,
+                    message: 'incorrect username or password'
+                });
+                } else {
+                    var token = jwt.sign(user.toObject(), config.db_secret, {
+                        expiresIn: "24h"
+                    });
+                    res.send({
+                        user: user.withoutPassword(),
+                        token: token,
+                        success: true,
+                        message: 'Here is your token'
+                    })
+                }
+            })
+        }
+    })
+})
+
+// delete user account route
 authRouter.delete('/delete/:userId', function (req, res) {
     var userId = req.params.userId;
     User.findOneAndRemove({

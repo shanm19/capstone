@@ -15,20 +15,20 @@ var userSchema = new Schema({
     },
     username: {
         type: String,
-        // required: true,
-        // unique: true,
+        required: true,
+        unique: true,
         lowercase: true
         //es_indexed: true
     },
     email: {
         type: String,
-        // required: true,
-        // unique: true,
+        required: true,
+        unique: true,
         lowercase: true
     },
     password: {
-        type: String
-        // required: true
+        type: String,
+        required: true
     },
     facebookId: String,
     facebook: {
