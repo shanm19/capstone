@@ -13,10 +13,18 @@ app.service('PostService', ['$http', 'Upload', function ($http, Upload) {
             });
     };
 
+    this.getSubForumList = function () {
+        return $http.get('/subreddit')
+            .then(function (response) {
+                console.log(response.data);
+                return response.data;
+            })
+    };
+
     this.createNewTextPost = function (textPostObj) {
         console.log(textPostObj);
-        return $http.post('/', textPostObj)
-            .then(function(response) {
+        return $http.post('/api/post', textPostObj)
+            .then(function (response) {
                 console.log(response.data);
                 return response.data;
             })
