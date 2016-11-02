@@ -5,7 +5,6 @@ var Comment = require("../models/commentSchema");
 var Post = require("../models/postSchema");
 var commentRouteProtected = express.Router();
 
-
 commentRouteProtected.route("/")
     .get(function(req, res) {
 

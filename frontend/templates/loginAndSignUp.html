@@ -15,8 +15,8 @@
                 </md-input-container>
                 <md-input-container>
                     <label>password</label>
-                    <input type="password" name="password" ng-model="newUser.password" ng-minlength="3"
-                           pattern="(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{3,}$" required>
+                    <input type="password" name="password" ng-model="newUser.password" ng-minlength="8"
+                           pattern=""(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" required>
                     <div ng-messages="signUpForm.password.$error" style="color: maroon" role="alert">
                         <div ng-message="minlength">password is too short</div>
                         <div ng-message="required">you must enter a password</div>
