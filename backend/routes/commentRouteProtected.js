@@ -133,4 +133,6 @@ module.exports = commentRouteProtected;
  Note:   This is tricky. In a linked list, this can break connection to ALL children. So really,
  you just change comment.isDeleted to true and this will get filtered on the frontend
  to read DELETED. It still exists, but maintaining it preserves the connection to its children.
+
+ agustin - we should also delete the actual comment key value pair, some comments can get really long
  */

@@ -17,6 +17,10 @@ app.config(['$routeProvider', '$mdThemingProvider', function ($routeProvider, $m
         })
         .when('/newsubforum', {
             templateUrl: './templates/createSubForum.html'
+        })
+        .when('/post/:id', {
+            templateUrl: './templates/singlePost.html',
+            controller: 'PostController'
         });
 
     $mdThemingProvider.theme('forms')
