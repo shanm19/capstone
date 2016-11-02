@@ -8,12 +8,12 @@ var postSchema = new Schema({
     },
     // in modern vernacular, referred to as OP
     originalPoster: {
-        type: Schema.Type.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: 'User',
         required: true
     },
     subreddit: {
-        type: Schema.Type.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: 'Subreddit',
         required: true
     },
@@ -23,7 +23,7 @@ var postSchema = new Schema({
     // Evan is exploring a 3rd party option, like Imgur
     image: String,
     comments: [{
-        type: Schema.Type.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: 'Comment'
     }],
     upVotes: {
@@ -48,7 +48,7 @@ var postSchema = new Schema({
         enum: ['nsfw', 'sfw', 'none'],
         default: 'none'
     }]
-});
+}, { timestamps: true });
 
 
 module.exports = mongoose.model('Post', postSchema);

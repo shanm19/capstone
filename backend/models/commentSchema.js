@@ -3,7 +3,7 @@ var Schema = mongoose.Schema;
 
 var commentSchema = new Schema({
     originalPoster: {
-        type: Schema.Type.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: 'User',
         required: true
     },
@@ -12,7 +12,7 @@ var commentSchema = new Schema({
         required: true
     },
     childComments: [{
-        type: Schema.Type.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: 'Comment'
     }],
     upVotes: {

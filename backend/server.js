@@ -32,16 +32,16 @@ app.use(express.static(path.join(__dirname, "..", "/frontend")));
 
 // Routes requiring authentication
 app.use("/api", expressJwt({secret:config.db_secret}));
-//app.use("/api/user", require("./routes/userRouteProtected"));
+app.use("/api/user", require("./routes/userRouteProtected"));
 //app.use("/api/admin", require("./routes/adminRoute"));
 //app.use("/api/post", require("./routes/postRouteProtected"));
-//app.use("/api/subreddit", require("./routes/subredditRouteProtected"));
-//app.use("/api/comment", require("./routes/commentRouteProtected"));
+app.use("/api/subreddit", require("./routes/subredditRouteProtected"));
+app.use("/api/comment", require("./routes/commentRouteProtected"));
 
 // Routes without authentication
 //app.use("/auth", require("./routes/authRoute"));
 //app.use("/post", require("./routes/postRoute"));
-//app.use("/subreddit", require("./routes/subredditRoute"));
+app.use("/subreddit", require("./routes/subredditRoute"));
 //app.use("/comment", require("./routes/commentRoute"));
 
 

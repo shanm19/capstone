@@ -1,3 +1,53 @@
+/* capstone subredditRoute.js */
+
+var express = require("express");
+var Subreddit = require("../models/subredditSchema");
+var subredditRoute = express.Router();
+
+subredditRoute.route("/")
+    .get(function(req, res) {
+
+            Subreddit.find({}, function(err, subreddits) {
+
+                if (err) res.status(500).send(err);
+                else {
+
+                    var subredditNames = [];
+
+                    subreddits.forEach(function(subreddit) {
+
+                        subredditNames.push(subreddit.name);
+                    });
+                    res.send(subredditNames);
+                }
+            });
+    });
+
+subredditRoute.route("/search")
+    .get(function(req, res) {
+
+        Subreddit.findOne({name: req.query.name})
+
+            .populate("posts")
+            .exec(function(err, subredditFound) {
+
+                if (err) res.status(500).send(err);
+                res.send(subredditFound);
+            });
+    });
+
+subredditRoute.route("/:SubredditID")
+    .get(function(req, res) {
+
+        Subreddit.findOne({_id: req.params.id}, function(err, subredditFound) {
+
+            if (err) res.status(500).send(err);
+            res.send(subredditFound);
+        });
+    });
+
+module.exports = subredditRoute;
+
 /*
 
 Subreddit

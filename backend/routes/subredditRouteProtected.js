@@ -1,3 +1,85 @@
+/* capstone subredditRouteProtected */
+
+var express = require("express");
+var Subreddit = require("../models/subredditSchema");
+var subredditRouteProtected = express.Router();
+
+subredditRouteProtected.route("/search")
+    .get(function(req, res) {
+
+        var time = req.query.time;
+        var date = new Date();
+
+        switch (time) {
+            case "minutes":
+                date.setMinutes(date.getMinutes() -1);
+                break;
+            case "hour":
+                date.setHours(date.getHours() - 1);
+                break;
+            case "day":
+                date.setDate(date.getDate() - 1);
+                break;
+            case "week":
+                date.setDate(date.getDate() - 7);
+                break;
+            case "month":
+                date.setMonth(date.getMonth() - 1);
+                break;
+            case "year":
+                date.setFullYear(date.getFullYear());
+                break;
+        }
+
+        Subreddit.find({subscribers: req.user_id}, function(err, subreddits) {
+
+            if (err) res.status(500).send(err);
+            else {
+
+                var postsArray = [];
+
+                subreddits.forEach(function(subreddit) {
+
+                    Subreddit.findOne({_id: subreddit._id})
+
+                        .populate("posts")
+                            .exec(function(err, subredditFound) {
+
+                                if (err) res.status(500).send(err);
+                                else {
+
+                                    if (subredditFound.posts.length) {
+
+                                        subredditFound.posts.forEach(function (post) {
+
+                                            if (post.timestamps.createdAt >= date)
+                                                postsArray.push(subredditFound.post);
+                                        });
+                                    }
+                                }
+                            });
+                });
+                res.send(postsArray);
+            }
+        });
+    });
+
+subredditRouteProtected.route("/")
+    .post(function(req, res) {
+
+        var newSubreddit = new Subreddit(req.body);
+
+        newSubreddit.creator = req.user_id;
+
+        newSubreddit.save(function(err, newSubredditSaved) {
+
+            if (err) res.status(500).send(err);
+            res.send(newSubredditSaved);
+        });
+    });
+
+module.exports = subredditRouteProtected;
+
 /*
 
 Subreddit Protected
