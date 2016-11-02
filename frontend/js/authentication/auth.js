@@ -5,10 +5,6 @@ var app = angular.module('MockReddit.Auth', ['ngRoute', 'ngAnimate']);
 // only the Logout has a route with a view because signup and login are handled in pop-up modals
 app.config(["$routeProvider", function ($routeProvider) {
     $routeProvider
-        .when('/logout', {
-            templateUrl: 'js/authentication/templates/logout.html',
-            controller: 'LogoutController'
-        })
         .when('/auth/profile', {
             templateUrl: 'js/authentication/templates/profile.html',
             controller: 'ProfileController'
@@ -18,30 +14,35 @@ app.config(["$routeProvider", function ($routeProvider) {
 // Controller for the login/signup navbar
 app.controller('AuthController', ["$scope", "UserService", function ($scope, UserService) {
 
-    $scope.facebookLogin = function() {
+    $scope.facebookLogin = function () {
         UserService.facebook()
-        .then(function(response){
-            console.log('controller response ', response);
-        })
+            .then(function (response) {
+                console.log('controller response ', response);
+            })
     }
-    
-    $scope.googleLogin = function() {
+
+    $scope.googleLogin = function () {
         UserService.google()
-        .then(function(response){
-            console.log('controller response ', response);
-        })
+            .then(function (response) {
+                console.log('controller response ', response);
+            })
     }
 
-
+    $scope.userService = UserService;
+    $scope.permission = UserService.isAuthenticated();
+    $scope.$on('authenticate', function () {
+        console.log('auth')
+        $scope.permission = UserService.isAuthenticated();
+    });
     // Retrieve the logged-in user's' information after a page reload using the Authentication Token
-    $scope.getUserFromToken = function () {
-        if (UserService.isAuthenticated()) {
-            UserService.getUserFromToken()
-                .then(function (response) {
-                    UserService.user = response;
-                });
-        }
-    }();
+    // $scope.getUserFromToken = function () {
+    //     if (UserService.isAuthenticated()) {
+    //         UserService.getUserFromToken()
+    //             .then(function (response) {
+    //                 UserService.user = response;
+    //             });
+    //     }
+    // }();
 
 }]);
 
@@ -53,6 +54,7 @@ app.service('TokenService', function () {
     }
 
     this.getToken = function () {
+        console.log(userToken)
         return localStorage[userToken];
     }
 
@@ -62,42 +64,48 @@ app.service('TokenService', function () {
 });
 
 // Service to handle user signup, login, and logout
-app.service('UserService', ["$http", "$location", "TokenService", function ($http, $location, TokenService) {
+app.service('UserService', ["$rootScope", "$http", "$location", "TokenService", function ($rootScope, $http, $location, TokenService) {
     var self = this;
     self.user = {};
 
-
+    /**
+     * Broadcast event to scopes that are listening
+     * for it. Updates authentication status.
+     */
+    function updateAuthentication() {
+        $rootScope.$broadcast('authenticate');
+    }
 
 ///////////////////////////////////////
 ///             OAUTH               ///
 ///////////////////////////////////////
 
     // SIGNUP/LOGIN WITH FACEBOOK
-    this.facebook = function(){
+    this.facebook = function () {
         return $http.get('/auth/facebook')
-        .then(function(response){
-            console.log('Userservice facebook res ', response)
-            this.user = response.data
-            return response.data;
-        }, function(error){
-            console.log('Userservice facebook error ', error);
-        })
-    }
-    
-    // SIGNUP/LOGIN WITH GOOGLE
-    this.google = function(){
-        return $http.get('/auth/google' + '?apikey=721050503042-f2qipv794269gifb9de6fpdo4cs7dkjp.apps.googleusercontent.com')
-        .then(function(response){
-            console.log('Userservice google res ', response)
-            this.user = response.data
-            return response.data;
-        }, function(error){
-            console.log('Userservice google error ', error);
-        })
+            .then(function (response) {
+                console.log('Userservice facebook res ', response)
+                this.user = response.data
+                return response.data;
+            }, function (error) {
+                console.log('Userservice facebook error ', error);
+            })
     }
 
-    
- // signup with local auth   
+    // SIGNUP/LOGIN WITH GOOGLE
+    this.google = function () {
+        return $http.get('/auth/google' + '?apikey=721050503042-f2qipv794269gifb9de6fpdo4cs7dkjp.apps.googleusercontent.com')
+            .then(function (response) {
+                console.log('Userservice google res ', response)
+                this.user = response.data
+                return response.data;
+            }, function (error) {
+                console.log('Userservice google error ', error);
+            })
+    }
+
+
+    // signup with local auth
     this.signup = function (userObj) {
         return $http.post('/auth/signup', userObj)
             .then(function (response) {
@@ -112,39 +120,41 @@ app.service('UserService', ["$http", "$location", "TokenService", function ($htt
             .then(function (response) {
                 TokenService.setToken(response.data.token);
                 self.user = response.data.user;
+                updateAuthentication();
                 return (response)
             }, function (error) {
                 console.log('UserService login error ', error);
-                return error
+                return error;
             })
     }
 
     this.logout = function () {
         TokenService.removeToken();
-        $location.path('/logout');
-    }
+        $location.path('/');
+        updateAuthentication();
+    };
 
     this.isAuthenticated = function () {
         return !!TokenService.getToken();
-    }
+    };
 
-    this.getUserFromToken = function () {
-        if (this.user.email) {
-            return this.user
-        } else if (this.isAuthenticated()) {
-            return $http.post('/auth/verifyuser', {
-                    token: TokenService.getToken()
-                })
-                .then(function (response) {
-                    return response.data
-                }, function (error) {
-                    console.log('Error verifying loggedin user: ', error)
-                    $location.path('/');
-                })
-        } else {
-            return 'user not logged in';
-        }
-    }
+    // this.getUserFromToken = function () {
+    //     if (this.user.email) {
+    //         return this.user
+    //     } else if (this.isAuthenticated()) {
+    //         return $http.post('/auth/verifyuser', {
+    //                 token: TokenService.getToken()
+    //             })
+    //             .then(function (response) {
+    //                 return response.data
+    //             }, function (error) {
+    //                 console.log('Error verifying loggedin user: ', error)
+    //                 $location.path('/');
+    //             })
+    //     } else {
+    //         return 'user not logged in';
+    //     }
+    // }
 
 }]);
 

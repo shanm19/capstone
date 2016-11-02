@@ -20,6 +20,11 @@ var postSchema = new Schema({
         ref: 'Subreddit',
         // required: true
     },
+    type: {
+        type: String,
+        enum: ['text', 'link'],
+        required: true
+    },
     // posts can just be images, gifs, or videos, so this isn't required
     siteUrl: String,
     // it's currently unclear how we're hosting images
