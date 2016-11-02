@@ -12,8 +12,8 @@ var postSchema = new Schema({
     // in modern vernacular, referred to as OP
     originalPoster: {
         type: Schema.Types.ObjectId,
-        ref: 'User'
-        // required: true
+        ref: 'User',
+        required: true
     },
     subreddit: {
         type: Schema.Types.ObjectId,

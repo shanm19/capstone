@@ -8,50 +8,42 @@
             </md-input-container>
         </form>
         <div class="login" md-theme="blue">
-            <div ng-if="!userService.isAuthenticated()" class="login" md-theme="blue">
-                <span><small>Login or <a ng-click="showAuthForm()"><b>signup</b></a></small></span>
-                <form name="signUpForm" layout="column">
-                    <div class="login" layout>
-                        <md-input-container flex="50">
-                            <label>username</label>
-                            <input type="text">
-                        </md-input-container>
-                        <md-input-container flex="50">
-                            <label>password</label>
-                            <input type="password">
-                        </md-input-container>
-                    </div>
-                    <md-button class="login-button md-raised md-primary" type="submit">login</md-button>
-                </form>
-                <md-content layout-margin>
-                    Or Log In Using:
-                    <div layout layout-align="space-around center" ng-controller="AuthController">
-                        <md-button class="md-raised md-primary" href="auth/facebook" style="background-color:#4267B2"
-                                   flex="50" layout><i class="fa fa-facebook fa-lg" flex="20"></i> <span
-                                style="font-size:12px" flex layout layout-align="center">Facebook</span></md-button>
-                        <md-button class="md-raised md-primary" href="auth/google" style="background-color:#db3236"
-                                   flex="50" layout><i class="fa fa-google-plus fa-lg" flex="30"></i> <span
-                                style="font-size:12px" flex layout layout-align="center">Google</span></md-button>
-                    </div>
-                </md-content>
+            <span><small>Login or <a ng-click="showAuthForm()">signup</a></small></span>
+
+            <form name="loginForm" layout="column" ng-controller="LoginController">
+                <div class="login" layout>
+                    <md-input-container flex="50">
+                        <label>username</label>
+                        <input type="text" ng-model="user.username">
+                    </md-input-container>
+                    <md-input-container flex="50">
+                        <label>password</label>
+                        <input type="password" ng-model="user.password">
+                    </md-input-container>
+                </div>
+                <p class="error" ng-show="loginError">{{message}}</p>
+                <md-button class="login-button md-raised md-primary" type="submit" ng-click="login($event)">login
+                </md-button>
+            </form>
+            <md-content layout-margin>
+            </md-content>
+        </div>
+    </div>
+    <div class="main-buttons" md-theme="cyan" layout="column" layout-align="center space-around" layout-padding>
+        <md-button class="full-width md-accent md-raised" href="#/newpost">Submit a new Post</md-button>
+        <md-button class="full-width md-accent md-raised" href="#/newsubforum">Create your own sub forum</md-button>
+    </div>
+    <div class="recent">
+        <md-subheader md-theme="cyan">recently viewed</md-subheader>
+        <!-- ng-repeat -->
+        <div class="caption m-a-half " layout layout-align="start center">
+            <div class="vote m-a-half" layout="column" layout-align="center center">
+                <i class="material-icons">keyboard_arrow_upward</i>
+                <i class="material-icons">keyboard_arrow_downward</i>
             </div>
-        </div>
-        <div class="main-buttons" md-theme="cyan" layout="column" layout-align="center space-around" layout-padding>
-            <md-button class="full-width md-accent md-raised" href="#/newpost">Submit a new Post</md-button>
-            <md-button class="full-width md-accent md-raised" href="#/newsubforum">Create your own sub forum</md-button>
-        </div>
-        <div class="recent">
-            <md-subheader md-theme="cyan">recently viewed</md-subheader>
-            <!-- ng-repeat -->
-            <div class="caption m-a-half " layout layout-align="start center">
-                <div class="vote m-a-half" layout="column" layout-align="center center">
-                    <i class="material-icons">keyboard_arrow_upward</i>
-                    <i class="material-icons">keyboard_arrow_downward</i>
-                </div>
-                <div layout="column">
-                    <a href="">I like dogs</a>
-                    <span class="caption dark">600 | <a href="">comment</a></span>
-                </div>
+            <div layout="column">
+                <a href="">I like dogs</a>
+                <span class="caption dark">600 | <a href="">comment</a></span>
             </div>
 
             <div class="caption m-a-half" layout layout-align="start center">
