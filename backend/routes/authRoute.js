@@ -30,7 +30,7 @@ authRouter.route('/profile')
 **********************************/
 
 authRouter.post('/signup', function (req, res) {
-    User.findOne({
+    User.find({
         username: req.body.username.toLowerCase()
     }, (function (err, existingUser) {
         if (err) res.status(500).send(err);
@@ -40,7 +40,7 @@ authRouter.post('/signup', function (req, res) {
             message: "That username is already taken."
         });
         else {
-            User.findOne({
+            User.find({
                 email: req.body.email.toLowerCase()
             }, (function (err, existingUser) {
                 if (err) res.status(500).send(err);

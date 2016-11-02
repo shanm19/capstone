@@ -1,12 +1,11 @@
-<md-dialog class="sign-up" aria-label="List dialog" ng-cloak>
+<md-dialog class="sign-up" ng-class="{'success-login': success}" aria-label="List dialog" ng-cloak>
     <md-dialog-content layout="column" layout-gt-xs="row">
-        <div class layout="column" layout-align="center center">
+        <div ng-hide="success" layout="column" layout-align="center center">
             <h3>create a new account</h3>
-            <form name="signUpForm" ng-submit="signup()" md-theme="forms" layout="column">
+            <form name="signUpForm" ng-submit="signup(newUser)" md-theme="forms" layout="column">
                 <md-input-container>
                     <label>username</label>
-                    <input type="text" name="username" ng-model="newUser.username" ng-minlength="4" ng-maxlength="15"
-                           required>
+                    <input type="text" name="username" ng-model="newUser.username" ng-minlength="4" ng-maxlength="15" required>
                     <div ng-messages="signUpForm.username.$error" style="color: maroon" role="alert">
                         <div ng-message="minlength">username name is too short</div>
                         <div ng-message="maxlength">username name is too long</div>
@@ -40,10 +39,7 @@
                     </div>
                 </md-input-container>
                 <p class="error" ng-show="duplicate">{{message}}</p>
-                <p class="success-message" ng-show="success">Your account was created successfully!</br>Please login on
-                    the next panel.</p>
-                <md-button ng-click="signup()" type="submit" class="md-raised md-accent"
-                           ng-disabled="signUpForm.$invalid">sign up
+                <md-button type="submit" class="md-raised md-accent" ng-disabled="signUpForm.$invalid">sign up
                 </md-button>
             </form>
         </div>
@@ -71,7 +67,7 @@
         </div>
     </md-dialog-content>
     <md-dialog-actions>
-        <md-button class="md-primary md-raised fb" md-theme="blue" layout layout-align="start center">
+        <md-button ng-hide="success" class="md-primary md-raised fb" md-theme="blue" layout layout-align="start center">
             <img src="../assets/20140221023021!Facebook_icon.svg" alt="facebook icon">
             <small>Log In with Facebook</small>
         </md-button>
