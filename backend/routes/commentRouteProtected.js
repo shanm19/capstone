@@ -5,48 +5,49 @@ var Comment = require("../models/commentSchema");
 var Post = require("../models/postSchema");
 var commentRouteProtected = express.Router();
 
+
 commentRouteProtected.route("/")
     .get(function(req, res) {
 
-        Comment.find({originalPoster: req.user._id},function(err, userComments) {
+        Comment.find({originalPoster: req.user._id}, function(err, userComments) {
 
             if (err) res.status(500).send(err);
             res.send(userComments);
         });
     })
 
-    .post(function(req, res) {
+   .post(function(req, res) {
 
-        var newComment = new Comment(req.body);
+       var newComment = new Comment(req.body);
 
-        var post_id = req.body.postID;
+       var post_id = req.body.postID;
 
-        if (post_id) {
+       if (post_id) {
 
-            Post.findOne({_id:post_id}, function (err, post) {
-                if (err) res.status(500).send(err);
-                else {
+           Post.findOne({_id: post_id}, function (err, post) {
+               if (err) res.status(500).send(err);
+               else {
 
-                    post.comments.push(newComment._id);
-                    post.save();
-                    res.send(newComment);
-                }
-            })
-        }
-        else {
+                   post.comments.push(newComment._id);
+                   post.save();
+                   res.send(newComment);
+               }
+           })
+       }
+       else {
 
-            Comment.findOne({_id: req.body.parentCommentID}, function (err, comment) {
+           Comment.findOne({_id: req.body.parentCommentID}, function (err, comment) {
 
-                if (err) res.status(500).send(err);
-                else {
+               if (err) res.status(500).send(err);
+               else {
 
-                    comment.comments.push(newComment._id);
-                    comment.save();
-                    res.send(newComment);
-                }
-            })
-        }
-    });
+                   comment.comments.unshift(newComment._id);
+                   comment.save();
+                   res.send(newComment);
+               }
+           })
+       }
+   });
 
 commentRouteProtected.route("/:commentID")
     .put(function(req, res) {
@@ -58,6 +59,7 @@ commentRouteProtected.route("/:commentID")
 
                 comment.editHistory.unshift(comment.content);
                 comment.content = req.body.editedContent;
+                comment.save();
                 res.send(comment);
             }
         });
@@ -65,16 +67,17 @@ commentRouteProtected.route("/:commentID")
 
     .delete(function(req, res) {
 
-        Comment.findOne({_id:req.params.id}, function(err, comment) {
+       Comment.findOne({_id:req.params.id}, function(err, comment) {
 
-                if (err) res.status(500).send(err);
-                else {
+               if (err) res.status(500).send(err);
+               else {
 
-                    comment.isDeleted = true;
-                    res.send(comment);
-                }
-        })
-    });
+                   comment.isDeleted = true;
+                   comment.save();
+                   res.send(comment);
+               }
+       })
+   });
 
 module.exports = commentRouteProtected;
 
@@ -92,8 +95,13 @@ module.exports = commentRouteProtected;
  ---
  $http.post(baseUrl + "/api/comment", {
  content: "Stupid pun comment for cheap laughs.",
+<<<<<<< HEAD
  parentCommentID: comment._id,
  postID: post._id
+=======
+ parentComment: comment._id,
+ postID: _id
+>>>>>>> dev
  })
  return comment object
  Note:  This one is highly debatable. Frankly, I don't know how to do nested comments the best way.

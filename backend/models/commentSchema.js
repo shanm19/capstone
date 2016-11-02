@@ -1,5 +1,8 @@
 var mongoose = require('mongoose');
+//var mongoosastic = require('mongoosastic');
+var deepPopulate = require('mongoose-deep-populate')(mongoose);
 var Schema = mongoose.Schema;
+
 
 var commentSchema = new Schema({
     originalPoster: {
@@ -10,8 +13,9 @@ var commentSchema = new Schema({
     content: {
         type: String,
         required: true
+        //es_indexed: true
     },
-    childComments: [{
+    comments: [{
         type: Schema.Types.ObjectId,
         ref: 'Comment'
     }],
@@ -36,7 +40,9 @@ var commentSchema = new Schema({
         type: Boolean,
         default: false
     }
-});
+}, { timestamps: true });
 
+//commentSchema.plugin(mongoosastic);
+commentSchema.plugin(deepPopulate);
 
 module.exports = mongoose.model('Comment', commentSchema);
