@@ -5,23 +5,20 @@ var User = require("../models/userSchema");
 var userRouteProtected = express.Router();
 
 // Get the user object from user collection based on user id and return.
-userRouteProtected.route("/api/user") // .route("/")
+userRouteProtected.route("/")
     .get(function(req, res) {
 
-        var user_id = req.user._id;
-
-        User.find(user_id, function(err, user) { // User.findById; you can just do find, but you'd have to send a search object {_id: user_id}
+        User.find({_id: req.user._id}, function(err, user) {
 
             if (err) res.status(500).send(err);
             res.send(user);
         });
     })
+
     // Save the updated user object in the user collection.
     .put(function(req, res) {
 
-        var user_id = req.user._id;
-
-        User.findOneAndUpdate(user_id, req.body, function(err, updatedUser) { // findByIdAndUpdate; also, adding {new:true} as a parameter after req.body will return the updated user
+        User.findOneAndUpdate({_id: req.user._id}, req.body, function(err, updatedUser) {
 
             if (err) res.status(500).send(err);
             res.send(updatedUser);
@@ -31,9 +28,7 @@ userRouteProtected.route("/api/user") // .route("/")
     // Delete the user object from the user collection.
     .delete(function(req, res) {
 
-        var user_id = req.user._id;
-
-        User.findOneAndRemove(user_id, function(err, user) { // findByIdAndRemove
+        User.findOneAndRemove({_id:req.user._id}, function(err, user) {
 
             if (err) req.status(500).send(err);
             res.send(user);

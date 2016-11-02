@@ -9,11 +9,12 @@ app.directive('sideBar', function () {
         controller: ['$scope', '$mdDialog', "$timeout", 'UserService', function ($scope, $mdDialog, $timeout, UserService) {
             $scope.showAuthForm = function ($event) {
                 $mdDialog.show({
-                    parent: angular.element(document.body),
-                    targetEvent: $event,
-                    templateUrl: 'templates/loginAndSignUp.html',
-                    scope: $scope
-                })
+                        parent: angular.element(document.body),
+                        targetEvent: $event,
+                        templateUrl: 'templates/loginAndSignUp.html',
+                    < < < < < < < HEAD
+                scope: $scope
+            })
             };
             $scope.userService = UserService;
 

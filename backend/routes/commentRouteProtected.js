@@ -5,25 +5,26 @@ var Comment = require("../models/commentSchema");
 var Post = require("../models/postSchema");
 var commentRouteProtected = express.Router();
 
-commentRouteProtected.route = ("/api/comment")  // "/api/comment" is written in the server.js, so anything getting to this file already has '/api/comment' prefixed to it
-   .get(function(req, res) {                    // commentRouteProtected.route("/")
 
-       Comment.find({originalPoster: req.user_id},function(err, userComments) { // req.user._id
+commentRouteProtected.route("/")
+    .get(function(req, res) {
 
-           if (err) res.status(500).send(err);
-           res.send(userComments);
-       });
-   })
+        Comment.find({originalPoster: req.user._id}, function(err, userComments) {
+
+            if (err) res.status(500).send(err);
+            res.send(userComments);
+        });
+    })
 
    .post(function(req, res) {
 
        var newComment = new Comment(req.body);
 
-       var post_id = req.post._id; // req.body.postID
+       var post_id = req.body.postID;
 
        if (post_id) {
 
-           Post.findOne({_id:post_id}, function (err, post) {
+           Post.findOne({_id: post_id}, function (err, post) {
                if (err) res.status(500).send(err);
                else {
 
@@ -35,12 +36,12 @@ commentRouteProtected.route = ("/api/comment")  // "/api/comment" is written in 
        }
        else {
 
-           Comment.findOne({_id:req.comment._id}, function (err, comment) { // _id: req.body.parentCommentID
+           Comment.findOne({_id: req.body.parentCommentID}, function (err, comment) {
 
                if (err) res.status(500).send(err);
                else {
 
-                   comment.childComments.push(comment_id); // this is my fault; I changed it to just be 'comments' to be easier to deep populate; also, it should push newComment._id
+                   comment.comments.unshift(newComment._id);
                    comment.save();
                    res.send(newComment);
                }
@@ -48,29 +49,31 @@ commentRouteProtected.route = ("/api/comment")  // "/api/comment" is written in 
        }
    });
 
-commentRouteProtected.route = ("/api/comment/:id") // commentRouteProtected.route("/:commentID")
-   .put(function(req, res) {
+commentRouteProtected.route("/:commentID")
+    .put(function(req, res) {
 
-       Comment.findOne({_id:req.params.id}, function(err, comment) {
+        Comment.findOne({_id:req.params.id}, function(err, comment) {
 
-           if (err) res.status(500).send(err);
-           else if (req.user._id === comment.originalPoster.user._id) { // 'comment.originalPoster' is already Reference ID
+            if (err) res.status(500).send(err);
+            else if (req.user._id === comment.originalPoster) {
 
-               comment.editHistory.push(comment.content); // .unshift(comment.content); it works fine with .push, but unshift will place the most recent comment at the front of the array so the most recent edit is first
-               comment.content = req.body.content; // req.body.editedComment
-               res.send(comment); // comment.save();
-           }
-       });
-   })
+                comment.editHistory.unshift(comment.content);
+                comment.content = req.body.editedContent;
+                comment.save();
+                res.send(comment);
+            }
+        });
+    })
 
-   .delete(function(req, res) {
+    .delete(function(req, res) {
 
        Comment.findOne({_id:req.params.id}, function(err, comment) {
 
                if (err) res.status(500).send(err);
                else {
 
-                   comment.isDeleted = true; // comment.save();
+                   comment.isDeleted = true;
+                   comment.save();
                    res.send(comment);
                }
        })
@@ -92,8 +95,13 @@ module.exports = commentRouteProtected;
  ---
  $http.post(baseUrl + "/api/comment", {
  content: "Stupid pun comment for cheap laughs.",
+<<<<<<< HEAD
+ parentCommentID: comment._id,
+ postID: post._id
+=======
  parentComment: comment._id,
  postID: _id
+>>>>>>> dev
  })
  return comment object
  Note:  This one is highly debatable. Frankly, I don't know how to do nested comments the best way.
