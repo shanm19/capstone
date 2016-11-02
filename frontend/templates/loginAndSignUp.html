@@ -1,4 +1,4 @@
-<md-dialog class="sign-up" aria-label="List dialog">
+<md-dialog class="sign-up" aria-label="List dialog" ng-cloak>
     <md-dialog-content layout="column" layout-gt-xs="row">
         <div class layout="column" layout-align="center center">
             <h3>create a new account</h3>
@@ -15,8 +15,8 @@
                 </md-input-container>
                 <md-input-container>
                     <label>password</label>
-                    <input type="password" name="password" ng-model="newUser.password" ng-minlength="3"
-                           pattern="(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{3,}$" required>
+                    <input type="password" name="password" ng-model="newUser.password" ng-minlength="8"
+                           pattern="(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" required>
                     <div ng-messages="signUpForm.password.$error" style="color: maroon" role="alert">
                         <div ng-message="minlength">password is too short</div>
                         <div ng-message="required">you must enter a password</div>
@@ -40,30 +40,32 @@
                     </div>
                 </md-input-container>
                 <p class="error" ng-show="duplicate">{{message}}</p>
-                <p class="success-message" ng-show="success">Your account was created successfully!</br>Please login on the next panel.</p>
-                <md-button ng-click="signup()" type="submit" class="md-raised md-accent" ng-disabled="signUpForm.$invalid">sign up
+                <p class="success-message" ng-show="success">Your account was created successfully!</br>Please login on
+                    the next panel.</p>
+                <md-button ng-click="signup()" type="submit" class="md-raised md-accent"
+                           ng-disabled="signUpForm.$invalid">sign up
                 </md-button>
             </form>
         </div>
         <md-divider></md-divider>
         <div layout="column" layout-align="start center">
             <h3>login</h3>
-            <form name="loginForm" ng-submit="login()" md-theme="forms" layout="column">
+            <form name="loginFormDialog" ng-submit="login(userDialog, loginFormDialog)" md-theme="forms" layout="column">
                 <md-input-container>
                     <label>username</label>
-                    <input type="text" name="username" ng-model="user.username" required>
-                    <div ng-messages="loginForm.username.$error" style="color:maroon" role="alert">
+                    <input type="text" name="username" ng-model="userDialog.username" required>
+                    <div ng-messages="loginFormDialog.username.$error" style="color:maroon" role="alert">
                         <div ng-message="required">Username is required</div>
                     </div>
                 </md-input-container>
                 <md-input-container>
                     <label>password</label>
-                    <input type="password" name="password" ng-model="user.password" required>
-                    <div ng-messages="loginForm.password.$error" style="color:maroon" role="alert">
+                    <input type="password" name="password" ng-model="userDialog.password" required>
+                    <div ng-messages="loginFormDialog.password.$error" style="color:maroon" role="alert">
                         <div ng-message="required">password is required</div>
                     </div>
                 </md-input-container>
-                <md-button type="submit" class="md-raised md-accent" ng-disabled="loginForm.$invalid">login
+                <md-button type="submit" class="md-raised md-accent" ng-disabled="loginFormDialog.$invalid">login
                 </md-button>
             </form>
         </div>

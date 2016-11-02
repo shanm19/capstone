@@ -6,37 +6,52 @@ app.directive('sideBar', function () {
     return {
         restrict: 'E',
         templateUrl: './js/directives/sideBar/sideBar.html',
-        controller: ['$scope', '$mdDialog', "$timeout", 'UserService', function ($scope, $mdDialog, $timeout, UserService) {
+        controller: ['$rootScope', '$scope', '$mdDialog', '$timeout', '$location', 'UserService', function ($rootScope, $scope, $mdDialog, $timeout, $location, UserService) {
+
+            $rootScope.$on('authenticate', function () {
+                $scope.permission = UserService.isAuthenticated()
+            });
+
+            $scope.permission = UserService.isAuthenticated();
             $scope.showAuthForm = function ($event) {
                 $mdDialog.show({
-                        parent: angular.element(document.body),
-                        targetEvent: $event,
-                        templateUrl: 'templates/loginAndSignUp.html',
-                    < < < < < < < HEAD
-                scope: $scope
-            })
+                    parent: angular.element(document.body),
+                    targetEvent: $event,
+                    templateUrl: 'templates/loginAndSignUp.html',
+                    scope: $scope,
+                    preserveScope: true
+                })
             };
-            $scope.userService = UserService;
-
-            $scope.signup = function () {
-                UserService.signup($scope.newUser)
-                    .then(function (response) {
-                        console.log(response);
-                        $scope.close();
-                    });
-            };
-
-            $scope.login = function () {
-                UserService.login($scope.user)
-                    .then(function (response) {
-                        console.log(response);
-                        $scope.close();
-                    })
-            };
+            $scope.location = $location;
 
             $scope.close = function () {
                 $mdDialog.hide();
             };
+
+            $scope.login = function (user, form) {
+
+                UserService.login(user)
+                    .then(function (response) {
+                        if (response.status === 401 && response.statusText === 'Unauthorized') {
+                            $scope.message = response.data.message;
+                            $scope.loginError = true;
+                            $timeout(function () {
+                                $scope.loginError = false;
+                            }, 3000);
+                        } else {
+                            $scope.user = {};
+                            form.$setValidity();
+                            form.$setPristine();
+                            form.$setUntouched();
+                            $scope.newUser = {};
+                            $scope.close();
+                            $scope.permission = UserService.isAuthenticated();
+                            console.log($scope.permission);
+                        }
+                        console.log('login ', response);
+
+                    })
+            }
 
             $scope.signup = function () {
                 $scope.duplicate = false;
@@ -53,7 +68,6 @@ app.directive('sideBar', function () {
                         } else {
                             $scope.success = true;
                             UserService.newSignup = response.user;
-
                         }
                     })
             }

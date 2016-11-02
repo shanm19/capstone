@@ -12,7 +12,7 @@ var express = require('express');
 var authRouter = express.Router();
 var User = require('../models/userSchema');
 var config = require('../config');
-var jwt = require('jsonwebtoken')
+var jwt = require('jsonwebtoken');
 
 authRouter.route('/profile')
     .get(function (req, res) {
@@ -26,12 +26,12 @@ authRouter.route('/profile')
     })
 
 /*********************************
-    SIGNUP ROUTE
+            SIGNUP ROUTE
 **********************************/
 
 authRouter.post('/signup', function (req, res) {
-    User.find({
-        username: req.body.username
+    User.findOne({
+        username: req.body.username.toLowerCase()
     }, (function (err, existingUser) {
         if (err) res.status(500).send(err);
         if (existingUser.length) res.json({
@@ -40,8 +40,8 @@ authRouter.post('/signup', function (req, res) {
             message: "That username is already taken."
         });
         else {
-            User.find({
-                email: req.body.email
+            User.findOne({
+                email: req.body.email.toLowerCase()
             }, (function (err, existingUser) {
                 if (err) res.status(500).send(err);
                 if (existingUser.length) res.json({
@@ -70,13 +70,13 @@ authRouter.post('/signup', function (req, res) {
 
 
 /**********************************
-    LOGIN ROUTE
+            LOGIN ROUTE
 **********************************/
 
 authRouter.post('/login', function (req, res) {
     console.log('login user ', req.body)
     User.findOne({
-        username: req.body.username
+        username: req.body.username.toLowerCase()
     }, function (err, user) {
         if (err) res.status(500).send(err);
 
@@ -117,7 +117,7 @@ authRouter.post('/login', function (req, res) {
 authRouter.delete('/delete/:userId', function (req, res) {
     var userId = req.params.userId;
     User.findOneAndRemove({
-        _id: uId
+        _id: userId
     }, function (err, deletedUser) {
         if (err) res.status(500).send(err);
         res.send({

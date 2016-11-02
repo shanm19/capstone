@@ -15,7 +15,11 @@ app.service('PostService', ['$http', 'Upload', function ($http, Upload) {
 
     this.createNewTextPost = function (textPostObj) {
         console.log(textPostObj);
-        // do stuff then submit call submitNewPost
+        return $http.post('/', textPostObj)
+            .then(function(response) {
+                console.log(response.data);
+                return response.data;
+            })
     };
 
     this.createNewLinkPost = function (linkPostObj) {

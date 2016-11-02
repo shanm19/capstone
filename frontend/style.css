@@ -51,10 +51,12 @@ md-nav-ink-bar {
     box-sizing: border-box;
 }
 
+button.md-button,
 a.md-button {
     padding: 0 !important;
 }
 
+.md-nav-item button,
 .md-nav-item a {
     padding-top: .8em !important;
     font-size: .8em;
@@ -145,6 +147,7 @@ textarea {
 
 .main-buttons .md-button {
     border-radius: 25px 0 25px 0 !important;
+    padding: 0 !important;
 }
 
 .side-bar .vote,
