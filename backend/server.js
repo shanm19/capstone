@@ -29,13 +29,13 @@ mongoose.connect("mongodb://" + config.db_user + ":" + config.db_pass + "@" + da
 app.use(express.static(path.join(__dirname, "..", "/frontend")));
 
 // Routes requiring authentication
-app.use("/api", expressJwt({secret:config.db_secret}));
+//app.use("/api", expressJwt({secret:config.db_secret}));
 require('./passport/passport')(app);
 //app.use("/api/user", require("./routes/userRouteProtected"));
 //app.use("/api/admin", require("./routes/adminRoute"));
 //app.use("/api/post", require("./routes/postRouteProtected"));
 //app.use("/api/subreddit", require("./routes/subredditRouteProtected"));
-//app.use("/api/comment", require("./routes/commentRouteProtected"));
+app.use("/api/comment", require("./routes/commentRouteProtected"));
 
 // Routes without authentication
 app.use("/post", require("./routes/postRoute"));
