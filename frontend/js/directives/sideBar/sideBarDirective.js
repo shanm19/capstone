@@ -51,12 +51,12 @@ app.directive('sideBar', function () {
                         console.log('login ', response);
 
                     })
-            }
+            };
 
-            $scope.signup = function () {
+            $scope.signup = function (user) {
                 $scope.duplicate = false;
-                console.log('new user ', $scope.newUser)
-                UserService.signup($scope.newUser)
+                console.log('new user ', user)
+                UserService.signup(user)
                     .then(function (response) {
                         if (response.success === false && response.cause === 'username or email') {
                             $scope.message = response.message;

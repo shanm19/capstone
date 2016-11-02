@@ -17,4 +17,14 @@ app.controller('NewPostController', ['$scope', 'PostService', function ($scope, 
         PostService.createNewTextPost(newLinkPost);
         $scope.newLinkPost = {};
     };
+
+    PostService.getSubForumList()
+        .then(function(response) {
+            $scope.subForums = response;
+            console.log($scope.subForums)
+        });
+
+    $scope.show = function(item) {
+        console.log(item)
+    };
 }]);

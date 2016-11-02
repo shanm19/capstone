@@ -2,6 +2,7 @@
 
 var express = require("express");
 var Subreddit = require("../models/subredditSchema");
+var User = require("../models/userSchema");
 var subredditRouteProtected = express.Router();
 
 subredditRouteProtected.route("/search")
@@ -31,6 +32,7 @@ subredditRouteProtected.route("/search")
                 break;
         }
 
+        // there's a better way to do this with the query using $in
         Subreddit.find({subscribers: req.user_id}, function(err, subreddits) {
 
             if (err) res.status(500).send(err);
@@ -69,11 +71,18 @@ subredditRouteProtected.route("/")
 
         var newSubreddit = new Subreddit(req.body);
 
-        newSubreddit.creator = req.user_id;
+        newSubreddit.creator = req.user;
 
         newSubreddit.save(function(err, newSubredditSaved) {
-
             if (err) res.status(500).send(err);
+
+            User.findById(newSubredditSaved.creator, function(err, user) {
+                if (err) return res.status(500).send(err);
+                // auto subscribe user to their created subreddit
+                user.subscribedSubreddits.push(newSubredditSaved);
+                user.save();
+            });
+
             res.send(newSubredditSaved);
         });
     });
@@ -91,17 +100,10 @@ purpose: Endpoints that can access subreddits only by a logged in user
 sub route: /
     $http.get(baseUrl + "/api/subreddit")
     return array of current posts, limited to the specific subreddits to which the user is subscribed
-    note:   The logged in user will be passed on req.user, which will contain an array of 
+    note:   The logged in user will be passed on req.user, which will contain an array of
             subscribed subreddit _id's. Use this information to query against the Subreddit collection,
             along with the timestamp parameter.
-    
+
 */
-
-var express = require('express');
-var subredditRouteProtected = express.Router();
-
-
-
-
 
 module.exports = subredditRouteProtected;

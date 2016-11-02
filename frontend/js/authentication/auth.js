@@ -54,7 +54,7 @@ app.service('TokenService', function () {
     }
 
     this.getToken = function () {
-        console.log(userToken)
+        // console.log(userToken)
         return localStorage[userToken];
     }
 
