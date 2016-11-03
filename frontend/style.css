@@ -20,6 +20,11 @@ a {
     padding-top: 1em;
 }
 
+.p-a {
+    padding: .5em;
+    box-siz
+}
+
 .m-a-half {
     margin: .5em;
 }
@@ -56,7 +61,7 @@ a.md-button {
     padding: 0 !important;
 }
 
-.md-nac0button a,
+.md-nav-item button,
 .md-nav-item a {
     padding-top: .8em !important;
     font-size: .8em;
@@ -81,7 +86,6 @@ side-bar label {
     padding-left: .5em !important;
 }
 
-
 /***************************************
 ****   error and successful         ****
 ****    sign up/login messags       **** 
@@ -93,8 +97,8 @@ side-bar label {
     font-size: 1em;
     line-height: 1.25em;
     text-align: center;
-    padding:0;
-    margin:0;
+    padding: 0;
+    margin: 0;
 }
 
 .error.ng-show-remove, .error.ng-show-add {
@@ -112,6 +116,7 @@ side-bar label {
     margin: 0;
     padding: 0;
 }
+
 .success-message.ng-show-add, .success-message.ng-show-remove {
     transition: all ease 0.5s;
 }
@@ -166,7 +171,7 @@ textarea {
 }
 
 /****************************************
-            Main/Posts
+                Main/Posts
 *****************************************/
 
 .main-post-thumb {
@@ -212,7 +217,7 @@ textarea {
 
 .success-login {
     transition: background .5s;
-    background-color: rgb(96,125,139) !important;
+    background-color: rgb(96, 125, 139) !important;
 }
 
 .sign-up h3 {
@@ -250,7 +255,7 @@ textarea {
 }
 
 .new-post textarea {
-    min-height: 145px !important;
+    min-height: 100px !important;
 }
 
 .new-post form[name="newTextPostForm"],
@@ -269,6 +274,11 @@ form[name="newSubForumForm"] md-input-container {
     background: rgb(144, 164, 174);
     padding: 1.2em;
     margin: .35em;
+}
+
+.sub-list {
+    background: rgb(144, 164, 174);
+    margin: .5em;
 }
 
 form[name="newTextPostForm"] label,
@@ -298,3 +308,4 @@ form[name="newSubForumForm"] label {
     padding-left: 1.5em !important;
     margin-bottom: -10px !important;
 }
+

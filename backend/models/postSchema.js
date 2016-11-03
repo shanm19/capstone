@@ -18,7 +18,7 @@ var postSchema = new Schema({
     subreddit: {
         type: Schema.Types.ObjectId,
         ref: 'Subreddit',
-        // required: true
+        required: true
     },
     type: {
         type: String,

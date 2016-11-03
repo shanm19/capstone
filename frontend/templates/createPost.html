@@ -13,36 +13,6 @@
                                         <div ng-message="required">a title is required</div>
                                     </div>
                                 </md-input-container>
-
-                                <md-input-container>
-                                    <!--<label>choose a sub forum</label>-->
-                                    <md-autocomplete flex
-                                                     md-require-match="true"
-                                                     md-select-on-match="true"
-                                                     md-selected-item="selectedItem"
-                                                     md-selected-item-change="show(item)"
-                                                     md-search-text="searchText"
-                                                     md-items="item in subForums"
-                                                     md-item-text="item.name"
-                                                     md-delay="100"
-                                                     md-floating-label="Search Subs">
-                                    </md-autocomplete>
-                                    <md-not-found>
-                                        Sub does not exist
-                                    </md-not-found>
-                                    <br>
-                                    <div class="p-t-1">
-                                        <span class="caption dark">sub forums you're subscibed to:</span>
-                                        <!-- ng repeat something -->
-                                        <span><a class="caption" href="#/">welovedogs</a></span>
-                                        <span><a class="caption" href="#/">vcshool</a></span>
-                                        <span><a class="caption" href="#/">wehatecats</a></span>
-                                        <span><a class="caption" href="#/">wehatecats</a></span>
-                                        <span><a class="caption" href="#/">wehatecats</a></span>
-                                        <span><a class="caption" href="#/">wehatecats</a></span>
-                                    </div>
-                                </md-input-container>
-
                                 <md-input-container>
                                     <label>text</label>
                                     <textarea type="text" name="text" ng-model="newTextPost.text"
@@ -50,6 +20,30 @@
                                     <div ng-messages="newTextPostForm.text.$error">
                                         <div ng-message="minlength">too short</div>
                                     </div>
+                                </md-input-container>
+
+                                <md-input-container>
+                                    <md-autocomplete flex
+                                                     required
+                                                     md-require-match="true"
+                                                     md-selected-item="newTextPost.subreddit"
+                                                     md-selected-item-change="show(item)"
+                                                     md-search-text="search"
+                                                     md-items="item in subForums | filter: search"
+                                                     md-item-text="item.name"
+                                                     md-delay="100"
+                                                     md-floating-label="Search Subs">
+                                        <md-item-template>
+                                            <span md-highlight-text="searchText">{{item.name}}</span>
+                                        </md-item-template>
+                                        <md-not-found>
+                                            No matches found.
+                                        </md-not-found>
+                                    </md-autocomplete>
+                                    <span class="caption dark" layout-margin>sub forums you're subscibed to:</span>
+                                    <!-- ng repeat something -->
+                                    <a class="caption" href="#/">welovedogs</a>
+                                    <a class="caption" href="#/">vcshool</a>
                                 </md-input-container>
                                 <md-button type="submit" class="md-raised md-accent md-hue-3"
                                            ng-disabled="newTextPostForm.$invalid">Submit
@@ -90,22 +84,28 @@
                                 </md-input-container>
 
                                 <md-input-container>
-                                    <label>choose a sub forum</label>
-                                    <input type="text" name="subForum" ng-model="newLinkPost.subForum" required>
-                                    <div ng-messages="newLinkPostForm.subForum.$error">
-                                        <div ng-message="required">choose a sub forum is required</div>
-                                    </div>
-                                    <br>
-                                    <div class="p-t-1">
-                                        <span class="caption">sub forums you're subscribed to:</span>
-                                        <!-- ng repeat something -->
-                                        <span><a class="caption" href="#/">welovedogs</a></span>
-                                        <span><a class="caption" href="#/">vcshool</a></span>
-                                        <span><a class="caption" href="#/">wehatecats</a></span>
-                                        <span><a class="caption" href="#/">wehatecats</a></span>
-                                        <span><a class="caption" href="#/">wehatecats</a></span>
-                                        <span><a class="caption" href="#/">wehatecats</a></span>
-                                    </div>
+                                    <md-autocomplete flex
+                                                     required
+                                                     md-require-match="true"
+                                                     md-selected-item="newLinkPost.subreddit"
+                                                     md-selected-item-change="show(item)"
+                                                     md-search-text="search"
+                                                     md-items="item in subForums | filter: search"
+                                                     md-item-text="item.name"
+                                                     md-delay="100"
+                                                     md-floating-label="Search Subs">
+
+                                        <md-item-template>
+                                            <span md-highlight-text="searchText">{{item.name}}</span>
+                                        </md-item-template>
+                                        <md-not-found>
+                                            No matches found.
+                                        </md-not-found>
+                                    </md-autocomplete>
+                                    <span class="caption dark" layout-margin>sub forums you're subscibed to:</span>
+                                    <!-- ng repeat something -->
+                                    <a class="caption" href="#/">welovedogs</a>
+                                    <a class="caption" href="#/">vcshool</a>
                                 </md-input-container>
                                 <md-button type="submit" class="md-raised md-accent md-hue-3"
                                            ng-disabled="newLinkPostForm.$invalid">Submit
