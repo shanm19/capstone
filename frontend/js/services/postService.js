@@ -31,8 +31,26 @@ app.service('PostService', ['$http', 'Upload', function ($http, Upload) {
     };
 
     this.createNewLinkPost = function (linkPostObj) {
-        console.log(linkPostObj);
-        // do stuff then submit call submitNewPost
+        if (linkPostObj.image) {
+            Upload.upload({
+                url: '/api/post',
+                data: linkPostObj
+            }).then(function (response) {
+                console.log(response)
+                return response.data
+            }, function (response) {
+                console.log('Error status: ' + response.status);
+            }, function (evt) {
+                // var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+                // console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+            })
+        } else {
+            return $http.post('/api/post', linkPostObj)
+                .then(function (response) {
+                    console.log(response.data);
+                    return response.data;
+                })
+        }
     };
 
     this.submitNewPost = function (newPost, url) {
