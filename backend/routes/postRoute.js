@@ -55,11 +55,13 @@ postRoute.route("/")
 // return all posts
     .get(function (req, res) { // ~ (this is my way of saying the endpoint is tested and proved)
         Post.find(req.query) // changed to req.query, if empty return all posts, if queries it'll return matches
+            .sort({createdAt: -1})
             .populate('originalPoster', 'username')
+            .populate('subreddit', 'name')
             .exec(function (err, posts) {
                 if (err) res.status(500).send(err);
                 res.send(posts);
-            });
+            })
     })
     // I considered only having logged in users make posts, but this is fine
     // It also could just be an option until the authentication is hooked up

@@ -14,7 +14,7 @@
                             <div class="md-list-item-text" layout="column">
                                 <p>{{post.title}}</p>
                                 <span class="caption">
-                                    submitted {{ post.createdAt | when }} by <a href="#/"><b>{{post.originalPoster.username}}</b></a> to <b><a href="#/">welovedogs</a></b>
+                                    submitted {{ post.createdAt | when }} by <a href="#/"><b>{{post.originalPoster.username}}</b></a> to <b><a href="#/">{{post.subreddit.name}}</a></b>
                                 </span>
                             </div>
                         </div>

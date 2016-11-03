@@ -35,14 +35,13 @@ var postRouteProtected = express.Router();
 var User = require('../models/userSchema');
 var Subreddit = require('../models/subredditSchema');
 var Post = require('../models/postSchema');
-// all modules below are for the protected route
 var multipart = require('connect-multiparty');
 var multipartyMiddleWare = multipart();
 var fs = require('fs');
 
 // needed for the req.file for images
 // protected route
-postRouteProtected.use('/', multipartyMiddleWare);
+postRouteProtected.use('*', multipartyMiddleWare);
 
 
 postRouteProtected.route('/')
@@ -68,11 +67,11 @@ postRouteProtected.route('/')
 
         var newPost = new Post(req.body);
         newPost.originalPoster = req.user;
-
         if (newPost.type === 'link') {
-            if (req.files.file) {
-                var data = fs.readFileSync(req.files.file.path);
-                var contentType = req.files.file.type;
+console.log(req.files.image)
+            if (req.files.image) {
+                var data = fs.readFileSync(req.files.image.path);
+                var contentType = req.files.image.type;
                 newPost.image = 'data:' + contentType + ';base64,' + data.toString('base64');
             } else {
                 newPost.image = '../assets/link.png'

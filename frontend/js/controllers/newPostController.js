@@ -14,7 +14,7 @@ app.controller('NewPostController', ['$scope', 'PostService', function ($scope, 
     $scope.submitLinkPost = function () {
         var newLinkPost = $scope.newLinkPost;
         newLinkPost.type = 'link';
-        PostService.createNewTextPost(newLinkPost);
+        PostService.createNewLinkPost(newLinkPost);
         $scope.newLinkPost = {};
     };
 
