@@ -8,6 +8,7 @@ var commentRouteProtected = express.Router();
 commentRouteProtected.route("/")
     .get(function(req, res) {
 
+        console.log(req);
         Comment.find({originalPoster: req.user._id}, function(err, userComments) {
 
             if (err) res.status(500).send(err);
@@ -87,22 +88,19 @@ module.exports = commentRouteProtected;
  file name: "commentRouteProtected"
  base route: /api/comment
  purpose: Endpoints that can access a user's comments
-
  sub route: /
  $http.get(baseUrl + "/api/comment")
  return array of all the user's comment history
+
  ---
+
  $http.post(baseUrl + "/api/comment", {
  content: "Stupid pun comment for cheap laughs.",
-<<<<<<< HEAD
- parentCommentID: comment._id,
- postID: post._id
-=======
  parentComment: comment._id,
  postID: _id
->>>>>>> dev
  })
  return comment object
+
  Note:  This one is highly debatable. Frankly, I don't know how to do nested comments the best way.
  Conceptually, this is my thinking. There are two options (buttons) for submitting comments:
  1. The user submits a comment directly to the post, making isPrimaryComment = true
@@ -115,6 +113,7 @@ module.exports = commentRouteProtected;
  Then, if it works, there is a mongoose deep populate npm package that appears capable of recursively
  retrieving and populating nested objects.
 
+
  sub route: /:commentID
  $http.put(baseUrl + "/api/comment/:commentID", {
  editedComment: ""
@@ -126,7 +125,9 @@ module.exports = commentRouteProtected;
  to set a visual flag if a comment has been edited so users can check the history against
  the logic of the comment flow. Also, only allow if the originalPoster's ._id matches
  the req.user._id
+
  ---
+
  $http.delete(baseUrl + "/api/comment/:commentID")
  return deleted comment
  Note:   This is tricky. In a linked list, this can break connection to ALL children. So really,
