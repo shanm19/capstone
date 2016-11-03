@@ -1,42 +1,40 @@
-<div class="new-post">
+<div class="new-post" ng-cloak>
     <div flex="100" layout layout-align="space-around start">
         <div flex="70" flex-offset="5" ng-cloak>
             <md-content flex="70" md-theme="blue">
-                <div>
-                    <div>
-                        <form name="newSubForumForm" layout="column">
-                            <md-input-container>
-                                <label>name</label>
-                                <input type="text" ng-model="newSubForum.name">
-                                <br>
-                                <span class="caption dark p-t-1">Some description</span>
-                            </md-input-container>
-                            <md-input-container>
-                                <label>title</label>
-                                <input type="text" ng-model="newSubForum.title">
-                                <br>
-                                <span class="caption dark p-t-1">Some description</span>
-                            </md-input-container>
-                            <md-input-container>
-                                <label>description</label>
-                                <input type="text" ng-model="newSubForum.description">
-                                <br>
-                                <span class="caption dark p-t-1">Some description</span>
-                            </md-input-container>
-                            <md-input-container>
-                                <label>sidebar</label>
-                                <input type="text" ng-model="newSubForum.sidebar">
-                                <br>
-                                <span class="caption dark p-t-1">Some description</span>
-                            </md-input-container>
-                            <md-input-container>
-                                <label>submission text</label>
-                                <textarea type="text"></textarea>
-                                <span class="caption dark p-t-1">Some description</span>
-                            </md-input-container>
-                        </form>
-                    </div>
-                </div>
+                <form name="newSubForumForm" ng-submit="createNewSubForum()" layout="column">
+                    <md-input-container>
+                        <label>name</label>
+                        <input type="text" ng-model="newSubForum.name">
+                        <br>
+                        <span class="caption dark p-t-1">Some description</span>
+                    </md-input-container>
+                    <md-input-container>
+                        <label>title</label>
+                        <input type="text" ng-model="newSubForum.title">
+                        <br>
+                        <span class="caption dark p-t-1">Some description</span>
+                    </md-input-container>
+                    <md-input-container>
+                        <label>description</label>
+                        <input type="text" ng-model="newSubForum.description">
+                        <br>
+                        <span class="caption dark p-t-1">Some description</span>
+                    </md-input-container>
+                    <md-input-container>
+                        <label>sidebar</label>
+                        <input type="text" ng-model="newSubForum.sidebar">
+                        <br>
+                        <span class="caption dark p-t-1">Some description</span>
+                    </md-input-container>
+
+                    <md-input-container>
+                        <label>submission text</label>
+                        <textarea type="text" ng-model="newSubForum.submissionText"></textarea>
+                        <span class="caption dark p-t-1">Some description</span>
+                    </md-input-container>
+                    <md-button type="submit" class="md-raised md-primary">create new sub forum</md-button>
+                </form>
             </md-content>
         </div>
         <side-bar class="aside" flex="25" layout="column" layout-align="start stretch" md-whiteframe="z1"></side-bar>

@@ -12,13 +12,18 @@ var postSchema = new Schema({
     // in modern vernacular, referred to as OP
     originalPoster: {
         type: Schema.Types.ObjectId,
-        ref: 'User'
-        // required: true
+        ref: 'User',
+        required: true
     },
     subreddit: {
         type: Schema.Types.ObjectId,
         ref: 'Subreddit',
         // required: true
+    },
+    type: {
+        type: String,
+        enum: ['text', 'link'],
+        required: true
     },
     // posts can just be images, gifs, or videos, so this isn't required
     siteUrl: String,

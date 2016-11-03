@@ -51,10 +51,12 @@ md-nav-ink-bar {
     box-sizing: border-box;
 }
 
+button.md-button,
 a.md-button {
     padding: 0 !important;
 }
 
+.md-nac0button a,
 .md-nav-item a {
     padding-top: .8em !important;
     font-size: .8em;
@@ -68,10 +70,8 @@ a.md-button {
                  SideBar
 *****************************************/
 
-.new-post input,
-.new-post textarea,
-.sign-up input,
-.main input {
+input,
+textarea {
     border: 1px solid #BBB !important;
 }
 
@@ -120,15 +120,14 @@ side-bar label {
     margin: 1.15em;
 }
 
-.new-post input,
-.new-post textarea,
-.sign-up input,
-.aside input {
-    -webkit-border-radius: .25em;
-    -moz-border-radius: .25em;
-    border-radius: .25em;
-    box-shadow: inset 1px 1px 2px -1px rgba(0, 0, 0, 0.15);
-    background: #fff;
+.drop-box,
+input,
+textarea {
+    -webkit-border-radius: .25em !important;
+    -moz-border-radius: .25em !important;
+    border-radius: .25em !important;
+    box-shadow: inset 3px 3px 3px -3px rgba(0, 0, 0, 0.2) !important;
+    background: #fff !important;
 }
 
 .aside md-toolbar {
@@ -137,8 +136,7 @@ side-bar label {
 }
 
 .login md-input-container {
-    margin: 0;
-    margin-top: .65em;
+    margin: .65em 0 0 0;
     max-height: 35px !important;
 }
 
@@ -149,6 +147,7 @@ side-bar label {
 
 .main-buttons .md-button {
     border-radius: 25px 0 25px 0 !important;
+    padding: 0 !important;
 }
 
 .side-bar .vote,
@@ -160,10 +159,14 @@ side-bar label {
 .side-bar .recent {
     border: 1px solid #DDD;
     background: #eee;
+    -webkit-border-radius: .25em;
+    -moz-border-radius: .25em;
+    border-radius: .25em;
+    padding: 0 !important;
 }
 
 /****************************************
-                 Posts
+            Main/Posts
 *****************************************/
 
 .main-post-thumb {
@@ -207,12 +210,35 @@ side-bar label {
     background-color: #DDD;
 }
 
+.success-login {
+    transition: background .5s;
+    background-color: rgb(96,125,139) !important;
+}
+
 .sign-up h3 {
     color: #3f3f3f;
 }
 
 .sign-up .md-button {
     color: #DDD !important;
+}
+
+.fb {
+    background: #3b5998 !important;
+}
+
+.fb small {
+    color: #FFF !important;
+    font-size: .8em;
+    padding: 0 .5em 0 .5em;
+}
+
+.fb img {
+    border-right: 1px solid dimgray;
+    margin: .25em;
+    padding-right: .5em;
+    width: 27px;
+    height: 27px;
 }
 
 /****************************************
@@ -227,13 +253,15 @@ side-bar label {
     min-height: 145px !important;
 }
 
-.new-post form[name="newPostForm"],
+.new-post form[name="newTextPostForm"],
+.new-post form[name="newLinkPostForm"],
 form[name="newSubForumForm"] {
     max-width: 500px;
     margin: auto;
 }
 
-form[name="newPostForm"] md-input-container,
+form[name="newTextPostForm"] md-input-container,
+form[name="newLinkPostForm"] md-input-container,
 form[name="newSubForumForm"] md-input-container {
     -webkit-border-radius: .25em;
     -moz-border-radius: .25em;
@@ -243,7 +271,29 @@ form[name="newSubForumForm"] md-input-container {
     margin: .35em;
 }
 
-form[name="newPostForm"] label,
+form[name="newTextPostForm"] label,
+form[name="newLinkPostForm"] label,
+form[name="newSubForumForm"] label {
+    padding-left: 1.5em !important;
+    margin-bottom: -10px !important;
+}
+
+.drop-box {
+    min-width: 300px;
+    background: rgb(250, 250, 250);
+}
+
+.drop-box img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: auto;
+}
+
+form[name="newLinkPostForm"] .md-button {
+    margin: .5em 0 !important;
+}
+
 form[name="newSubForumForm"] label {
     padding-left: 1.5em !important;
     margin-bottom: -10px !important;
