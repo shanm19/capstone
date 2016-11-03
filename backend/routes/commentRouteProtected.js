@@ -8,8 +8,7 @@ var commentRouteProtected = express.Router();
 commentRouteProtected.route("/")
     .get(function(req, res) {
 
-        console.log(req);
-        Comment.find({originalPoster: req.user._id}, function(err, userComments) {
+        Comment.find({originalPoster: req.user}, function(err, userComments) {
 
             if (err) res.status(500).send(err);
             res.send(userComments);
@@ -18,41 +17,49 @@ commentRouteProtected.route("/")
 
    .post(function(req, res) {
 
-       var newComment = new Comment(req.body);
+        var newComment = new Comment(req.body);
+        var post_id = req.body.postID;
 
-       var post_id = req.body.postID;
+        newComment.save();
 
-       if (post_id) {
+        if (post_id) {
 
-           Post.findOne({_id: post_id}, function (err, post) {
-               if (err) res.status(500).send(err);
-               else {
+            Post.findOne({_id: post_id}, function (err, post) {
+                if (err) res.status(500).send(err);
+                else {
 
-                   post.comments.push(newComment._id);
-                   post.save();
-                   res.send(newComment);
-               }
-           })
+
+                    post.comments.push(newComment._id);
+                    post.save(function (err, savedComment) {
+
+                        if (err) req.status(500).send(err);
+                        res.send(savedComment);
+                    });
+                }
+            });
        }
        else {
 
-           Comment.findOne({_id: req.body.parentCommentID}, function (err, comment) {
+            Comment.findOne({_id: req.body._id}, function (err, comment) {
 
                if (err) res.status(500).send(err);
                else {
 
                    comment.comments.unshift(newComment._id);
-                   comment.save();
-                   res.send(newComment);
+                   comment.save(function (err, savedComment) {
+
+                       if (err) req.status(500).send(err);
+                       res.send(savedComment);
+                   });
                }
            })
        }
    });
 
-commentRouteProtected.route("/:commentID")
+commentRouteProtected.route("/:id")
     .put(function(req, res) {
 
-        Comment.findOne({_id:req.params.id}, function(err, comment) {
+        Comment.findOne({_id: req.user._id}, function(err, comment) {
 
             if (err) res.status(500).send(err);
             else if (req.user._id === comment.originalPoster) {
@@ -67,7 +74,7 @@ commentRouteProtected.route("/:commentID")
 
     .delete(function(req, res) {
 
-       Comment.findOne({_id:req.params.id}, function(err, comment) {
+       Comment.findOne({_id: req.user._id}, function(err, comment) {
 
                if (err) res.status(500).send(err);
                else {
