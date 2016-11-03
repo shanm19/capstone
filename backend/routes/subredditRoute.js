@@ -2,8 +2,10 @@
 
 var express = require("express");
 var Subreddit = require("../models/subredditSchema");
+var Post = require("../models/postSchema");
 var subredditRoute = express.Router();
 
+// find all subreddits, return the names
 subredditRoute.route("/")
     .get(function (req, res) {
         Subreddit.find({}, 'name', function (err, subreddits) {
@@ -13,6 +15,7 @@ subredditRoute.route("/")
         });
     });
 
+// search for a subreddit by name
 subredditRoute.route("/search")
     .get(function (req, res) {
 
@@ -26,14 +29,43 @@ subredditRoute.route("/search")
             });
     });
 
-subredditRoute.route("/:SubredditID")
+// return a subreddit object
+subredditRoute.route("/:subredditID")
     .get(function (req, res) {
 
-        Subreddit.findOne({_id: req.params.id}, function (err, subredditFound) {
+        Subreddit.findOne({_id: req.params.subredditID}, function (err, subredditFound) {
 
             if (err) res.status(500).send(err);
             res.send(subredditFound);
         });
+    });
+
+// find all posts in a subreddit created in the last 24 hours
+subredditRoute.route("/posts/:subredditID")
+    .get(function(req, res){
+
+        var subID = req.params.subredditID;
+
+        var d = new Date();
+
+        if(req.query.time){
+
+            if(req.query.time === "hour") d.setDate(d.getHours() - 1);
+            if(req.query.time === "day") d.setDate(d.getDate() - 1);
+            if(req.query.time === "week") d.setDate(d.getDate() - 7);
+            if(req.query.time === "month") d.setDate(d.getMonth() - 1);
+            if(req.query.time === "year") d.setDate(d.getFullYear() - 1);
+
+            Post.find({subreddit: subID, createdAt: { "$gte": d } }, function(err, foundPosts){
+                if(err) res.status(500).send(err);
+                res.send(foundPosts);
+            });
+        } else {
+            Post.find({ subreddit: subID, createdAt: { "$gte":  d.setDate(d.getDate() - 1) } }, function(err, foundPosts){
+                if(err) res.status(500).send(err);
+                res.send(foundPosts);
+            });
+        }
     });
 
 module.exports = subredditRoute;

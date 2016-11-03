@@ -1,11 +1,8 @@
 /*
-
  Post
-
  file name: "postRoute"
  base route: /post
  purpose: Endpoints that can be accessed without being logged in to fill the front page
-
  sub route: /
  $http.get(baseUrl + "/post")
  return array of current posts
@@ -30,7 +27,6 @@
  Note: 	The front page or subreddit is just filled with posts with basic data, and references to comments
  It's not until the 'comments' button is clicked that it will make a second call for the post
  and deep populate the comments
-
  */
 
 var express = require('express');
@@ -62,20 +58,6 @@ postRoute.route("/")
                 if (err) res.status(500).send(err);
                 res.send(posts);
             })
-    })
-    // I considered only having logged in users make posts, but this is fine
-    // It also could just be an option until the authentication is hooked up
-    // $http.post(baseUrl + "/post", { title: "", subreddit: sub._id, siteUrl: "", image: "", tags: ["nsfw"] })
-    // return new post object
-    // this is for the protected route, just here for testing at this point - AV
-    // dunno if I should remove this? visitors shouldn't be able to comment
-    .post(function (req, res) { // ~
-        var newPost = new Post(req.body);
-
-        newPost.save(function (err, savedPost) {
-            if (err) res.status(500).send(err);
-            res.send(savedPost);
-        });
     });
 
 
