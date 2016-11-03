@@ -22,7 +22,8 @@ authRouter.route('/profile')
             // console.log('profile req.body ', req.body)
         console.log('profile serializeuser ', req._passport.instance._userProperty)
         var user = req._passport.instance._userProperty
-        res.send(user)
+    
+        res.redirect('http://localhost:8080/helloworld')
     })
 
 /*********************************
