@@ -1,0 +1,33 @@
+<md-content ng-cloak>
+    <md-list flex="100" flex-gt-sm="80" flex-gt-md="60">
+        <md-subheader class="md-no-sticky">
+            <h3>results matching {{::keyword}}</h3>
+        </md-subheader>
+        <!-- ng-repeat through messages, filter by filter -->
+        <md-list-item class="md-3-line md-long-text" ng-repeat="result in results track by $index">
+
+            <div class="md-list-item-text">
+
+                <h3><a href="#/sub/{{::result._id}}">{{::result.name }}</a></h3>
+                <p>
+                    Secondary line text Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam massa quam.
+                    Nulla metus metus, ullamcorper vel, tincidunt sed, euismod in, nibh. Quisque volutpat condimentum
+                    velit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
+                    {{ ::result.description }}
+                </p>
+
+            </div>
+
+        </md-list-item>
+        <!--<md-list-item class="md-3-line md-long-text">-->
+            <!--<div class="md-list-item-text">-->
+                <!--<h3>{{ todos[1].who }}</h3>-->
+                <!--<p>-->
+                    <!--Secondary line text Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam massa quam.-->
+                    <!--Nulla metus metus, ullamcorper vel, tincidunt sed, euismod in, nibh. Quisque volutpat condimentum-->
+                    <!--velit. Class aptent taciti sociosqu ad litra torquent per conubia nostra, per inceptos himenaeos.-->
+                <!--</p>-->
+            <!--</div>-->
+        <!--</md-list-item>-->
+    </md-list>
+</md-content>

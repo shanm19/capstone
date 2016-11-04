@@ -52,6 +52,7 @@ postRoute.route("/")
     .get(function (req, res) { // ~ (this is my way of saying the endpoint is tested and proved)
         Post.find(req.query) // changed to req.query, if empty return all posts, if queries it'll return matches
             .sort({createdAt: -1})
+            .limit(10)
             .populate('originalPoster', 'username')
             .populate('subreddit', 'name')
             .exec(function (err, posts) {
