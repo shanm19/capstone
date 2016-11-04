@@ -40,7 +40,7 @@ app.use("/api/comment", require("./routes/commentRouteProtected"));
 
 // Routes without authentication
 app.use("/post", require("./routes/postRoute"));
-//app.use("/subreddit", require("./subredditRoute"));
+// app.use("/subreddit", require("./subredditRoute"));
 app.use("/comment", require("./routes/commentRoute"));
 // require('./routes/authRoute')(app, passport);
 app.use("/auth", require("./routes/authRoute"));
