@@ -66,5 +66,17 @@ app.service('PostService', ['$http', 'Upload', function ($http, Upload) {
             var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
             console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
         });
-    }
+    };
+
+    this.updatePost = function(post) {
+
+        var postID = post._id;
+        return $http.put("api/post/" + postID, post)
+
+            .then(function (response) {
+
+                console.log(response.data);
+                return response.data;
+            });
+    };
 }]);

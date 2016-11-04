@@ -5,9 +5,9 @@
                 <md-list flex>
                     <md-list-item class="md-3-line post" ng-repeat="post in posts" md-whiteframe="2" layout-padding layout-margin>
                         <div class="vote" layout="column" layout-align="center center">
-                            <i class="material-icons">keyboard_arrow_upward</i>
+                            <i class="material-icons pointer" ng-click="addPostVote(post, 'up')">keyboard_arrow_upward</i>
                             <span><b>{{post.netVotes}}</b></span>
-                            <i class="material-icons">keyboard_arrow_downward</i>
+                            <i class="material-icons pointer" ng-click="addPostVote(post, 'down')">keyboard_arrow_downward</i>
                         </div>
                         <div layout layout-padding>
                             <a ng-href="{{post.siteUrl}}/#/post/{{post._id}}"><img ng-src="{{post.image}}" alt="image of {{post.title}}" class="main-post-thumb"/></a>

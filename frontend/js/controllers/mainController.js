@@ -19,5 +19,20 @@ app.controller('MainController', ['$scope', 'PostService', function ($scope, Pos
                 console.log('Maincontroller ', response);
                 $scope.user = response;
             })
-    }
+    };
+
+    $scope.addPostVote = function(post, direction) {
+
+        if (direction === "up") {
+
+            post.netVotes++;
+            post.upVotes++;
+        }
+        else {
+
+            post.netVotes--;
+            post.downVotes++;
+        }
+        PostService.updatePost(post);
+    };
 }]);

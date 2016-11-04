@@ -6,7 +6,7 @@ app.directive('sideBar', function () {
     return {
         restrict: 'E',
         templateUrl: './js/directives/sideBar/sideBar.html',
-        controller: ['$rootScope', '$scope', '$mdDialog', '$timeout', '$location', 'UserService', function ($rootScope, $scope, $mdDialog, $timeout, $location, UserService) {
+        controller: ['$rootScope', '$scope', '$mdDialog', '$timeout', '$location', 'UserService', 'PostService', function ($rootScope, $scope, $mdDialog, $timeout, $location, UserService, PostService) {
 
             $rootScope.$on('authenticate', function () {
                 $scope.permission = UserService.isAuthenticated()
@@ -72,5 +72,7 @@ app.directive('sideBar', function () {
                     })
             }
         }]
+
+        //$scope.addPostVote
     }
 });
