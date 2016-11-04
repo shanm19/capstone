@@ -25,6 +25,7 @@ var test = function(){
     $scope.submitComment = function(){
         PostService.addCommentToPost($scope.newComment, $scope.post._id)
         .then(function(response){
+            console.log('adding comment ')
             $scope.post = response;
             $scope.newComment.content = ""
         })

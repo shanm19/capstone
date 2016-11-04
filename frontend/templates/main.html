@@ -5,18 +5,18 @@
                 <md-list flex>
                     <md-list-item class="md-3-line post" ng-repeat="post in posts" md-whiteframe="2" layout-padding layout-margin>
                         <div class="vote" layout="column" layout-align="center center">
-                            <i class="material-icons">keyboard_arrow_upward</i>
+                            <i class="material-icons pointer" ng-click="addPostVote(post, 'up')">keyboard_arrow_upward</i>
                             <span><b>{{post.netVotes}}</b></span>
-                            <i class="material-icons">keyboard_arrow_downward</i>
+                            <i class="material-icons pointer" ng-click="addPostVote(post, 'down')">keyboard_arrow_downward</i>
                         </div>
                         <div layout layout-padding>
-                            <a ng-href="{{post.siteUrl}}/#/post/{{post._id}}"><img ng-src="{{post.image}}" alt="image of {{post.title}}" class="main-post-thumb"/></a>
+                            <a ng-href="{{::post.siteUrl}}/#/post/{{::post._id}}"><img ng-src="{{::post.image}}" alt="image of {{::post.title}}" class="main-post-thumb"/></a>
                             <div class="md-list-item-text" layout="column">
-                                <p>{{post.title}}</p>
+                                <p>{{::post.title}}</p>
                                 <span class="caption">
-                                    submitted {{ post.createdAt | when }} by <a href="#/"><b>{{post.originalPoster.username}}</b></a> to <b><a href="#/">{{post.subreddit.name}}</a></b>
+                                    submitted {{ ::post.createdAt | when }} by <a href="#/"><b>{{::post.originalPoster.username}}</b></a> to <b><a href="#/sub/{{::post.subreddit._id}}">{{::post.subreddit.name}}</a></b>
                                     <br/>
-                                    <b><a href="#/post/{{post._id}}">{{post.comments.length}} comments</a></b>
+                                    <b><a href="#/post/{{::post._id}}">{{post.comments.length}} comments</a></b>
                                 </span>
                             </div>
                         </div>

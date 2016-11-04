@@ -1,87 +1,87 @@
     /*
 
-         Post Protected
 
-         file name: "postRouteProtected"
-         base route: /api/post
-         purpose: Endpoints a user can access after logging in for posting
-         note: req.user._id will carry the specific user's _id after loggin in, it's added on in the backend with middleware
+ Post Protected
 
-         sub route: /
-         $http.get(baseUrl + "/api/post");
-         return array of all personal posts
-         ---
-         $http.post(baseUrl + "/api/post", {
-         title: "Bananas are bananas",
-         subreddit: currentSubreddit._id,
-         siteUrl: "http://www.something.com",
-         image: "asdfaewetw123sdfq35",
-         tags: "nsfw"
-         })
-         return user's new post object
-         ---
-         sub route: /:postID
-         $http.put(baseUrl + "/api/post/:postID", { updated post Obj })
-         return user's updated post object in full
-         ---
-         sub route: /comment/:postID
-         $http.post(baseUrl + "/api/post/comment/:postID, { content: "I like cheese" })
-         return comment
+ file name: "postRouteProtected"
+ base route: /api/post
+ purpose: Endpoints a user can access after logging in for posting
+ note: req.user._id will carry the specific user's _id after loggin in, it's added on in the backend with middleware
 
-         */
+ sub route: /
+ $http.get(baseUrl + "/api/post");
+ return array of all personal posts
+ ---
+ $http.post(baseUrl + "/api/post", {
+ title: "Bananas are bananas",
+ subreddit: currentSubreddit._id,
+ siteUrl: "http://www.something.com",
+ image: "asdfaewetw123sdfq35",
+ tags: "nsfw"
+ })
+ return user's new post object
+ ---
+ sub route: /:postID
+ $http.put(baseUrl + "/api/post/:postID", { updated post Obj })
+ return user's updated post object in full
+ ---
+ sub route: /comment/:postID
+ $http.post(baseUrl + "/api/post/comment/:postID, { content: "I like cheese" })
+ return comment
 
-    var express = require('express');
-    var postRouteProtected = express.Router();
-    var User = require('../models/userSchema');
-    var Subreddit = require('../models/subredditSchema');
-    var Post = require('../models/postSchema');
-    var Comment = require('../models/commentSchema');
-    var multipart = require('connect-multiparty');
-    var multipartyMiddleWare = multipart();
-    var fs = require('fs');
+ */
 
-    // needed for the req.file for images
-    // protected route
-    postRouteProtected.use('*', multipartyMiddleWare);
+var express = require('express');
+var postRouteProtected = express.Router();
+var User = require('../models/userSchema');
+var Subreddit = require('../models/subredditSchema');
+var Post = require('../models/postSchema');
+var Comment = require('../models/commentSchema');
+var multipart = require('connect-multiparty');
+var multipartyMiddleWare = multipart();
+var fs = require('fs');
+
+// needed for the req.file for images
+// protected route
+postRouteProtected.use('*', multipartyMiddleWare);
 
 
-    postRouteProtected.route('/')
-        // $http.get(baseUrl + "/api/post")
-        // return user's post history
-        .get(function (req, res) {
-            User.findById(req.user._id)
-                .populate('postHistory')
-                .exec(function (err, foundUser) {
-                    if (err) res.status(500).send(err);
-                    res.send(foundUser.postHistory);
-                });
-        })
-        // $http.post(baseUrl + "/api/post", { 
-        //         title: "Bananas are bananas",
-        //         subreddit: currentSubreddit._id,
-        //         siteUrl: "http://www.something.com",
-        //         image: "asdfaewetw123sdfq35",
-        //         tags: "nsfw"
-        //      })
-        //      return user's new post object
-        .post(function (req, res) {
+postRouteProtected.route('/')
+// $http.get(baseUrl + "/api/post")
+// return user's post history
+    .get(function (req, res) {
+        User.findById(req.user._id)
+            .populate('postHistory')
+            .exec(function (err, foundUser) {
+                if (err) res.status(500).send(err);
+                res.send(foundUser.postHistory);
+            });
+    })
+    // $http.post(baseUrl + "/api/post", { 
+    //         title: "Bananas are bananas",
+    //         subreddit: currentSubreddit._id,
+    //         siteUrl: "http://www.something.com",
+    //         image: "asdfaewetw123sdfq35",
+    //         tags: "nsfw"
+    //      })
+    //      return user's new post object
+    .post(function (req, res) {
 
-            var newPost = new Post(req.body);
-            newPost.originalPoster = req.user;
-            if (newPost.type === 'link') {
-                console.log(req.files.image)
-                if (req.files.image) {
-                    var data = fs.readFileSync(req.files.image.path);
-                    var contentType = req.files.image.type;
-                    newPost.image = 'data:' + contentType + ';base64,' + data.toString('base64');
-                } else {
-                    newPost.image = '../assets/link.png'
-                }
+        var newPost = new Post(req.body);
+        newPost.originalPoster = req.user;
+        if (newPost.type === 'link') {
+            if (req.files.image) {
+                var data = fs.readFileSync(req.files.image.path);
+                var contentType = req.files.image.type;
+                newPost.image = 'data:' + contentType + ';base64,' + data.toString('base64');
             } else {
                 newPost.image = '../assets/text.png';
             }
 
-            newPost.save(function (err, savedPost) {
+        newPost.save(function (err, savedPost) {
+            if (err) return res.status(500).send(err);
+
+            Subreddit.findById(req.body.subreddit, function (err, foundSub) {
                 if (err) return res.status(500).send(err);
 
                 Subreddit.findOne(req.body.subreddit, function (err, foundSub) {
@@ -100,9 +100,9 @@
                     })
                 })
             });
-
         });
-
+        }
+    });
 
     // $http.put(baseUrl + "/api/post/:postID", { updated post Obj })
     // return user's updated post object in full
@@ -165,6 +165,6 @@
                         });
                 }
             })
-        });
+        })
 
     module.exports = postRouteProtected;
