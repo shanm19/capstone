@@ -56,19 +56,21 @@ commentRouteProtected.route("/")
        }
    });
 
-commentRouteProtected.route("/:id")
+// Logic for this, per below, needs to be rethought because need a way to add a vote to comment.
+commentRouteProtected.route("/:commentID")
     .put(function(req, res) {
-
-        Comment.findOne({_id: req.user._id}, function(err, comment) {
+        console.log("Put");
+        Comment.findByIdAndUpdate(req.params.commentID, req.body, {new: true}, function(err, updatedComment) {
 
             if (err) res.status(500).send(err);
-            else if (req.user._id === comment.originalPoster) {
+            //else if (req.user._id === comment.originalPoster) {
 
-                comment.editHistory.unshift(comment.content);
-                comment.content = req.body.editedContent;
-                comment.save();
-                res.send(comment);
-            }
+                //comment.editHistory.unshift(comment.content);
+                //comment.content = req.body.editedContent;
+                //comment.save();
+                console.log(updatedComment);
+                res.send(updatedComment);
+            //}
         });
     })
 
