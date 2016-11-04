@@ -22,7 +22,7 @@ a {
 
 .p-a {
     padding: .5em;
-    box-siz
+    /*box-siz*/
 }
 
 .m-a-half {
@@ -31,6 +31,14 @@ a {
 
 .dark {
     color: #3f3f3f;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.txt-center {
+    text-align: center;
 }
 
 /****************************************
@@ -46,7 +54,7 @@ a {
     border-radius: .25em .25em 0;
 }
 
-md-nav-ink-bar {
+.md-nav-ink-bar {
     background: transparent !important;
 }
 
@@ -71,17 +79,26 @@ a.md-button {
     font-size: 1.3em;
 }
 
+.logo {
+    height: 40px;
+    width: 40px;
+    margin-top: -12px;
+    padding-left: .5em;
+}
+
 /****************************************
                  SideBar
 *****************************************/
 
 input,
-textarea {
+textarea,
+md-select {
     border: 1px solid #BBB !important;
 }
 
 .sign-up label,
 .main label,
+md-select label,
 side-bar label {
     padding-left: .5em !important;
 }
@@ -127,7 +144,8 @@ side-bar label {
 
 .drop-box,
 input,
-textarea {
+textarea,
+md-select {
     -webkit-border-radius: .25em !important;
     -moz-border-radius: .25em !important;
     border-radius: .25em !important;
@@ -175,8 +193,9 @@ textarea {
 *****************************************/
 
 .main-post-thumb {
-    width: 60px;
-    height: 60px;
+    width: 85px;
+    height: 70px;
+    padding: 0 !important;
 }
 
 .main .vote {

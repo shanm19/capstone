@@ -20,7 +20,6 @@ subredditRoute.route("/search")
     .get(function (req, res) {
 
         Subreddit.findOne({name: req.query.name})
-
             .populate("posts")
             .exec(function (err, subredditFound) {
 
@@ -29,40 +28,57 @@ subredditRoute.route("/search")
             });
     });
 
+// search for a sub matching any pattern of the keyword
+subredditRoute.route("/query/:keyword")
+    .get(function (req, res) {
+        Subreddit.find({name: new RegExp(req.params.keyword, 'i')}, 'name', function (err, subReddits) {
+            if (err) return res.status(500).send(err);
+            res.send(subReddits);
+        })
+    });
+
 // return a subreddit object
 subredditRoute.route("/:subredditID")
     .get(function (req, res) {
 
-        Subreddit.findOne({_id: req.params.subredditID}, function (err, subredditFound) {
+        Subreddit.findById(req.params.subredditID)
+            .populate({
+                path: 'posts',
+                populate: {
+                    path: 'originalPoster subreddit',
+                    select: 'username name'
+                }
+            })
+            .exec(function (err, subredditFound) {
 
-            if (err) res.status(500).send(err);
-            res.send(subredditFound);
-        });
+                if (err) res.status(500).send(err);
+                res.send(subredditFound);
+            });
     });
 
 // find all posts in a subreddit created in the last 24 hours
 subredditRoute.route("/posts/:subredditID")
-    .get(function(req, res){
+    .get(function (req, res) {
 
         var subID = req.params.subredditID;
 
         var d = new Date();
 
-        if(req.query.time){
+        if (req.query.time) {
 
-            if(req.query.time === "hour") d.setDate(d.getHours() - 1);
-            if(req.query.time === "day") d.setDate(d.getDate() - 1);
-            if(req.query.time === "week") d.setDate(d.getDate() - 7);
-            if(req.query.time === "month") d.setDate(d.getMonth() - 1);
-            if(req.query.time === "year") d.setDate(d.getFullYear() - 1);
+            if (req.query.time === "hour") d.setDate(d.getHours() - 1);
+            if (req.query.time === "day") d.setDate(d.getDate() - 1);
+            if (req.query.time === "week") d.setDate(d.getDate() - 7);
+            if (req.query.time === "month") d.setDate(d.getMonth() - 1);
+            if (req.query.time === "year") d.setDate(d.getFullYear() - 1);
 
-            Post.find({subreddit: subID, createdAt: { "$gte": d } }, function(err, foundPosts){
-                if(err) res.status(500).send(err);
+            Post.find({subreddit: subID, createdAt: {"$gte": d}}, function (err, foundPosts) {
+                if (err) res.status(500).send(err);
                 res.send(foundPosts);
             });
         } else {
-            Post.find({ subreddit: subID, createdAt: { "$gte":  d.setDate(d.getDate() - 1) } }, function(err, foundPosts){
-                if(err) res.status(500).send(err);
+            Post.find({subreddit: subID, createdAt: {"$gte": d.setDate(d.getDate() - 1)}}, function (err, foundPosts) {
+                if (err) res.status(500).send(err);
                 res.send(foundPosts);
             });
         }

@@ -68,7 +68,6 @@ postRouteProtected.route('/')
         var newPost = new Post(req.body);
         newPost.originalPoster = req.user;
         if (newPost.type === 'link') {
-console.log(req.files.image)
             if (req.files.image) {
                 var data = fs.readFileSync(req.files.image.path);
                 var contentType = req.files.image.type;
@@ -83,7 +82,7 @@ console.log(req.files.image)
         newPost.save(function (err, savedPost) {
             if (err) return res.status(500).send(err);
 
-            Subreddit.findOne(req.body.subreddit, function (err, foundSub) {
+            Subreddit.findById(req.body.subreddit, function (err, foundSub) {
                 if (err) return res.status(500).send(err);
                 foundSub.posts.push(savedPost._id);
                 foundSub.save(function (err, savedSub) {
