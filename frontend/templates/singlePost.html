@@ -28,14 +28,13 @@
     <div style="border-bottom:1px solid rgba(0,0,0,.2)"></div>
     <!-- ADD A COMMENT section - user must be logged in -->
     <div ng-show="isAuthenticated()">
-        <div ng-cloak>
             <div flex="100" layout layout-align="start start">
                 <md-content flex="70" md-theme="blue">
                     <md-content layout-margin>
                         <h4>Add a comment</h4>
-                        <form name="newCommentForm" ng-submit="submitComment(newComment.text)" layout="column">
+                        <form name="newCommentForm" ng-submit="submitComment()" layout="column">
                             <md-input-container>
-                                <textarea type="text" name="text" ng-model="newComment.text" rows="5"></textarea>
+                                <textarea type="text" name="text" ng-model="newComment.content" rows="5"></textarea>
                             </md-input-container>
                             <div layout>
                                 <md-button type="submit" class="md-raised md-accent md-hue-3">Submit
@@ -45,14 +44,13 @@
                     </md-content>
                 </md-content>
             </div>
-        </div>
     </div>
     <!-- / end add comment section-->
     <!-- DISPLAY COMMENTS FOR SELECTED POST -->
     <div class="main" layout="column" ng-cloak>
         <!-- level 1 comments-->
         <md-list>
-            <md-list-item layout-align="start" ng-repeat="comment in post.comments" layout="column">
+            <md-list-item layout-align="start" ng-repeat="comment in post.comments track by $index" layout="column">
                 <div layout>
                     <div class="vote" layout="column" layout-align="center center">
                         <i class="material-icons pointer" ng-click="addCommentVote(comment, 'up')">keyboard_arrow_upward</i>
@@ -66,7 +64,7 @@
                 </div>
                 <!-- level 2 comments-->
                 <md-list flex-offset="5" ng-if="comment.comments.length>0">
-                    <md-list-item ng-repeat="subcomment in comment.comments" layout-wrap layout layout-align="start start">
+                    <md-list-item ng-repeat="subcomment in comment.comments track by $index" layout-wrap layout layout-align="start start">
                         <div layout flex="100">
                             <div class="vote" layout="column" layout-align="center start">
                                 <i class="material-icons pointer" ng-click="addCommentVote(comment, 'up')">keyboard_arrow_upward</i>
@@ -79,7 +77,7 @@
                         </div>
                         <!-- level 3 columns -->
                         <md-list ng-if="subcomment.comments.length>0" flex-offset="10" flex="80">
-                            <md-list-item ng-repeat="subsubcomment in subcomment.comments" layout-align="start start">
+                            <md-list-item ng-repeat="subsubcomment in subcomment.comments track by $index" layout-align="start start">
                                 <div layout>
                                     <div class="vote" layout="column" layout-align="center center">
                                         <i class="material-icons pointer" ng-click="addCommentVote(comment, 'up')">keyboard_arrow_upward</i>

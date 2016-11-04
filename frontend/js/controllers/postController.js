@@ -19,13 +19,15 @@ var test = function(){
     console.log('hello world from test function');
 }
 
-// send a comment object that contains the comment text and id of the parent Post as postID
-    function submitComment(){
-        $scope.newComment.postID = $scope.post._id
-        console.log('adding comment ', $scope.newComment)
-        PostService.addCommentToPost($scope.newComment)
-        .then(function(){
-            $scope.post.comments.unshift($scope.newComment.text)
+// Save a new comment associated with an existing Postsend
+// Pass an object to PostService 
+// that contains the comment text and id of the parent Post as postID
+    $scope.submitComment = function(){
+        PostService.addCommentToPost($scope.newComment, $scope.post._id)
+        .then(function(response){
+            console.log('adding comment ')
+            $scope.post = response;
+            $scope.newComment.content = ""
         })
     }
 
