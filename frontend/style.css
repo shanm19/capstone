@@ -33,6 +33,10 @@ a {
     color: #3f3f3f;
 }
 
+.txt-center {
+    text-align: center;
+}
+
 /****************************************
                  NavBar
 *****************************************/
@@ -71,17 +75,26 @@ a.md-button {
     font-size: 1.3em;
 }
 
+.logo {
+    height: 40px;
+    width: 40px;
+    margin-top: -12px;
+    padding-left: .5em;
+}
+
 /****************************************
                  SideBar
 *****************************************/
 
 input,
-textarea {
+textarea,
+md-select {
     border: 1px solid #BBB !important;
 }
 
 .sign-up label,
 .main label,
+md-select label,
 side-bar label {
     padding-left: .5em !important;
 }
@@ -127,7 +140,8 @@ side-bar label {
 
 .drop-box,
 input,
-textarea {
+textarea,
+md-select {
     -webkit-border-radius: .25em !important;
     -moz-border-radius: .25em !important;
     border-radius: .25em !important;
@@ -175,8 +189,9 @@ textarea {
 *****************************************/
 
 .main-post-thumb {
-    width: 60px;
-    height: 60px;
+    width: 85px;
+    height: 70px;
+    padding: 0 !important;
 }
 
 .main .vote {

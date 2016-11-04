@@ -5,8 +5,13 @@ var Schema = mongoose.Schema;
 var subredditSchema = new Schema({
     name: {
         type: String,
-        unique: true
+        unique: true,
+        required: true
         //es_indexed: true
+    },
+    description: {
+        type: String,
+        required: true
     },
     posts: [{
         type: Schema.Types.ObjectId,
