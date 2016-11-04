@@ -3,81 +3,68 @@
 var express = require("express");
 var Subreddit = require("../models/subredditSchema");
 var User = require("../models/userSchema");
+var Post = require("../models/postSchema");
 var subredditRouteProtected = express.Router();
 
-subredditRouteProtected.route("/search")
+subredditRouteProtected.route("/")
     .get(function(req, res) {
 
-        var time = req.query.time;
         var date = new Date();
 
-        switch (time) {
-            case "minutes":
-                date.setMinutes(date.getMinutes() -1);
-                break;
-            case "hour":
-                date.setHours(date.getHours() - 1);
-                break;
-            case "day":
-                date.setDate(date.getDate() - 1);
-                break;
-            case "week":
-                date.setDate(date.getDate() - 7);
-                break;
-            case "month":
-                date.setMonth(date.getMonth() - 1);
-                break;
-            case "year":
-                date.setFullYear(date.getFullYear());
-                break;
-        }
+        if (req.query.time) {
 
-        // there's a better way to do this with the query using $in
-        Subreddit.find({subscribers: req.user_id}, function(err, subreddits) {
+            var time = req.query.time;
 
-            if (err) res.status(500).send(err);
-            else {
-
-                var postsArray = [];
-
-                subreddits.forEach(function(subreddit) {
-
-                    Subreddit.findOne({_id: subreddit._id})
-
-                        .populate("posts")
-                            .exec(function(err, subredditFound) {
-
-                                if (err) res.status(500).send(err);
-                                else {
-
-                                    if (subredditFound.posts.length) {
-
-                                        subredditFound.posts.forEach(function (post) {
-
-                                            if (post.timestamps.createdAt >= date)
-                                                postsArray.push(subredditFound.post);
-                                        });
-                                    }
-                                }
-                            });
-                });
-                res.send(postsArray);
+            switch (time) {
+                case "minutes":
+                    date.setMinutes(date.getMinutes() - 1);
+                    break;
+                case "hour":
+                    date.setHours(date.getHours() - 1);
+                    break;
+                case "day":
+                    date.setDate(date.getDate() - 1);
+                    break;
+                case "week":
+                    date.setDate(date.getDate() - 7);
+                    break;
+                case "month":
+                    date.setMonth(date.getMonth() - 1);
+                    break;
+                case "year":
+                    date.setFullYear(date.getFullYear());
+                    break;
             }
-        });
-    });
 
-subredditRouteProtected.route("/")
+            Post.find({_id: {$in: req.user.subscribedSubreddits}, createdAt: {"$gte": date}}, function (err, postArray) {
+
+                if (err) res.status(500).send(err);
+                res.send(postArray);
+            });
+        }
+        else {
+
+            Post.find({_id: {$in: req.user.subscribedSubreddits}, createdAt: {"$gte": date.setDate(date.getDate()) - 1}}, function (err, postArray) {
+
+                if (err) res.status(500).send(err);
+                res.send(postArray);
+            });
+        }
+    })
+
     .post(function(req, res) {
 
         var newSubreddit = new Subreddit(req.body);
 
         newSubreddit.creator = req.user;
-
         newSubreddit.save(function(err, newSubredditSaved) {
+
             if (err) res.status(500).send(err);
 
             User.findById(newSubredditSaved.creator, function(err, user) {
+
                 if (err) return res.status(500).send(err);
+
                 // auto subscribe user to their created subreddit
                 user.subscribedSubreddits.push(newSubredditSaved);
                 user.save();
