@@ -74,7 +74,18 @@ app.service('PostService', ['$http', '$location', 'Upload', function ($http, $lo
         var postID = post._id;
         return $http.put("api/post/" + postID, post)
 
-            .then(function (response) {
+            .then(function(response) {
+
+                console.log(response.data);
+                return response.data;
+            });
+    };
+
+    this.updateComment = function(comment) {
+
+        return $http.put("api/comment" + comment._id, comment)
+
+            .then(function(response) {
 
                 console.log(response.data);
                 return response.data;

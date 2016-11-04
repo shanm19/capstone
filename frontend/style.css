@@ -35,6 +35,9 @@ a {
 
 .pointer {
     cursor: pointer;
+    outline: none;
+    border: none;
+    background: none;
 }
 
 .txt-center {

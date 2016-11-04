@@ -16,7 +16,7 @@
                                 <span class="caption">
                                     submitted {{ ::post.createdAt | when }} by <a href="#/"><b>{{::post.originalPoster.username}}</b></a> to <b><a href="#/sub/{{::post.subreddit._id}}">{{::post.subreddit.name}}</a></b>
                                     <br/>
-                                    <b><a href="#/post/{{::post._id}}">{{post.comments.length}} comments</a></b>
+                                    <b><a class="pointer" href="#/post/{{::post._id}}">{{post.comments.length}} comments</a></b>
                                 </span>
                             </div>
                         </div>
