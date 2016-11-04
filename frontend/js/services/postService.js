@@ -102,4 +102,27 @@ app.service('PostService', ['$http', '$location', 'Upload', function ($http, $lo
             console.log('Error adding comment: ', error)
         })
     }
+
+    // get all comments for a single Post given the Post Id
+    this.getPostComments = function(postId) {
+        return $http.get('/post/' + postId)
+        .then(function(response){
+            this.post = response.data
+            return response.data
+        }.bind(this), function(error){
+            console.log('error getting comments for post id ' + postId, error)
+        })
+    }
+
+// function takes a comment object containing the comment text and the parent Post ID no.
+    this.addCommentToPost = function(comment) {
+        return $http.post('api/comment', comment)
+        .then(function(response){
+            console.log('add Comment service ', response.data)
+            return response.data
+        }, function(error){
+            console.log('Error adding comment: ', error)
+        })
+    }
+
 }]);
