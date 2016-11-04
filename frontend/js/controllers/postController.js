@@ -31,4 +31,34 @@ var test = function(){
         })
     }
 
+    $scope.addPostVote = function(post, direction) {
+
+        if (direction === "up") {
+
+            post.netVotes++;
+            post.upVotes++;
+        }
+        else {
+
+            post.netVotes--;
+            post.downVotes++;
+        }
+        PostService.updatePost(post);
+    };
+
+    $scope.addCommentVote = function(comment, direction) {
+
+        if (direction === 'up') {
+
+            comment.netVotes++;
+            comment.upVotes++;
+        }
+        else {
+
+            comment.netVotes--;
+            comment.downVotes++;
+        }
+        PostService.updateComment(comment);
+    };
+
 }]);

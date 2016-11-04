@@ -5,9 +5,9 @@
                 <div flex>
                     <div class="md-3-line post" layout layout-padding>
                         <div class="vote" layout="column" layout-align="center center">
-                            <i class="material-icons">keyboard_arrow_upward</i>
+                            <i class="material-icons pointer" ng-click="addPostVote(post, 'up')">keyboard_arrow_upward</i>
                             <span><b>{{post.netVotes}}</b></span>
-                            <i class="material-icons">keyboard_arrow_downward</i>
+                            <i class="material-icons pointer" ng-click="addPostVote(post, 'down')">keyboard_arrow_downward</i>
                         </div>
                         <div layout layout-padding>
                             <a ng-href="{{post.siteUrl}}/#/post/{{post._id}}"><img ng-src="{{post.image}}" alt="image of {{post.title}}" class="main-post-thumb" /></a>
@@ -53,8 +53,8 @@
             <md-list-item layout-align="start" ng-repeat="comment in post.comments track by $index" layout="column">
                 <div layout>
                     <div class="vote" layout="column" layout-align="center center">
-                        <i class="material-icons">keyboard_arrow_upward</i>
-                        <i class="material-icons">keyboard_arrow_downward</i>
+                        <i class="material-icons pointer" ng-click="addCommentVote(comment, 'up')">keyboard_arrow_upward</i>
+                        <i class="material-icons pointer" ng-click="addCommentVote(comment, 'down')">keyboard_arrow_downward</i>
                     </div>
                     <div class="md-list-item-text" layout="column" layout-align="center start">
                         <span>{{comment.title}}</span>
@@ -67,8 +67,8 @@
                     <md-list-item ng-repeat="subcomment in comment.comments track by $index" layout-wrap layout layout-align="start start">
                         <div layout flex="100">
                             <div class="vote" layout="column" layout-align="center start">
-                                <i class="material-icons">keyboard_arrow_upward</i>
-                                <i class="material-icons">keyboard_arrow_downward</i>
+                                <i class="material-icons pointer" ng-click="addCommentVote(comment, 'up')">keyboard_arrow_upward</i>
+                                <i class="material-icons pointer" ng-click="addCommentVote(comment, 'down')">keyboard_arrow_downward</i>
                             </div>
                             <div class="md-list-item-text" layout-align="center start" layout="column">
                                 <span class="caption"><b><a href="#/">{{subcomment.originalPoster.username}}</a> </b><b> {{subcomment.netVotes}} points </b>{{ subcomment.createdAt | when }} </span>
@@ -80,8 +80,8 @@
                             <md-list-item ng-repeat="subsubcomment in subcomment.comments track by $index" layout-align="start start">
                                 <div layout>
                                     <div class="vote" layout="column" layout-align="center center">
-                                        <i class="material-icons">keyboard_arrow_upward</i>
-                                        <i class="material-icons">keyboard_arrow_downward</i>
+                                        <i class="material-icons pointer" ng-click="addCommentVote(comment, 'up')">keyboard_arrow_upward</i>
+                                        <i class="material-icons pointer" ng-click="addCommentVote(comment, 'down')">keyboard_arrow_downward</i>
                                     </div>
                                     <div class="md-list-item-text" layout-align="center start" layout="column">
                                         <span>{{subsubcomment.title}}</span>

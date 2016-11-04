@@ -6,7 +6,7 @@ app.directive('sideBar', function () {
     return {
         restrict: 'E',
         templateUrl: './js/directives/sideBar/sideBar.html',
-        controller: ['$rootScope', '$scope', '$mdDialog', '$timeout', '$location', 'UserService', 'SearchService', function ($rootScope, $scope, $mdDialog, $timeout, $location, UserService, SearchService) {
+        controller: ['$rootScope', '$scope', '$mdDialog', '$timeout', '$location', 'UserService', 'SearchService', 'PostService', function ($rootScope, $scope, $mdDialog, $timeout, $location, UserService, SearchService, PostService) {
 
             $rootScope.$on('authenticate', function () {
                 $scope.permission = UserService.isAuthenticated()
@@ -69,13 +69,26 @@ app.directive('sideBar', function () {
                             UserService.newSignup = response.user;
                         }
                     })
-            };
+            }
 
             $scope.querySubs = function () {
                 $location.path('/search/' + $scope.search.query);
-            }
-        }]
+            };
 
-        //$scope.addPostVote
+            $scope.addPostVote = function (post, direction) {
+
+                if (direction === "up") {
+
+                    post.netVotes++;
+                    post.upVotes++;
+                }
+                else {
+
+                    post.netVotes--;
+                    post.downVotes++;
+                }
+                PostService.updatePost(post);
+            };
+        }]
     }
 });
