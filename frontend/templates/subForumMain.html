@@ -1,0 +1,33 @@
+<div layout-padding ng-cloak>
+    <div flex="100" layout layout layout-align="space-around start">
+        <div class="main" flex="70" ng-cloak>
+            <md-content>
+                <md-subheader class="md-no-sticky md-primary" md-theme="blue">
+                    <h1 class="txt-center">{{::sub.name}}</h1>
+                    <p>{{::sub.description}}</p>
+                </md-subheader>
+                <md-list flex>
+                    <md-list-item class="md-3-line post" ng-repeat="post in sub.posts" md-whiteframe="2" layout-padding layout-margin>
+                        <div class="vote" layout="column" layout-align="center center">
+                            <i class="material-icons">keyboard_arrow_upward</i>
+                            <span><b>{{post.netVotes}}</b></span>
+                            <i class="material-icons">keyboard_arrow_downward</i>
+                        </div>
+                        <div layout layout-padding>
+                            <a ng-href="{{::post.siteUrl}}/#/post/{{::post._id}}"><img ng-src="{{post.image}}" alt="image of {{::post.title}}" class="main-post-thumb"/></a>
+                            <div class="md-list-item-text" layout="column">
+                                <p>{{::post.title}}</p>
+                                <span class="caption">
+                                    submitted {{ post.createdAt | when }} by <a href="#/"><b>{{::post.originalPoster.username}}</b></a>
+                                    <br/>
+                                    <b><a href="#/post/{{post._id}}">{{::post.comments.length}} comments</a></b>
+                                </span>
+                            </div>
+                        </div>
+                    </md-list-item>
+                </md-list>
+            </md-content>
+        </div>
+        <side-bar class="aside" flex="25" layout="column" layout-align="start stretch" md-whiteframe="z1"></side-bar>
+    </div>
+</div>
