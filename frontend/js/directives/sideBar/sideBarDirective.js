@@ -54,7 +54,7 @@ app.directive('sideBar', function () {
 
             $scope.signup = function (user) {
                 $scope.duplicate = false;
-                console.log('new user ', user)
+                console.log('new user ', user);
                 UserService.signup(user)
                     .then(function (response) {
                         if (response.success === false && response.cause === 'username or email') {
@@ -75,5 +75,7 @@ app.directive('sideBar', function () {
                 $location.path('/search/' + $scope.search.query);
             }
         }]
+
+        //$scope.addPostVote
     }
 });

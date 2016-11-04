@@ -22,7 +22,7 @@ a {
 
 .p-a {
     padding: .5em;
-    box-siz
+    /*box-siz*/
 }
 
 .m-a-half {
@@ -31,6 +31,10 @@ a {
 
 .dark {
     color: #3f3f3f;
+}
+
+.pointer {
+    cursor: pointer;
 }
 
 .txt-center {
@@ -50,7 +54,7 @@ a {
     border-radius: .25em .25em 0;
 }
 
-md-nav-ink-bar {
+.md-nav-ink-bar {
     background: transparent !important;
 }
 

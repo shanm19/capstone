@@ -66,7 +66,20 @@ app.service('PostService', ['$http', '$location', 'Upload', function ($http, $lo
             var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
             console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
         });
-    }
+
+    };
+
+    this.updatePost = function(post) {
+
+        var postID = post._id;
+        return $http.put("api/post/" + postID, post)
+
+            .then(function (response) {
+
+                console.log(response.data);
+                return response.data;
+            });
+    };
 
     // get all comments for a single Post given the Post Id
     this.getPostComments = function(postId) {
@@ -89,5 +102,4 @@ app.service('PostService', ['$http', '$location', 'Upload', function ($http, $lo
             console.log('Error adding comment: ', error)
         })
     }
-
 }]);

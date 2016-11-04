@@ -46,7 +46,6 @@ app.use("/comment", require("./routes/commentRoute"));
 app.use("/auth", require("./routes/authRoute"));
 
 
-
 app.listen(port, function() {console.log("Server is listening on port", port)});
 
 

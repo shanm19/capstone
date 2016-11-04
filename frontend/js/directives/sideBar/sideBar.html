@@ -46,8 +46,9 @@
         <!-- ng-repeat -->
         <div class="caption m-a-half " layout layout-align="start center">
             <div class="vote m-a-half" layout="column" layout-align="center center">
-                <i class="material-icons">keyboard_arrow_upward</i>
-                <i class="material-icons">keyboard_arrow_downward</i>
+                <i class="material-icons" ng-click="addPostVote(post, 'up')">keyboard_arrow_upward</i>
+                <span><b>{{post.netVotes}}</b></span>
+                <i class="material-icons" ng-click="addPostVote(post, 'down')">keyboard_arrow_downward</i>
             </div>
             <div layout="column">
                 <a href="">I like dogs</a>
@@ -57,8 +58,9 @@
 
         <div class="caption m-a-half" layout layout-align="start center">
             <div class="vote m-a-half" layout="column" layout-align="center center">
-                <i class="material-icons">keyboard_arrow_upward</i>
-                <i class="material-icons">keyboard_arrow_downward</i>
+                <i class="material-icons" ng-click="addPostVote(post, 'up')">keyboard_arrow_upward</i>
+                <span><b>{{post.netVotes}}</b></span>
+                <i class="material-icons" ng-click="addPostVote(post, 'down')">keyboard_arrow_downward</i>
             </div>
             <div layout="column">
                 <a href="">Look at this picture from 1971</a>
@@ -67,8 +69,9 @@
         </div>
         <div class="caption m-a-half" layout layout-align="start center">
             <div class="vote m-a-half" layout="column" layout-align="center center">
-                <i class="material-icons">keyboard_arrow_upward</i>
-                <i class="material-icons">keyboard_arrow_downward</i>
+                <i class="material-icons" ng-click="addPostVote(post, 'up')">keyboard_arrow_upward</i>
+                <span><b>{{post.netVotes}}</b></span>
+                <i class="material-icons" ng-click="addPostVote(post, 'down')">keyboard_arrow_downward</i>
             </div>
             <div layout="column">
                 <a href="">how do I know if he's cheating?</a>
