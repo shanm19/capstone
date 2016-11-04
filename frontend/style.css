@@ -71,6 +71,13 @@ a.md-button {
     font-size: 1.3em;
 }
 
+.logo {
+    height: 40px;
+    width: 40px;
+    margin-top: -12px;
+    padding-left: .5em;
+}
+
 /****************************************
                  SideBar
 *****************************************/
@@ -175,8 +182,9 @@ textarea {
 *****************************************/
 
 .main-post-thumb {
-    width: 60px;
-    height: 60px;
+    width: 85px;
+    height: 70px;
+    padding: 0 !important;
 }
 
 .main .vote {

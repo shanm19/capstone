@@ -22,6 +22,10 @@ app.config(['$routeProvider', '$mdThemingProvider', function ($routeProvider, $m
         .when('/post/:id', {
             templateUrl: './templates/singlePost.html',
             controller: 'PostController'
+        })
+        .when('/search/:keyword', {
+            templateUrl: './templates/results.html',
+            controller: 'SearchController'
         });
 
     $mdThemingProvider.theme('forms')

@@ -1,11 +1,12 @@
 <md-toolbar md-theme="blue"></md-toolbar>
 <div class="side-bar" ng-cloak>
     <div layout-padding>
-        <form name="searchForm">
-            <md-input-container layout layout-align="start stretch" md-theme="blue">
+        <form name="searchForm" ng-submit="querySubs()">
+            <md-input-container layout layout-align="start end" md-theme="blue">
                 <label>search</label>
-                <input type="text">
+                <input type="text" ng-model="search.query">
             </md-input-container>
+            <md-button type="submit" class="md-raised md-primary full-width" md-theme="blue">search</md-button>
         </form>
         <div class="login" ng-show="!permission" md-theme="blue">
             <span><small>Login or <a ng-click="showAuthForm()"><b>signup</b></a></small></span>
@@ -40,7 +41,7 @@
                    ng-click=" (permission) ? location.path('/newsubforum') : showAuthForm()">Create your own sub forum
         </md-button>
     </div>
-    <div  ng-if="permission" class="recent">
+    <div ng-if="permission" class="recent">
         <md-subheader md-theme="cyan">recently viewed</md-subheader>
         <!-- ng-repeat -->
         <div class="caption m-a-half " layout layout-align="start center">
