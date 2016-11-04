@@ -135,7 +135,8 @@ postRoute.route("/:postID")
         // I'm sure there's a better way, but for now this works
         // It only populates ternary comments, but this is similar to Reddit where you have to make
         // a subsequent call for deeper levels
-            .deepPopulate("comments comments.comments comments.comments.comments")
+            .populate('originalPoster')
+            .deepPopulate("comments comments.originalPoster comments.comments comments.comments.comments")
             // Disclaimer: NO idea if this is right yet, hasn't been tested
             // The idea is to also deeply populate the comments and also fill out
             // only the person's username and _id who submitted the comment
