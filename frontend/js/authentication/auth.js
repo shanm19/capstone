@@ -92,9 +92,9 @@ app.service('UserService', ["$rootScope", "$http", "$location", "TokenService", 
             })
     }
 
-    // SIGNUP/LOGIN WITH GOOGLE
+    // SIGNUP/LOGIN WITH GOOGLE - this is still developmental 
     this.google = function () {
-        return $http.get('/auth/google' + '?apikey=721050503042-f2qipv794269gifb9de6fpdo4cs7dkjp.apps.googleusercontent.com')
+        return $http.get('/auth/google')
             .then(function (response) {
                 console.log('Userservice google res ', response)
                 this.user = response.data
