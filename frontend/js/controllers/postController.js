@@ -24,8 +24,8 @@ var test = function(){
 // that contains the comment text and id of the parent Post as postID
     $scope.submitComment = function(){
         PostService.addCommentToPost($scope.newComment, $scope.post._id)
-        .then(function(){
-            $scope.post.comments.unshift($scope.newComment.content)
+        .then(function(response){
+            $scope.post = response;
             $scope.newComment.content = ""
         })
     }
