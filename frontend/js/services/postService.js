@@ -2,7 +2,7 @@
 
 var app = angular.module('MockReddit');
 
-app.service('PostService', ['$http', 'Upload', function ($http, Upload) {
+app.service('PostService', ['$http', '$location', 'Upload', function ($http, $location, Upload) {
 
     this.getPosts = function () {
         return $http.get('/post')
@@ -12,7 +12,7 @@ app.service('PostService', ['$http', 'Upload', function ($http, Upload) {
                 console.log("Error could not get posts:", err.status);
             });
     };
-
+    
     this.getSubForumList = function () {
         return $http.get('/subreddit')
             .then(function (response) {
@@ -67,4 +67,17 @@ app.service('PostService', ['$http', 'Upload', function ($http, Upload) {
             console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
         });
     }
+
+    // get all comments for a single Post given the Post Id
+    this.getPostComments = function(postId) {
+        return $http.get('/post/' + postId)
+        .then(function(response){
+            this.post = response.data
+            console.log('getPostComments ', response.data)
+            return response.data
+        }.bind(this), function(error){
+            console.log('error getting comments for post id ' + postId, error)
+        })
+    }
+
 }]);

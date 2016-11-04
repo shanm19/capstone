@@ -13,11 +13,15 @@ app.controller('MainController', ['$scope', 'PostService', function ($scope, Pos
     }
     getPosts();
     
-    $scope.FBlogin = function () {
-        UserService.FBlogin()
-            .then(function (response) {
-                console.log('Maincontroller ', response);
-                $scope.user = response;
-            })
-    }
+
+    /// used temporarily during development
+    (function getSubforumList() {
+        PostService.getSubForumList()
+        .then(function(response){
+            $scope.subforumList = response
+        })
+    })();
+
+    /// end temproary dev function
+
 }]);
