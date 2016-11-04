@@ -33,6 +33,10 @@ a {
     color: #3f3f3f;
 }
 
+.txt-center {
+    text-align: center;
+}
+
 /****************************************
                  NavBar
 *****************************************/
@@ -83,12 +87,14 @@ a.md-button {
 *****************************************/
 
 input,
-textarea {
+textarea,
+md-select {
     border: 1px solid #BBB !important;
 }
 
 .sign-up label,
 .main label,
+md-select label,
 side-bar label {
     padding-left: .5em !important;
 }
@@ -134,7 +140,8 @@ side-bar label {
 
 .drop-box,
 input,
-textarea {
+textarea,
+md-select {
     -webkit-border-radius: .25em !important;
     -moz-border-radius: .25em !important;
     border-radius: .25em !important;

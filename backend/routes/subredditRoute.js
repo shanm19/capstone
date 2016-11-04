@@ -28,9 +28,10 @@ subredditRoute.route("/search")
             });
     });
 
+// search for a sub matching any pattern of the keyword
 subredditRoute.route("/query/:keyword")
     .get(function (req, res) {
-        Subreddit.find({name: new RegExp(req.params.keyword, 'i')}, function (err, subReddits) {
+        Subreddit.find({name: new RegExp(req.params.keyword, 'i')}, 'name', function (err, subReddits) {
             if (err) return res.status(500).send(err);
             res.send(subReddits);
         })
@@ -40,11 +41,19 @@ subredditRoute.route("/query/:keyword")
 subredditRoute.route("/:subredditID")
     .get(function (req, res) {
 
-        Subreddit.findOne({_id: req.params.subredditID}, function (err, subredditFound) {
+        Subreddit.findById(req.params.subredditID)
+            .populate({
+                path: 'posts',
+                populate: {
+                    path: 'originalPoster subreddit',
+                    select: 'username name'
+                }
+            })
+            .exec(function (err, subredditFound) {
 
-            if (err) res.status(500).send(err);
-            res.send(subredditFound);
-        });
+                if (err) res.status(500).send(err);
+                res.send(subredditFound);
+            });
     });
 
 // find all posts in a subreddit created in the last 24 hours

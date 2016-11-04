@@ -26,6 +26,10 @@ app.config(['$routeProvider', '$mdThemingProvider', function ($routeProvider, $m
         .when('/search/:keyword', {
             templateUrl: './templates/results.html',
             controller: 'SearchController'
+        })
+        .when('/sub/:id', {
+            templateUrl: './templates/subForumMain.html',
+            controller: 'SubController'
         });
 
     $mdThemingProvider.theme('forms')
