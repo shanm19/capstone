@@ -58,7 +58,7 @@
                     </div>
                     <div class="md-list-item-text" layout="column" layout-align="center start">
                         <span>{{comment.title}}</span>
-                        <span class="caption"><b><a href="#/">{{comment.originalPoster.username}}</a> </b><b> {{comment.netVotes}} points </b>{{ comment.createdAt | when }} </span>
+                        <span class="caption"><b><a class="pointer" href="#/">{{comment.originalPoster.username}}</a> </b><b> {{comment.netVotes}} points </b>{{ comment.createdAt | when }} </span>
                         <span>{{comment.content}} </span>
                     </div>
                 </div>
@@ -71,7 +71,7 @@
                                 <i class="material-icons pointer" ng-click="addCommentVote(comment, 'down')">keyboard_arrow_downward</i>
                             </div>
                             <div class="md-list-item-text" layout-align="center start" layout="column">
-                                <span class="caption"><b><a href="#/">{{subcomment.originalPoster.username}}</a> </b><b> {{subcomment.netVotes}} points </b>{{ subcomment.createdAt | when }} </span>
+                                <span class="caption"><b><a class="pointer" href="#/">{{subcomment.originalPoster.username}}</a> </b><b> {{subcomment.netVotes}} points </b>{{ subcomment.createdAt | when }} </span>
                                 <span>{{subcomment.content}} </span>
                             </div>
                         </div>
@@ -85,11 +85,11 @@
                                     </div>
                                     <div class="md-list-item-text" layout-align="center start" layout="column">
                                         <span>{{subsubcomment.title}}</span>
-                                        <span class="caption"><b><a href="#/">{{subsubcomment.originalPoster.username}}</a> </b><b> {{subsubcomment.netVotes}} points </b>{{ subsubcomment.createdAt | when }} </span>
+                                        <span class="caption"><b><a class="pointer" href="#/">{{subsubcomment.originalPoster.username}}</a> </b><b> {{subsubcomment.netVotes}} points </b>{{ subsubcomment.createdAt | when }} </span>
                                         <span>{{subsubcomment.content}} </span>
                                     </div>
                                 </div>
-                                <div ng-if="subsubcomment.comments.length>0"><a href="">More Comments</a></div>
+                                <div ng-if="subsubcomment.comments.length>0"><a class="pointer" href="">More Comments</a></div>
                             </md-list-item>
                         </md-list>
                     </md-list-item>
