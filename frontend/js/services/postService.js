@@ -80,8 +80,8 @@ app.service('PostService', ['$http', '$location', 'Upload', function ($http, $lo
     }
 
 // function takes a comment object containing the comment text and the parent Post ID no.
-    this.addCommentToPost = function(comment) {
-        return $http.post('api/comment', comment)
+    this.addCommentToPost = function(comment, postID) {
+        return $http.post('api/post/' + postID + '/comments', comment)
         .then(function(response){
             console.log('add Comment service ', response.data)
             return response.data

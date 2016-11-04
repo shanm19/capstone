@@ -34,7 +34,7 @@ app.use("/api", expressJwt({secret:config.db_secret}));
 require('./passport/passport')(app);
 app.use("/api/user", require("./routes/userRouteProtected"));
 app.use("/api/admin", require("./routes/adminRoute"));
-// app.use("/api/post", require("./routes/postRouteProtected"));
+app.use("/api/post", require("./routes/postRouteProtected"));
 app.use("/api/subreddit", require("./routes/subredditRouteProtected"));
 app.use("/api/comment", require("./routes/commentRouteProtected"));
 

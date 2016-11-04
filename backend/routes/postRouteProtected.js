@@ -35,6 +35,7 @@ var postRouteProtected = express.Router();
 var User = require('../models/userSchema');
 var Subreddit = require('../models/subredditSchema');
 var Post = require('../models/postSchema');
+var Comment = require('../models/commentSchema');
 var multipart = require('connect-multiparty');
 var multipartyMiddleWare = multipart();
 var fs = require('fs');
@@ -126,22 +127,26 @@ postRouteProtected.route("/:postID")
 // to be downvoted into oblivion instead of potentially being negligent enough to allow
 // comments to be orphaned in the collection and be an unremovable hindrance
 
-// This is for posting primary level comments, directly to the Post object
-postRouteProtected.route("/comment/:postID")
-// $http.post(baseUrl + "/api/post/comment/:postID, { content: "I like cheese" })
-// return comment
+// add a new Comment related to an existing Post
+postRouteProtected.route("/:postID/comments")
     .post(function (req, res) {
         var postID = req.params.postID;
+        
+        var newComment = new Comment(req.body);
+
+        newComment.originalPoster = req.user._id
+        
+        newComment.save();
+
+
         Post.findById(postID, function (err, foundPost) {
             if (err) {
                 res.status(500).send(err);
             } else {
-                req.body.originalPoster = req.user._id;
-                var newComment = new Comment(req.body);
-                newComment.save(function (err, savedComment) {
-                    if (err) res.status(500).send(err);
-                    foundPost.comments.push(newComment);
-                    res.send(newComment);
+                foundPost.comments.push(newComment._id)
+                Post.findByIdAndUpdate(postID, foundPost, {new:true}, function(err, updatedPost){
+                        if(err) res.status(500).send(err);
+                        else res.send(updatedPost);
                 });
             }
         });
